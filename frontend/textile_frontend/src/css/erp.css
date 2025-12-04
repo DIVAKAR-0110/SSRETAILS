@@ -1,0 +1,82 @@
+body {
+  background: #f4f6f9;
+  font-family: "Inter", sans-serif;
+}
+
+.erp-card {
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.erp-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+}
+
+.erp-input {
+  width: 100%;
+  padding: 12px;
+  margin-top: 8px;
+  border-radius: 10px;
+  border: 1px solid #dcdcdc;
+  outline: none;
+  font-size: 15px;
+}
+
+.erp-input:focus {
+  border-color: #1677ff;
+}
+
+.erp-btn {
+  background: linear-gradient(135deg, #005bea, #00c6fb);
+  padding: 12px 20px;
+  border-radius: 12px;
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.erp-btn:hover {
+  opacity: 0.85;
+}
+
+.error-text {
+  color: #f00;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.table-container {
+  margin-top: 20px;
+}
+
+.erp-table {
+  width: 100%;
+  background: white;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.erp-table th {
+  padding: 12px;
+  text-align: left;
+  background: #eef3ff;
+}
+
+.erp-table td {
+  padding: 12px;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.action-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #005bea;
+  font-weight: bold;
+}

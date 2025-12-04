@@ -1,0 +1,23 @@
+.tools-container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 15px;
+  background: linear-gradient(145deg, #e4e4e4, #cfcfcf);
+  padding: 12px;
+  border-radius: 10px;
+  box-shadow: 0px 2px 6px rgba(0,0,0,0.15);
+}
+
+.search-box {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #aaa;
+  width: 220px;
+  transition: 0.24s ease;
+}
+
+.search-box:focus {
+  border-color: #005fcc;
+  box-shadow: 0px 0px 8px rgba(0,95,204,0.4);
+}

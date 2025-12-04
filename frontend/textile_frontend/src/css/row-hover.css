@@ -1,0 +1,9 @@
+/* Highlight on hover */
+.erp-table tbody tr {
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.erp-table tbody tr:hover {
+  background: #c5ff00 !important;
+  transform: scale(1.01);
+}

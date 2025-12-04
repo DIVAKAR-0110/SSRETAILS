@@ -1,0 +1,20 @@
+.system-drawer {
+  padding: 20px 24px;
+}
+
+.system-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1.1fr;
+  gap: 18px;
+  margin-top: 8px;
+}
+
+@media (max-width: 992px) {
+  .system-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* card-section, form-row, form-field, label, checkbox-row, checkbox-label,
+   card-title, card-subtitle, card-meta, drawer-header, drawer-footer, etc.
+   can be identical to the TaxTypeForm styles you already added. */

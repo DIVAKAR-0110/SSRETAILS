@@ -1,0 +1,22 @@
+.tool-btn {
+  display:flex;
+  align-items:center;
+  gap:6px;
+  background:white;
+  border:1px solid #ddd;
+  padding:6px 12px;
+  border-radius:6px;
+  cursor:pointer;
+  font-size:14px;
+}
+.tool-btn:hover {
+  background:#f0f0f0;
+}
+
+.center-top-btn {
+      margin-top: 50px; /* Adjust this value to move button up/down */
+    }
+
+    .icon-btn{
+        background: #ecb53e;
+    }

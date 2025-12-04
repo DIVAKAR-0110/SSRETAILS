@@ -1,0 +1,4 @@
+.data-table tr.selected,
+.report-table tr.selected {
+  background: #c5ff00 !important;
+}

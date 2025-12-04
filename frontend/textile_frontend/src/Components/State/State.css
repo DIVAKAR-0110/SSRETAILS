@@ -1,0 +1,204 @@
+/* Premium ERP Style CSS */
+.box {
+  background: #f9fafb;
+  border-radius: 8px;
+  padding: 24px;
+  max-width: 900px;
+  margin: 24px auto;
+  box-shadow: 0 2px 6px rgb(0 0 0 / 0.1);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+h2 {
+  font-weight: 700;
+  font-size: 1.8rem;
+  border-bottom: 2px solid #0066cc;
+  padding-bottom: 8px;
+  margin-bottom: 20px;
+}
+
+select,
+input {
+  padding: 10px 14px;
+  font-size: 1rem;
+  border: 1px solid #ccd3db;
+  border-radius: 4px;
+  transition: border-color 0.3s ease;
+  width: 200px;
+  outline: none;
+}
+
+select:focus,
+input:focus {
+  border-color: #005bb5;
+  box-shadow: 0 0 5px rgba(0, 91, 181, 0.4);
+}
+
+button {
+  background-color: #0066cc;
+  border: none;
+  color: white;
+  font-weight: 600;
+  padding: 10px 18px;
+  font-size: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.25s ease;
+  margin-left: 8px;
+  min-width: 80px;
+}
+
+button:hover {
+  background-color: #004a99;
+}
+
+button:disabled {
+  background-color: #aac4e8;
+  cursor: not-allowed;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 18px;
+  box-shadow: 0 0 10px rgb(0 0 0 / 0.05);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+thead {
+  background-color: #004a99;
+  color: white;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+}
+
+thead th {
+  padding: 12px 16px;
+  text-align: left;
+}
+
+tbody tr {
+  border-bottom: 1px solid #ddd;
+  transition: background-color 0.3s ease;
+}
+
+tbody tr:hover {
+  background-color: #f1f5fb;
+}
+
+tbody td {
+  padding: 12px 16px;
+  font-size: 0.95rem;
+  color: #222;
+}
+
+@media (max-width: 640px) {
+  .box {
+    padding: 16px;
+  }
+
+  select,
+  input {
+    width: 100%;
+  }
+
+  button {
+    width: 100%;
+    margin: 8px 0 0 0;
+  }
+
+  table,
+  thead,
+  tbody,
+  th,
+  td,
+  tr {
+    display: block;
+  }
+
+  thead tr {
+    display: none;
+  }
+
+  tbody tr {
+    margin-bottom: 16px;
+    border-bottom: 2px solid #ddd;
+  }
+
+  tbody td {
+    padding-left: 50%;
+    position: relative;
+  }
+
+  tbody td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 16px;
+    top: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    color: #555;
+  }
+}
+
+.supplier-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 26px 0 15px 0;
+}
+.supplier-header-row h3 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #12508a;
+  margin: 0;
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.header-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.header-btn {
+  background: linear-gradient(90deg, #eaf6fe 30%, #b6e3fa 100%);
+  color: #17588c;
+  border: 0.7px solid #b6e3fa;
+  border-radius: 6px;
+  font-weight: 600;
+  padding: 7px 21px;
+  box-shadow: 0 0.5px 4px #b6e3fa38;
+  font-size: 1.01rem;
+  cursor: pointer;
+  transition: background 0.17s, box-shadow 0.15s, color 0.15s;
+  letter-spacing: 0.01em;
+  outline: none;
+}
+.header-btn:hover, .header-btn:focus {
+  background: linear-gradient(92deg, #43a8ff 5%, #cdefef 95%);
+  color: #0477c7;
+  box-shadow: 0 4px 12px #b6e3fa70;
+}
+
+.grid-view {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+  gap: 18px;
+  margin-top: 12px;
+}
+
+.supplier-card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(22, 95, 170, 0.09);
+  padding: 18px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 1.01rem;
+}
+

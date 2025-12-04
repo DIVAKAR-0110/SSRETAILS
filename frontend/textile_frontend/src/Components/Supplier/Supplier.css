@@ -1,0 +1,3 @@
+.data-table tbody tr.selected, .data-table tbody tr.selected:hover {
+    background: #c5ff00 !important;
+}

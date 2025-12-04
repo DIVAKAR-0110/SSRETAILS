@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+body { font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; }
+.table { width: 100%; border-collapse: collapse; }
+.table th, .table td { padding: 8px 12px; border-bottom: 1px solid #e5e7eb; }
+.selected-row { background: #e0f2fe; }
+
+
+.modal { position: fixed; inset:0; display:flex; align-items:center; justify-content:center; background: rgba(0,0,0,0.5); }
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.animate-slideIn {
+  animation: slideInRight 0.35s ease-out;
+}
+
+
+
+.tool-btn {
+  @apply flex items-center gap-2 border px-3 py-1 rounded-md bg-white 
+         hover:bg-gray-100 transition text-sm font-medium;
+}
+*/

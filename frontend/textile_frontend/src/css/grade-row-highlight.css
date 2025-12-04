@@ -1,0 +1,4 @@
+/* grade-row-highlight.css */
+.data-row { transition: all .12s ease; }
+.data-row:hover { cursor:pointer; background: #c5ff00 !important;transform: translateY(-2px); box-shadow: 0 10px 20px rgba(2,6,23,0.04); }
+.data-row.selected {background: #c5ff00 !important; border-left: 4px solid var(--accent); }

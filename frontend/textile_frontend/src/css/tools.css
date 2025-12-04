@@ -1,0 +1,46 @@
+.tool-bar {
+  display: flex;
+  gap: 10px;
+  margin: 10px 0 20px;
+}
+
+.tool-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(to bottom, #eceff1, #cfd8dc);
+  box-shadow: 0 2px 4px #90a4ae;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.tool-btn:hover {
+  background: linear-gradient(to bottom, #ffffff, #b0bec5);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px #607d8b80;
+}
+
+/* Ripple */
+.tool-btn:active::after {
+  content: "";
+  position: absolute;
+  width: 140%;
+  height: 140%;
+  background: rgba(255, 255, 255, 0.6);
+  animation: ripple 0.4s linear;
+  border-radius: 50%;
+  transform: scale(0);
+}
+
+@keyframes ripple {
+  to {
+    transform: scale(1);
+    opacity: 0;
+  }
+}

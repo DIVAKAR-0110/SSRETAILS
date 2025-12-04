@@ -1,0 +1,70 @@
+.tax-type-container {
+  width: 100%;
+}
+
+.erp-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.erp-table th {
+  background: #e7dfcc;
+  padding: 8px;
+  font-weight: bold;
+  border: 1px solid #c9c1b0;
+}
+
+.erp-table td {
+  padding: 6px;
+  border: 1px solid #e0d9c8;
+}
+
+.erp-table tr.selected-row {
+  background: #c7d8ff !important;
+}
+
+.left-panel {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 350px;
+  height: 100%;
+  background: #fff;
+  padding: 20px;
+  border-right: 2px solid #ccc;
+  animation: slideIn 0.25s ease;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.left-panel input[type="text"],
+.left-panel input[type="number"] {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 6px;
+  border: 1px solid #ccc;
+}
+
+.save-btn {
+  background: #198754;
+  color: white;
+  padding: 8px;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.close-btn {
+  background: #6c757d;
+  color: #000000;
+  padding: 8px;
+  width: 100%;
+  margin-top: 5px;
+}
