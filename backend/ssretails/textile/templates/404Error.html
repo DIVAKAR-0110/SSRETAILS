@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Service Unavailable</title>
+
+    <!-- Mobile Responsive -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .error-container {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .error-container img {
+            max-width: 100%;
+            height: auto;
+            width: 320px;
+        }
+
+        .error-container h2 {
+            color: #333;
+            margin-top: 15px;
+        }
+
+        .error-container p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .retry-btn {
+            margin-top: 20px;
+            padding: 12px 24px;
+            font-size: 16px;
+            border: none;
+            background-color: #0d6efd;
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .retry-btn:hover {
+            background-color: #084298;
+        }
+    </style>
+</head>
+
+<body>
+{% csrf_token %}
+    <div class="error-container">
+        <img src="{% static 'style/404error/404error.gif' %}" alt="Error">
+
+        <h2>Oops! Something went wrong</h2>
+        <p>We are facing a technical issue. Please try again.</p>
+
+        <button class="retry-btn" onclick="retryPage()">
+            Restart Application
+        </button>
+    </div>
+
+    <script>
+        function retryPage() {
+            if (confirm("Do you want to retry?")) {
+                window.location.href = "http://localhost:5173/";
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,188 @@
+/* Full-screen background */
+.splash-root {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(circle at top left, #1e293b 0, #0a6923 55%),
+    radial-gradient(circle at bottom right, #0f172a 0, #1a7f1d 60%);
+  overflow: hidden;
+  color: #e5e7eb;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+}
+
+/* Blurred color orbs */
+.splash-glow {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(60px);
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.splash-glow-1 {
+  width: 380px;
+  height: 380px;
+  background: radial-gradient(circle at center, #22d3ee 0, transparent 60%);
+  top: -80px;
+  left: -60px;
+}
+
+.splash-glow-2 {
+  width: 420px;
+  height: 420px;
+  background: radial-gradient(circle at center, #a855f7 0, transparent 65%);
+  bottom: -120px;
+  right: -60px;
+}
+
+/* Center card */
+.splash-card {
+  position: relative;
+  width: min(480px, 95vw);
+  padding: 32px 32px 24px;
+  border-radius: 24px;
+  background: rgba(15, 23, 42, 0.92);
+  box-shadow:
+    0 24px 70px rgba(15, 23, 42, 0.9),
+    0 0 0 1px rgba(148, 163, 184, 0.12);
+  backdrop-filter: blur(22px);
+}
+
+/* Logo / cube loader */
+.splash-logo-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.splash-cube {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  transform-style: preserve-3d;
+  animation: cube-rotate 1.8s linear infinite;
+}
+
+.splash-cube span {
+  position: absolute;
+  inset: 0;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #22c55e, #22d3ee);
+  box-shadow: 0 0 25px rgba(45, 212, 191, 0.65);
+  opacity: 0.9;
+}
+
+/* Give depth with multiple faces */
+.splash-cube span:nth-child(1) {
+  transform: translateZ(16px);
+}
+.splash-cube span:nth-child(2) {
+  transform: rotateY(90deg) translateZ(16px);
+}
+.splash-cube span:nth-child(3) {
+  transform: rotateX(90deg) translateZ(16px);
+}
+.splash-cube span:nth-child(4) {
+  transform: rotateY(180deg) translateZ(16px);
+}
+
+@keyframes cube-rotate {
+  0% {
+    transform: rotateX(18deg) rotateY(0deg);
+  }
+  50% {
+    transform: rotateX(18deg) rotateY(180deg);
+  }
+  100% {
+    transform: rotateX(18deg) rotateY(360deg);
+  }
+}
+
+/* Text block */
+.splash-text {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.splash-title {
+  font-size: 1.45rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #f9fafb;
+}
+
+.splash-subtitle {
+  margin-top: 6px;
+  font-size: 0.9rem;
+  color: #9ca3af;
+}
+
+/* Progress bar */
+.splash-progress {
+  margin-bottom: 20px;
+}
+
+.splash-bar {
+  position: relative;
+  height: 5px;
+  border-radius: 999px;
+  background: rgba(30, 64, 175, 0.55);
+  overflow: hidden;
+}
+
+.splash-bar-fill {
+  position: absolute;
+  inset: 0;
+  width: 45%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #22d3ee, #a855f7);
+  animation: bar-move 1.4s ease-in-out infinite;
+}
+
+@keyframes bar-move {
+  0% {
+    transform: translateX(-120%);
+  }
+  50% {
+    transform: translateX(10%);
+  }
+  100% {
+    transform: translateX(120%);
+  }
+}
+
+.splash-progress-label {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: #6b7280;
+}
+
+/* Footer badges */
+.splash-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 0.75rem;
+  color: #9ca3af;
+}
+
+.badge {
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.4);
+  background: radial-gradient(circle at top left, rgba(7, 108, 56, 0.2), transparent 55%);
+}
+
+.badge-soft {
+  border-color: rgba(56, 189, 248, 0.6);
+  color: #e0f2fe;
+}

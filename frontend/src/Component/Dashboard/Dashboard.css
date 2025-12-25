@@ -1,0 +1,200 @@
+.dash-root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background:
+    radial-gradient(circle at top left, #fff8e1 0, #f4e0b5 40%, #f1d2a4 70%, #f7f2e7 100%);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  color: #3f2a1c;
+}
+
+/* top bar */
+.dash-topbar {
+  height: auto;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(90deg, #8b5a2b, #c58c3b);
+  box-shadow: 0 4px 18px rgba(139, 90, 43, 0.45);
+}
+
+
+.dash-brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.dash-brand-title {
+  font-size: 0.95rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #fff8e1;
+  font-weight: 600;
+}
+
+.dash-brand-sub {
+  font-size: 0.75rem;
+  color: #ffecb3;
+}
+
+/* user area */
+.dash-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #fff8e1;
+}
+
+.dash-user-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  background: #f9e0ae;
+  color: #5d3b14;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+
+.dash-user-meta {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.dash-user-role {
+  color: #ffe8b0;
+}
+
+.dash-logout {
+  border: none;
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.16);
+  color: #3f2a1c;
+  backdrop-filter: blur(6px);
+}
+
+
+.dash-logout:hover {
+    color:white;
+}
+
+/* main */
+.dash-main {
+  flex: 1;
+  padding: 18px 20px 24px;
+}
+
+/* hero card */
+.dash-welcome {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 20px 22px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #fff3c4, #f5deb3);
+  box-shadow: 0 18px 40px rgba(196, 140, 59, 0.35);
+  border: 1px solid rgba(193, 136, 60, 0.35);
+}
+
+.dash-welcome-left h1 {
+  font-size: 1.35rem;
+  margin-bottom: 6px;
+  color: #4a2f13;
+}
+
+.dash-welcome-left p {
+  font-size: 0.9rem;
+  color: #7a5730;
+}
+
+/* small stat cards */
+.dash-welcome-right {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 180px;
+}
+
+.stat-card {
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(227, 175, 84, 0.6);
+  box-shadow: 0 8px 18px rgba(161, 109, 43, 0.25);
+}
+
+.stat-card.soft {
+  background: rgba(255, 248, 225, 0.95);
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: #9a6b33;
+}
+
+.stat-value {
+  margin-top: 4px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #4a2f13;
+}
+
+/* responsive */
+@media (max-width: 768px) {
+  .dash-topbar {
+    flex-direction: column;
+    align-items: flex-start;
+    height: auto;
+    padding: 10px 12px;
+    gap: 8px;
+  }
+
+  .dash-main {
+    padding: 14px 12px 18px;
+  }
+
+  .dash-welcome {
+    flex-direction: column;
+  }
+
+  .dash-welcome-right {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
+
+/* Dashboard.css extra */
+
+.dash-main {
+  display: flex;
+  flex-direction: column;
+}
+
+.dash-content {
+  padding: 0.6rem 0.8rem 1.4rem;
+}
+
+.dash-placeholder {
+  max-width: 1100px;
+  margin: 1.2rem auto;
+  padding: 1.1rem 1rem;
+  border-radius: 18px;
+  background: rgba(15, 23, 42, 0.96);
+  border: 1px solid rgba(148, 163, 184, 0.6);
+  color: #e5e7eb;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+}
+
