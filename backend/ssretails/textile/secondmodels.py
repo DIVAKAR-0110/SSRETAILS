@@ -9,7 +9,7 @@ class ItemCategoryMas1(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        db_table = "ItemCategoryMas1"
+        db_table = "Brand"
 
     def __str__(self):
         return self.name
@@ -24,7 +24,7 @@ class ItemCategoryMas2(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        db_table = "ItemCategoryMas2"
+        db_table = "Type"
 
     def __str__(self):
         return self.name
@@ -39,7 +39,7 @@ class ItemCategoryMas3(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        db_table = "ItemCategoryMas3"
+        db_table = "Style"
 
     def __str__(self):
         return self.name
@@ -54,7 +54,7 @@ class ItemCategoryMas4(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        db_table = "ItemCategoryMas4"
+        db_table = "Pattern"
 
     def __str__(self):
         return self.name
@@ -69,7 +69,7 @@ class ItemCategoryMas5(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        db_table = "ItemCategoryMas5"
+        db_table = "Color"
 
     def __str__(self):
         return self.name
@@ -84,7 +84,7 @@ class ItemCategoryMas6(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        db_table = "ItemCategoryMas6"
+        db_table = "Hsn Code"
 
     def __str__(self):
         return self.name
@@ -99,7 +99,7 @@ class ItemCategoryMas7(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        db_table = "ItemCategoryMas7"
+        db_table = "Floor"
 
     def __str__(self):
         return self.name
@@ -114,7 +114,7 @@ class ItemCategoryMas8(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        db_table = "ItemCategoryMas8"
+        db_table = "Section"
 
     def __str__(self):
         return self.name
@@ -129,7 +129,7 @@ class ItemCategoryMas9(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        db_table = "ItemCategoryMas9"
+        db_table = "Section Group"
 
     def __str__(self):
         return self.name
@@ -144,7 +144,7 @@ class ItemCategoryMas10(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        db_table = "ItemCategoryMas10"
+        db_table = "Size Order"
 
     def __str__(self):
         return self.name

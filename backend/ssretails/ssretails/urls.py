@@ -20,6 +20,7 @@ from textile import views
 from textile.views import *
 
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
 
@@ -109,6 +110,38 @@ urlpatterns = [
 
     path("employees/",EmployeeViewSet.as_view({"get": "list","post": "create"}),name="employee"),
     path("employees/<int:pk>/",EmployeeViewSet.as_view({"get": "retrieve","put": "update","patch": "partial_update","delete": "destroy"}),name="employee-detail"),
+
+
+    path("brand/",BrandViewSet.as_view({"get": "list", "post": "create"}),name="brand"),
+    path("brand/<int:pk>/",BrandViewSet.as_view({"get": "retrieve", "put": "update", "delete": "destroy"}),name="brand"),
+
+    path("type/",TypeViewSet.as_view({"get": "list", "post": "create"}),name="type"),
+    path("type/<int:pk>/",TypeViewSet.as_view({"get": "retrieve", "put": "update", "delete": "destroy"}),name="type"),
+
+    path("style/",StyleViewSet.as_view({"get": "list", "post": "create"}),name="style"),
+    path("style/<int:pk>/",StyleViewSet.as_view({"get": "retrieve", "put": "update", "delete": "destroy"}),name="style"),
+
+    path("pattern/",PatternViewSet.as_view({"get": "list", "post": "create"}),name="pattern"),
+    path("pattern/<int:pk>/",PatternViewSet.as_view({"get": "retrieve", "put": "update", "delete": "destroy"}),name="pattern"),
+
+    path("color/",ColorViewSet.as_view({"get": "list", "post": "create"}),name="color"),
+    path("color/<int:pk>/",ColorViewSet.as_view({"get": "retrieve", "put": "update", "delete": "destroy"}),name="color"),
+
+    path("floor_category/",FloorsViewSet.as_view({"get": "list", "post": "create"}),name="floor_category"),
+    path("floor_category/<int:pk>/",FloorsViewSet.as_view({"get": "retrieve", "put": "update", "delete": "destroy"}),name="floor_category"),
+
+    path("hsn_code/",HsnCodeViewSet.as_view({"get": "list", "post": "create"}),name="hsn_code"),
+    path("hsn_code/<int:pk>/",HsnCodeViewSet.as_view({"get": "retrieve", "put": "update", "delete": "destroy"}),name="hsn_code"),
+
+    path("section/",SectionViewSet.as_view({"get": "list", "post": "create"}),name="section"),
+    path("section/<int:pk>/",SectionViewSet.as_view({"get": "retrieve", "put": "update", "delete": "destroy"}),name="section"),
+
+    path("section_group/",SectionGroupViewSet.as_view({"get": "list", "post": "create"}),name="section_group"),
+    path("section_group/<int:pk>/",SectionGroupViewSet.as_view({"get": "retrieve", "put": "update", "delete": "destroy"}),name="section_group"),
+
+    path("sizeorder/",SizeOrderViewSet.as_view({"get": "list", "post": "create"}),name="sizeorder"),
+    path("sizeorder/<int:pk>/",SizeOrderViewSet.as_view({"get": "retrieve", "put": "update", "delete": "destroy"}),name="sizeorder"),
+
 
     path("errorpage/",views.errorpage,name="errorpage"),
 ]

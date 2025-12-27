@@ -33,6 +33,16 @@ import TaxType from "../TaxType/TaxType.jsx";
 import SystemCounterIntegration from "../SystemCounterIngestion/SystemCounterIntegration.jsx";
 import SystemMas from "../System/SystemMas.jsx";
 import Employee from "../Employee/Employee.jsx";
+import Brand from "../Brand/Brand.jsx";
+import Type from "../Type/Type.jsx";
+import Style from "../Style/Style.jsx";
+import Pattern from "../Pattern/Pattern.jsx";
+import Color from "../Color/Color.jsx";
+import Floors from "../FloorItemCategory10/Floors.jsx";
+import SectionGroup from "../SectionGroup/SectionGroup.jsx";
+import Section from "../Section/Section.jsx";
+import HsnCode from "../HsnCode/HsnCode.jsx";
+import Sizeorder from "../Size Order/Sizeorder.jsx";
 
 export default function Dashboard() {
   const location = useLocation();
@@ -125,6 +135,27 @@ export default function Dashboard() {
         return <AccountHead adminId={adminId} />;
       case "Income and Expenses 3":
         return <IncomeAndExpense adminId={adminId} />;
+      case "Brand":
+        return <Brand adminId={adminId} />;
+      case "Type":
+        return <Type adminId={adminId} />;
+      case "Style":
+        return <Style adminId={adminId} />;
+      case "Pattern":
+        return <Pattern adminId={adminId} />;
+      case "Color":
+        return <Color adminId={adminId} />;
+      case "Floors":
+        return <Floors adminId={adminId} />;
+      case "Section":
+        return <Section adminId={adminId} />;
+      case "Section Group":
+        return <SectionGroup adminId={adminId} />;
+      case "Hsn Code":
+        return <HsnCode adminId={adminId} />;
+      case "Size Order":
+        return <Sizeorder adminId={adminId} />;
+
       default:
         return (
           <div className="dash-placeholder">

@@ -68,7 +68,7 @@ const MENU = [
               "Pattern",
               "Color",
               "Hsn Code",
-              "Floor",
+              "Floors",
               "Section",
               "Section Group",
               "Size Order",
