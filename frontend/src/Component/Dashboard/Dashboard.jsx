@@ -42,7 +42,7 @@ import SectionGroup from "../SectionGroup/SectionGroup.jsx";
 import Section from "../Section/Section.jsx";
 import HsnCode from "../HsnCode/HsnCode.jsx";
 import Sizeorder from "../Size Order/Sizeorder.jsx";
-import GiftVoucher from "../GiftVoucher/Giftvoucher.jsx";
+import GiftVoucher from "../GiftVoucher/GiftVoucher.jsx";
 
 export default function Dashboard() {
   const location = useLocation();
