@@ -358,6 +358,7 @@ class GiftvoucherMas(models.Model):
     admin_id = models.IntegerField(null=True,blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
+
     class Meta:
         db_table = "GiftvoucherMas"
 
@@ -636,3 +637,5 @@ class EmployeeMas(models.Model):
 
     def __str__(self):
         return self.name
+
+
