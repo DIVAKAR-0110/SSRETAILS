@@ -143,6 +143,9 @@ USE_I18N = True
 USE_TZ = True
 
 
+
+
+
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 
 EMAIL_HOST = "smtp.gmail.com"
@@ -155,6 +158,7 @@ EMAIL_HOST_PASSWORD = "lglj fcjx vpqr kbtz"
 DEFAULT_FROM_EMAIL = "SSRetails <divaleetcode@gmail.com>"
 
 ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(",")
+ALLOWED_HOSTS ='ssretails-backend.onrender.com',
 
 
 STATICFILES_DIRS = [
