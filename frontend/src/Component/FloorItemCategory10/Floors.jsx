@@ -5,7 +5,7 @@ export default function Floors({ adminId, onExit }) {
   const columns = [
     {
       name: "name",
-      label: "Floor Category Name",
+      label: "Floors Category Name",
       required: true,
       transform: (value) => value.toUpperCase(),
     },

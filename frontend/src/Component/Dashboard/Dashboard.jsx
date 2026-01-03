@@ -108,7 +108,6 @@ export default function Dashboard() {
         return <SystemMas adminId={adminId} />;
       case "Employee":
         return <Employee adminId={adminId} />;
-      // later you can add:
       // case "State": return <State adminId={adminId} />;
       // case "City": return <City adminId={adminId} />;
       case "System Counter Integration 2":
