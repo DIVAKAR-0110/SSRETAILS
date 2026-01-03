@@ -17,7 +17,6 @@ import Religion from "../Religion/Religion.jsx";
 import Occupation from "../Occupation/Occupation.jsx";
 import Bank from "../Bank/Bank.jsx";
 import CounterGroup from "../CounterGroup/CounterGroup.jsx";
-import GiftVoucher from "../Gift voucher/Giftvoucher.jsx";
 import PaymentMode from "../PaymentMode/PaymentMode.jsx";
 import DiscountType from "../DiscountType/DiscountType.jsx";
 import Department from "../Department/Department.jsx";
@@ -43,6 +42,7 @@ import SectionGroup from "../SectionGroup/SectionGroup.jsx";
 import Section from "../Section/Section.jsx";
 import HsnCode from "../HsnCode/HsnCode.jsx";
 import Sizeorder from "../Size Order/Sizeorder.jsx";
+import GiftVoucher from "../GiftVoucher/Giftvoucher.jsx";
 
 export default function Dashboard() {
   const location = useLocation();
