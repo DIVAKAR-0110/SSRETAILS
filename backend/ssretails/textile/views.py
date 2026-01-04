@@ -13,7 +13,7 @@ from .serializers import *
 from .utils import send_login_mail
 
 def errorpage(request):
-    return render(request,"404Error.html")
+    return render(request,"404Error.html",status=503)
 
 @api_view(["POST"])
 @permission_classes([AllowAny])
