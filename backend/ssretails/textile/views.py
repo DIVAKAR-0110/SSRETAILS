@@ -24,16 +24,7 @@ def admin_login(request):
         email = request.data.get("email")
 
         if email:
-            send_login_mail(
-                email=email,
-                subject="SSRetails Login Failed",
-                message=(
-                    "Dear User,\n\n"
-                    "There was a failed login attempt to your SSRetails account.\n"
-                    "If this was not you, please secure your account.\n\n"
-                    "Regards,\nSSRetails Team"
-                ),
-            )
+            pass
 
         return Response(
             {"message": "Invalid credentials", "errors": serializer.errors},
@@ -42,16 +33,6 @@ def admin_login(request):
 
     admin = serializer.validated_data["admin"]
 
-    send_login_mail(
-        email=admin.email,
-        subject="SSRetails Login Successful",
-        message=(
-            f"Dear {admin.username},\n\n"
-            "You have successfully logged in to SSRetails.\n\n"
-            "If this was not you, please contact support immediately.\n\n"
-            "Regards,\nSSRetails Team"
-        ),
-    )
 
     data = AdministratorSerializer(admin).data
     data.pop("password", None)  # extra safety
