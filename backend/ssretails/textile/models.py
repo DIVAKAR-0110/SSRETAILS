@@ -2,7 +2,6 @@ from datetime import timezone
 
 from django.db import models
 from django.contrib.auth.hashers import make_password
-from spacy import blank
 from textile.secondmodels import *
 
 

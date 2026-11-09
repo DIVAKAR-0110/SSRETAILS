@@ -16,10 +16,10 @@ export default function Login({ onSuccess }) {
   const handleChange = (e) => {
     const { name, value, maxLength } = e.target;
     const trimmed = maxLength ? value.slice(0, maxLength) : value;
+    const finalVal = name === "email" ? trimmed.toLowerCase() : trimmed;
     setForm((prev) => ({
       ...prev,
-      [name]: trimmed,
-      [name]: value.toLowerCase(),
+      [name]: finalVal,
     }));
     setErrors((prev) => ({ ...prev, [name]: "" }));
     setServerError("");
