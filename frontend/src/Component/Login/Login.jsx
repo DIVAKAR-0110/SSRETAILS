@@ -1,7 +1,7 @@
 // src/Component/Login/Login.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./Login.css"; // shared for login + registration
+import "./Login.css";
 
 const API_BASE = "http://127.0.0.1:8000";
 
@@ -31,13 +31,13 @@ export default function Login({ onSuccess }) {
     if (!form.email.trim()) {
       newErr.email = "Email is required";
     } else if (!/^\S+@\S+\.\S+$/.test(form.email)) {
-      newErr.email = "Enter a valid email";
+      newErr.email = "Enter a valid email address";
     }
 
     if (!form.password) {
       newErr.password = "Password is required";
     } else if (form.password.length < 6) {
-      newErr.password = "Min 6 characters";
+      newErr.password = "Minimum 6 characters required";
     }
 
     setErrors(newErr);
@@ -61,20 +61,15 @@ export default function Login({ onSuccess }) {
       const data = await res.json();
 
       if (!res.ok) {
-        setServerError(data.message || "Login failed");
-        // window.location.href = `${API_BASE}/errorpage`;
-        // return;
+        setServerError(data.message || "Invalid credentials. Please verify your email and password.");
       } else {
-        // you can store id/email in localStorage or context
         localStorage.setItem("admin", JSON.stringify(data.data));
         if (onSuccess) onSuccess(data.data);
         navigate("/dashboard", { state: { admin: data.data }, replace: true });
       }
     } catch (err) {
       console.error("LOGIN ERROR:", err);
-      setServerError("Unable to reach server. Try again.");
-      window.location.href = `${API_BASE}/errorpage`;
-      return;
+      setServerError("Unable to reach backend server. Please verify Django is running on port 8000.");
     } finally {
       setSubmitting(false);
     }
@@ -82,69 +77,92 @@ export default function Login({ onSuccess }) {
 
   return (
     <div className="auth-root">
+      {/* Background Watermark */}
+      <div className="auth-bg-watermark">
+        <span>SSRETAIL - GANESH TEXTILES</span>
+      </div>
+
       <div className="auth-card">
-        <header className="auth-header">
-          <div className="auth-logo-circle">SS</div>
-          <div>
-            <h1 className="auth-title">Administrator Login</h1>
-            <p className="auth-subtitle">
-              Sign in to manage SSRetails textile operations.
-            </p>
+        {/* Windows ERP Dialog Header */}
+        <div className="auth-window-header">
+          <div className="auth-header-left">
+            <span className="auth-header-icon">❖</span>
+            <span className="auth-header-title">SSRETAIL - User Authentication</span>
           </div>
-        </header>
+          <div className="auth-header-badge">SECURE ERP LOGIN</div>
+        </div>
 
-        <form className="auth-form" onSubmit={handleSubmit} noValidate>
-          <div className="field">
-            <label htmlFor="email">Email</label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              autoComplete="email"
-              maxLength={120}
-              value={form.email}
-              onChange={handleChange}
-              className={errors.email ? "input error" : "input"}
-              placeholder="admin@ssretails.com"
-              required
-            />
-            {errors.email && <span className="error-text">{errors.email}</span>}
-          </div>
+        <div className="auth-content">
+          <header className="auth-header">
+            <div className="auth-logo-circle">GT</div>
+            <div>
+              <h1 className="auth-title">SSRETAIL-GANESH TEXTILES</h1>
+              <p className="auth-subtitle">
+                Retail Management &amp; Enterprise Resource Planning
+              </p>
+            </div>
+          </header>
 
-          <div className="field">
-            <label htmlFor="password">Password</label>
-            <div className="password-wrap">
+          <form className="auth-form" onSubmit={handleSubmit} noValidate>
+            <div className="field">
+              <label htmlFor="email">User Email / Login ID</label>
               <input
-                id="password"
-                name="password"
-                type={showPassword ? "text" : "password"}
-                autoComplete="current-password"
-                maxLength={32}
-                value={form.password}
+                id="email"
+                name="email"
+                type="email"
+                autoComplete="email"
+                maxLength={120}
+                value={form.email}
                 onChange={handleChange}
-                className={errors.password ? "input error" : "input"}
-                placeholder="Enter your password"
+                className={errors.email ? "input error" : "input"}
+                placeholder="e.g. rdivakar0110@gmail.com"
                 required
               />
-              <button
-                type="button"
-                className="eye-btn"
-                onClick={() => setShowPassword((v) => !v)}
-              >
-                {showPassword ? "🙈" : "👁️"}
-              </button>
+              {errors.email && <span className="error-text">{errors.email}</span>}
             </div>
-            {errors.password && (
-              <span className="error-text">{errors.password}</span>
+
+            <div className="field">
+              <label htmlFor="password">Password</label>
+              <div className="password-wrap">
+                <input
+                  id="password"
+                  name="password"
+                  type={showPassword ? "text" : "password"}
+                  autoComplete="current-password"
+                  maxLength={32}
+                  value={form.password}
+                  onChange={handleChange}
+                  className={errors.password ? "input error" : "input"}
+                  placeholder="Enter your password"
+                  required
+                />
+                <button
+                  type="button"
+                  className="eye-btn"
+                  onClick={() => setShowPassword((v) => !v)}
+                  tabIndex={-1}
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                >
+                  {showPassword ? "🙈" : "👁️"}
+                </button>
+              </div>
+              {errors.password && (
+                <span className="error-text">{errors.password}</span>
+              )}
+            </div>
+
+            {serverError && (
+              <div className="server-error-box">
+                <span className="error-icon">⚠️</span>
+                <span>{serverError}</span>
+              </div>
             )}
-          </div>
 
-          {serverError && <p className="server-error">{serverError}</p>}
-
-          <button className="auth-btn" type="submit" disabled={submitting}>
-            {submitting ? "Signing in..." : "Login"}
-          </button>
-        </form>
+            <button className="auth-btn" type="submit" disabled={submitting}>
+              {submitting ? "Authenticating..." : "Sign In to ERP System"}
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );

@@ -2,6 +2,13 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
+from pathlib import Path
+
+# Auto-activate venv: if not running inside the project's venv, re-execute with venv Python
+_VENV_PYTHON = Path(__file__).resolve().parent.parent / "venv" / "Scripts" / "python.exe"
+if _VENV_PYTHON.exists() and Path(sys.executable).resolve() != _VENV_PYTHON.resolve():
+    import subprocess
+    sys.exit(subprocess.call([str(_VENV_PYTHON)] + sys.argv))
 
 
 def main():

@@ -1,48 +1,64 @@
 // src/Component/Dashboard/Dashboard.jsx
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./Dashboard.css";
-import logo from "../../assets/react.svg";
 
 import Navbar from "../Navbar/Navbar.jsx";
-import Country from "../Country/Country.jsx";
-import State from "../State/State.jsx";
-import City from "../City/City.jsx";
-import Title from "../Title/Title.jsx";
-import Grade from "../Grade/Grade.jsx";
-import Group from "../Group/Group.jsx";
-import Category from "../Category/Category.jsx";
-import Relation from "../Relation/Relation.jsx";
-import Religion from "../Religion/Religion.jsx";
-import Occupation from "../Occupation/Occupation.jsx";
-import Bank from "../Bank/Bank.jsx";
-import CounterGroup from "../CounterGroup/CounterGroup.jsx";
-import PaymentMode from "../PaymentMode/PaymentMode.jsx";
-import DiscountType from "../DiscountType/DiscountType.jsx";
-import Department from "../Department/Department.jsx";
-import TransferMode from "../TransferMode/TransferMode.jsx";
-import Star from "../Star/Star.jsx";
-import Location from "../Location/Location.jsx";
-import GroupHead from "../GroupHead/GroupHead.jsx";
-import AccountHead from "../AccountHead/AccountHead.jsx";
-import IncomeAndExpense from "../IncomeAndExpense/IncomeAndExpense.jsx";
-import Counter from "../Counter/Counter.jsx";
-import Floor from "../Floor/Floor.jsx";
-import TaxType from "../TaxType/TaxType.jsx";
-import SystemCounterIntegration from "../SystemCounterIngestion/SystemCounterIntegration.jsx";
-import SystemMas from "../System/SystemMas.jsx";
-import Employee from "../Employee/Employee.jsx";
-import Brand from "../Brand/Brand.jsx";
-import Type from "../Type/Type.jsx";
-import Style from "../Style/Style.jsx";
-import Pattern from "../Pattern/Pattern.jsx";
-import Color from "../Color/Color.jsx";
-import Floors from "../FloorItemCategory10/Floors.jsx";
-import SectionGroup from "../SectionGroup/SectionGroup.jsx";
-import Section from "../Section/Section.jsx";
-import HsnCode from "../HsnCode/HsnCode.jsx";
-import Sizeorder from "../Size Order/Sizeorder.jsx";
-import GiftVoucher from "../GiftVoucher/GiftVoucher.jsx";
+import Tools from "../Tools.jsx";
+
+// 1. General Masters
+import Country from "../Master/General/Country/Country.jsx";
+import State from "../Master/General/State/State.jsx";
+import City from "../Master/General/City/City.jsx";
+import Title from "../Master/General/Title/Title.jsx";
+import Grade from "../Master/General/Grade/Grade.jsx";
+import Group from "../Master/General/Group/Group.jsx";
+import Category from "../Master/General/Category/Category.jsx";
+import Relation from "../Master/General/Relation/Relation.jsx";
+import Religion from "../Master/General/Religion/Religion.jsx";
+import Occupation from "../Master/General/Occupation/Occupation.jsx";
+import Bank from "../Master/General/Bank/Bank.jsx";
+import Employee from "../Master/General/Employee/Employee.jsx";
+import TaxType from "../Master/General/TaxType/TaxType.jsx";
+import SystemMas from "../Master/General/System/SystemMas.jsx";
+import Counter from "../Master/General/Counter/Counter.jsx";
+import SystemCounterIntegration from "../Master/General/SystemCounterIngestion/SystemCounterIntegration.jsx";
+import CounterGroup1 from "../Master/General/CounterGroup1/CounterGroup1.jsx";
+import GiftVoucher from "../Master/General/GiftVoucher/GiftVoucher.jsx";
+import PaymentMode from "../Master/General/PaymentMode/PaymentMode.jsx";
+import DiscountType from "../Master/General/DiscountType/DiscountType.jsx";
+import IncomeAndExpense from "../Master/General/IncomeAndExpense/IncomeAndExpense.jsx";
+import Department from "../Master/General/Department/Department.jsx";
+import Floor from "../Master/General/Floor/Floor.jsx";
+import TransferMode from "../Master/General/TransferMode/TransferMode.jsx";
+import Star from "../Master/General/Star/Star.jsx";
+
+// 2. Location
+import Location from "../Master/Location/Location.jsx";
+
+// 3. Tally
+import GroupHead from "../Master/Tally/GroupHead/GroupHead.jsx";
+import AccountHead from "../Master/Tally/AccountHead/AccountHead.jsx";
+
+// 4. Item Definition -> Item Categories
+import Brand from "../Master/ItemDefinition/ItemCategories/Brand/Brand.jsx";
+import Type from "../Master/ItemDefinition/ItemCategories/Type/Type.jsx";
+import Style from "../Master/ItemDefinition/ItemCategories/Style/Style.jsx";
+import Pattern from "../Master/ItemDefinition/ItemCategories/Pattern/Pattern.jsx";
+import Color from "../Master/ItemDefinition/ItemCategories/Color/Color.jsx";
+import FloorCategory from "../Master/ItemDefinition/ItemCategories/Floor/FloorCategory.jsx";
+import Section from "../Master/ItemDefinition/ItemCategories/Section/Section.jsx";
+import SectionGroup from "../Master/ItemDefinition/ItemCategories/SectionGroup/SectionGroup.jsx";
+import HsnCode from "../Master/ItemDefinition/ItemCategories/HsnCode/HsnCode.jsx";
+import Sizeorder from "../Master/ItemDefinition/ItemCategories/Size Order/Sizeorder.jsx";
+
+// Helper function to format tab title like classic ERP (e.g. "Location Listing", "Supplier Listing")
+function getTabTitle(label) {
+  if (!label) return "Listing";
+  if (label.endsWith(" Listing")) return label;
+  const clean = label.replace(/\s+Master$/i, "");
+  return `${clean} Listing`;
+}
 
 export default function Dashboard() {
   const location = useLocation();
@@ -54,149 +70,270 @@ export default function Dashboard() {
     : null;
   const admin = adminFromState || stored;
 
-  const [currentScreen, setCurrentScreen] = useState("Home");
+  // Multi-Tab MDI State
+  const [tabs, setTabs] = useState([]);
+  const [activeTab, setActiveTab] = useState(null);
 
-  // if not logged in, redirect to login
-  if (!admin) {
-    navigate("/login", { replace: true });
-    return null;
-  }
+  // Redirect to login if unauthenticated
+  useEffect(() => {
+    if (!admin) {
+      navigate("/", { replace: true });
+    }
+  }, [admin, navigate]);
 
-  const adminId = admin.id;
+  const adminId = admin ? admin.id : null;
 
   const handleLogout = () => {
     localStorage.removeItem("admin");
     navigate("/", { replace: true });
   };
 
-  const handleNavigate = (label) => {
-    // label comes from Navbar leaf click, e.g. "Country"
-    setCurrentScreen(label);
-  };
+  // Open a new tab or focus existing one
+  const handleNavigate = useCallback((label) => {
+    setTabs((prev) => {
+      if (!prev.includes(label)) {
+        return [...prev, label];
+      }
+      return prev;
+    });
+    setActiveTab(label);
+  }, []);
 
-  const renderScreen = () => {
-    switch (currentScreen) {
+  // Close specific tab
+  const handleCloseTab = useCallback((tabToClose) => {
+    setTabs((prev) => {
+      const idx = prev.indexOf(tabToClose);
+      const nextTabs = prev.filter((t) => t !== tabToClose);
+
+      if (activeTab === tabToClose) {
+        if (nextTabs.length > 0) {
+          const newIdx = Math.max(0, idx - 1);
+          setActiveTab(nextTabs[newIdx]);
+        } else {
+          setActiveTab(null);
+        }
+      }
+      return nextTabs;
+    });
+  }, [activeTab]);
+
+  // Global shortcut to close active tab (Ctrl+F4 / Escape)
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      const isCloseKey =
+        e.key === "Escape" ||
+        ((e.ctrlKey || e.metaKey) && (e.key === "F4" || e.keyCode === 115));
+
+      if (isCloseKey && activeTab) {
+        e.preventDefault();
+        e.stopPropagation();
+        handleCloseTab(activeTab);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [activeTab, handleCloseTab]);
+
+  // Protect against accidental browser window close when tabs are open
+  useEffect(() => {
+    const handleBeforeUnload = (e) => {
+      if (tabs.length > 0) {
+        e.preventDefault();
+        e.returnValue = "";
+      }
+    };
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+  }, [tabs.length]);
+
+  if (!admin) return null;
+
+  // Render component for each tab
+  const renderScreenComponent = (tabKey) => {
+    const onExit = () => handleCloseTab(tabKey);
+
+    switch (tabKey) {
+      // General
       case "Country":
-        return <Country adminId={adminId} />;
+        return <Country adminId={adminId} onExit={onExit} />;
       case "State":
-        return <State adminId={adminId} />;
+        return <State adminId={adminId} onExit={onExit} />;
       case "City":
-        return <City adminId={adminId} />;
+        return <City adminId={adminId} onExit={onExit} />;
       case "Title":
-        return <Title adminId={adminId} />;
+        return <Title adminId={adminId} onExit={onExit} />;
       case "Grade":
-        return <Grade adminId={adminId} />;
+        return <Grade adminId={adminId} onExit={onExit} />;
       case "Group":
-        return <Group adminId={adminId} />;
+        return <Group adminId={adminId} onExit={onExit} />;
       case "Category":
-        return <Category adminId={adminId} />;
-      case "Religion":
-        return <Religion adminId={adminId} />;
+        return <Category adminId={adminId} onExit={onExit} />;
       case "Relation":
-        return <Relation adminId={adminId} />;
+        return <Relation adminId={adminId} onExit={onExit} />;
+      case "Religion":
+        return <Religion adminId={adminId} onExit={onExit} />;
       case "Occupation":
-        return <Occupation adminId={adminId} />;
+        return <Occupation adminId={adminId} onExit={onExit} />;
       case "Bank":
-        return <Bank adminId={adminId} />;
-      case "Counter Group 1":
-        return <CounterGroup adminId={adminId} />;
-      case "Counter":
-        return <Counter adminId={adminId} />;
-      case "Tax Type":
-        return <TaxType adminId={adminId} />;
-      case "System":
-        return <SystemMas adminId={adminId} />;
+        return <Bank adminId={adminId} onExit={onExit} />;
       case "Employee":
-        return <Employee adminId={adminId} />;
-      // case "State": return <State adminId={adminId} />;
-      // case "City": return <City adminId={adminId} />;
+        return <Employee adminId={adminId} onExit={onExit} />;
+      case "Tax Type":
+        return <TaxType adminId={adminId} onExit={onExit} />;
+      case "System":
+        return <SystemMas adminId={adminId} onExit={onExit} />;
+      case "Counter":
+        return <Counter adminId={adminId} onExit={onExit} />;
       case "System Counter Integration 2":
-        return <SystemCounterIntegration adminId={adminId} />;
-      case "Floor":
-        return <Floor adminId={adminId} />;
+        return <SystemCounterIntegration adminId={adminId} onExit={onExit} />;
+      case "Counter Group 1":
+        return <CounterGroup1 adminId={adminId} onExit={onExit} />;
+      case "Gift Voucher":
       case "Gift voucher":
-        return <GiftVoucher adminId={adminId} />;
+        return <GiftVoucher adminId={adminId} onExit={onExit} />;
       case "Payment Mode":
-        return <PaymentMode adminId={adminId} />;
+        return <PaymentMode adminId={adminId} onExit={onExit} />;
       case "Discount Type":
-        return <DiscountType adminId={adminId} />;
-      case "Department":
-        return <Department adminId={adminId} />;
-      case "Transfer Mode":
-        return <TransferMode adminId={adminId} />;
-      case "Star":
-        return <Star adminId={adminId} />;
-      case "Location":
-        return <Location adminId={adminId} />;
-      case "Group Head":
-        return <GroupHead adminId={adminId} />;
-      case "Account Head":
-        return <AccountHead adminId={adminId} />;
+        return <DiscountType adminId={adminId} onExit={onExit} />;
       case "Income and Expenses 3":
-        return <IncomeAndExpense adminId={adminId} />;
-      case "Brand":
-        return <Brand adminId={adminId} />;
-      case "Type":
-        return <Type adminId={adminId} />;
-      case "Style":
-        return <Style adminId={adminId} />;
-      case "Pattern":
-        return <Pattern adminId={adminId} />;
-      case "Color":
-        return <Color adminId={adminId} />;
-      case "Floors":
-        return <Floors adminId={adminId} />;
-      case "Section":
-        return <Section adminId={adminId} />;
-      case "Section Group":
-        return <SectionGroup adminId={adminId} />;
-      case "Hsn Code":
-        return <HsnCode adminId={adminId} />;
-      case "Size Order":
-        return <Sizeorder adminId={adminId} />;
+        return <IncomeAndExpense adminId={adminId} onExit={onExit} />;
+      case "Department":
+        return <Department adminId={adminId} onExit={onExit} />;
+      case "Floor":
+        return <Floor adminId={adminId} onExit={onExit} />;
+      case "Transfer Mode":
+        return <TransferMode adminId={adminId} onExit={onExit} />;
+      case "Star":
+        return <Star adminId={adminId} onExit={onExit} />;
 
+      // Location
+      case "Location":
+        return <Location adminId={adminId} onExit={onExit} />;
+
+      // Tally
+      case "Group Head":
+        return <GroupHead adminId={adminId} onExit={onExit} />;
+      case "Account Head":
+        return <AccountHead adminId={adminId} onExit={onExit} />;
+
+      // Item Categories
+      case "Brand":
+        return <Brand adminId={adminId} onExit={onExit} />;
+      case "Type":
+        return <Type adminId={adminId} onExit={onExit} />;
+      case "Style":
+        return <Style adminId={adminId} onExit={onExit} />;
+      case "Pattern":
+        return <Pattern adminId={adminId} onExit={onExit} />;
+      case "Color":
+        return <Color adminId={adminId} onExit={onExit} />;
+      case "Floor Category":
+      case "Floors":
+        return <FloorCategory adminId={adminId} onExit={onExit} />;
+      case "Section":
+        return <Section adminId={adminId} onExit={onExit} />;
+      case "Section Group":
+        return <SectionGroup adminId={adminId} onExit={onExit} />;
+      case "Hsn Code":
+        return <HsnCode adminId={adminId} onExit={onExit} />;
+      case "Size Order":
+        return <Sizeorder adminId={adminId} onExit={onExit} />;
+
+      // Fallback for all other unmapped masters (Supplier, Agent, Customer, etc.)
       default:
         return (
-          <div className="dash-placeholder">
-            <h2>Dashboard</h2>
-            <p>Select a module from Master / Tools menu to begin.</p>
-          </div>
+          <Tools
+            title={tabKey}
+            columns={[
+              { name: "code", label: "CODE" },
+              { name: "name", label: "NAME", required: true, transform: (v) => v.toUpperCase() },
+              { name: "shortname", label: "SHORT NAME", transform: (v) => v.toUpperCase() },
+              { name: "active", label: "ACTIVE", type: "boolean" },
+            ]}
+            apiBase={`http://localhost:8000/${tabKey.toLowerCase().replace(/\s+/g, "_")}/`}
+            extraPayload={{ admin_id: adminId }}
+            onExit={onExit}
+          />
         );
     }
   };
 
   return (
     <div className="dash-root">
-      {/* top admin bar */}
-      <header className="dash-topbar">
-        <div className="dash-brand">
-          <span className="dash-logo">
-            <img src={logo} alt="SS" />
-          </span>
-          <div className="dash-brand-text">
-            <span className="dash-brand-title">SSRetails Textile</span>
-            <span className="dash-brand-sub">ERP Console</span>
+      {/* 1. Menu Bar */}
+      <Navbar onNavigate={handleNavigate} onLogout={handleLogout} />
+
+      {/* 2. MDI Multi-Tab Strip (Image 1) */}
+      {tabs.length > 0 && (
+        <div className="erp-tab-strip">
+          <div className="erp-tabs-scroll-area">
+            {tabs.map((tabKey) => {
+              const isActive = tabKey === activeTab;
+              const tabTitle = getTabTitle(tabKey);
+              return (
+                <div
+                  key={tabKey}
+                  className={`erp-tab ${isActive ? "active" : ""}`}
+                  onClick={() => setActiveTab(tabKey)}
+                  title={tabTitle}
+                >
+                  <span className="erp-tab-title">{tabTitle}</span>
+                  {isActive && (
+                    <button
+                      className="erp-tab-close"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleCloseTab(tabKey);
+                      }}
+                      title="Close Tab (Ctrl+F4)"
+                    >
+                      ×
+                    </button>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Far-Right Tabstrip Close Control (Image 1 & Image 2) */}
+          <div className="erp-tabstrip-controls">
+            <button
+              className="erp-tabstrip-close-btn"
+              onClick={() => activeTab && handleCloseTab(activeTab)}
+              title="Close Active Tab (Ctrl+F4)"
+            >
+              ×
+            </button>
           </div>
         </div>
+      )}
 
-        <div className="dash-user">
-          <div className="dash-user-avatar">
-            {admin.username?.[0]?.toUpperCase() || "A"}
+      {/* 3. Main Workspace Area */}
+      <main className="dash-body">
+        {tabs.length === 0 ? (
+          <div className="erp-desktop-canvas">
+            <div className="erp-desktop-watermark">
+              <span className="watermark-logo">❖</span>
+              <h2>SSRETAIL-GANESH TEXTILES</h2>
+              <p>Ready. Select an option from Master, Transaction, or Reports menu.</p>
+            </div>
           </div>
-          <div className="dash-user-meta">
-            <span className="dash-user-name">{admin.username}</span>
-            <span className="dash-user-role">Administrator</span>
-          </div>
-          <button onClick={handleLogout} className="dash-logout">
-            Logout
-          </button>
-        </div>
-      </header>
-
-      <div className="dash-main">
-        <Navbar onNavigate={handleNavigate} />
-        <div className="dash-content">{renderScreen()}</div>
-      </div>
+        ) : (
+          tabs.map((tabKey) => (
+            <div
+              key={tabKey}
+              className="erp-tab-content-panel"
+              style={{
+                display: tabKey === activeTab ? "flex" : "none",
+                height: "100%",
+                width: "100%",
+              }}
+            >
+              {renderScreenComponent(tabKey)}
+            </div>
+          ))
+        )}
+      </main>
     </div>
   );
 }

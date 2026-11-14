@@ -90,17 +90,18 @@ WSGI_APPLICATION = 'ssretails.wsgi.application'
 
 
 # =========================
-# DATABASE (LOCAL POSTGRES)
+# DATABASE (MS SQL SERVER)
 # =========================
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'GDStore',
-        'USER': 'postgres',
-        'PASSWORD': 'R_diva_0110_',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'ENGINE': 'mssql',
+        'NAME': 'GANESHSSRETAIL',
+        'HOST': r'localhost\SQL2008',
+        'OPTIONS': {
+            'driver': 'ODBC Driver 17 for SQL Server',
+            'trusted_connection': 'yes',
+        },
     }
 }
 

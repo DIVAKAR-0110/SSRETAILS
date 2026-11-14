@@ -1,0 +1,12 @@
+# ssretails/URLS/Master/Tally.py
+from django.urls import path
+from textile import views
+
+urlpatterns = [
+    path("group-heads/", views.GroupHeadViewSet.as_view({"get": "list", "post": "create"}), name="group-head"),
+    path("group-heads/<int:pk>/", views.GroupHeadViewSet.as_view({"get": "retrieve", "put": "update", "delete": "destroy"}), name="group-head-detail"),
+
+    path("account-heads/", views.AccountHeadViewSet.as_view({"get": "list", "post": "create"}), name="account-head"),
+    path("account-heads/<int:pk>/", views.AccountHeadViewSet.as_view({"get": "retrieve", "put": "update", "delete": "destroy"}), name="account-head-detail"),
+]
+
