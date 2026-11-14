@@ -4,10 +4,10 @@ from django.db import models
 
 class CountryMas(models.Model):
     id = models.AutoField(primary_key=True, db_column='Code')
-    admin_id = models.IntegerField(null=True, blank=True, db_column='UserID')
-    name = models.CharField(max_length=200, unique=True, db_column='Name')
-    shortname = models.CharField(max_length=20, unique=True, db_column='ShortName')
-    active = models.BooleanField(default=False, db_column='Active')
+    admin_id = models.IntegerField(null=True, blank=True, db_column='UserID', default=0)
+    name = models.CharField(max_length=50, unique=True, db_column='Name')
+    shortname = models.CharField(max_length=25, unique=True, db_column='ShortName')
+    active = models.BooleanField(default=True, db_column='Active')
     created_at = models.DateTimeField(auto_now_add=True, db_column='CreatedDateTime')
 
     class Meta:
@@ -20,11 +20,11 @@ class CountryMas(models.Model):
 
 class StateMas(models.Model):
     id = models.AutoField(primary_key=True, db_column='Code')
-    admin_id = models.IntegerField(null=True, blank=True, db_column='UserID')
-    name = models.CharField(max_length=200, unique=True, db_column='Name')
-    shortname = models.CharField(max_length=20, unique=True, db_column='ShortName')
-    country_id = models.IntegerField(null=True, blank=True, db_column='CountryCode')
-    active = models.BooleanField(default=False, db_column='Active')
+    admin_id = models.IntegerField(null=True, blank=True, db_column='UserID', default=0)
+    name = models.CharField(max_length=50, unique=True, db_column='Name')
+    shortname = models.CharField(max_length=25, unique=True, db_column='ShortName')
+    country_id = models.IntegerField(null=True, blank=True, db_column='CountryCode', default=0)
+    active = models.BooleanField(default=True, db_column='Active')
     created_at = models.DateTimeField(auto_now_add=True, db_column='CreatedDateTime')
 
     class Meta:
@@ -37,11 +37,11 @@ class StateMas(models.Model):
 
 class CityMas(models.Model):
     id = models.AutoField(primary_key=True, db_column='Code')
-    admin_id = models.IntegerField(null=True, blank=True, db_column='UserID')
-    name = models.CharField(max_length=200, unique=True, db_column='Name')
-    shortname = models.CharField(max_length=20, unique=True, db_column='ShortName')
-    state_id = models.IntegerField(null=True, blank=True, db_column='StateCode')
-    active = models.BooleanField(default=False, db_column='Active')
+    admin_id = models.IntegerField(null=True, blank=True, db_column='UserID', default=0)
+    name = models.CharField(max_length=50, unique=True, db_column='Name')
+    shortname = models.CharField(max_length=25, unique=True, db_column='ShortName')
+    state_id = models.IntegerField(null=True, blank=True, db_column='StateCode', default=0)
+    active = models.BooleanField(default=True, db_column='Active')
     created_at = models.DateTimeField(auto_now_add=True, db_column='CreatedDateTime')
 
     class Meta:
@@ -54,10 +54,10 @@ class CityMas(models.Model):
 
 class TitleMas(models.Model):
     id = models.AutoField(primary_key=True, db_column='Code')
+    admin_id = models.IntegerField(null=True, blank=True, db_column='UserID', default=0)
     name = models.CharField(max_length=50, unique=True, db_column='Name')
     shortname = models.CharField(max_length=25, unique=True, db_column='ShortName')
-    active = models.BooleanField(default=False, db_column='Active')
-    admin_id = models.IntegerField(null=True, blank=True, db_column='UserID')
+    active = models.BooleanField(default=True, db_column='Active')
     created_at = models.DateTimeField(auto_now_add=True, db_column='CreatedDateTime')
 
     class Meta:
@@ -70,10 +70,10 @@ class TitleMas(models.Model):
 
 class GradeMas(models.Model):
     id = models.AutoField(primary_key=True, db_column='Code')
-    name = models.CharField(max_length=150, unique=True, db_column='Name')
+    admin_id = models.IntegerField(null=True, blank=True, db_column='UserID', default=0)
+    name = models.CharField(max_length=50, unique=True, db_column='Name')
     shortname = models.CharField(max_length=25, unique=True, db_column='ShortName')
-    active = models.BooleanField(default=False, db_column='Active')
-    admin_id = models.IntegerField(null=True, blank=True, db_column='UserID')
+    active = models.BooleanField(default=True, db_column='Active')
     created_at = models.DateTimeField(auto_now_add=True, db_column='CreatedDateTime')
 
     class Meta:
@@ -86,10 +86,10 @@ class GradeMas(models.Model):
 
 class GroupMas(models.Model):
     id = models.AutoField(primary_key=True, db_column='Code')
+    admin_id = models.IntegerField(null=True, blank=True, db_column='UserID', default=0)
     name = models.CharField(max_length=50, unique=True, db_column='Name')
     shortname = models.CharField(max_length=25, unique=True, db_column='ShortName')
-    active = models.BooleanField(default=False, db_column='Active')
-    admin_id = models.IntegerField(null=True, blank=True, db_column='UserID')
+    active = models.BooleanField(default=True, db_column='Active')
     created_at = models.DateTimeField(auto_now_add=True, db_column='CreatedDateTime')
 
     class Meta:
@@ -102,10 +102,10 @@ class GroupMas(models.Model):
 
 class CategoryMas(models.Model):
     id = models.AutoField(primary_key=True, db_column='Code')
+    admin_id = models.IntegerField(null=True, blank=True, db_column='UserID', default=0)
     name = models.CharField(max_length=50, unique=True, db_column='Name')
     shortname = models.CharField(max_length=25, unique=True, db_column='ShortName')
-    active = models.BooleanField(default=False, db_column='Active')
-    admin_id = models.IntegerField(null=True, blank=True, db_column='UserID')
+    active = models.BooleanField(default=True, db_column='Active')
     created_at = models.DateTimeField(auto_now_add=True, db_column='CreatedDateTime')
 
     class Meta:
@@ -118,10 +118,10 @@ class CategoryMas(models.Model):
 
 class RelationMas(models.Model):
     id = models.AutoField(primary_key=True, db_column='Code')
+    admin_id = models.IntegerField(null=True, blank=True, db_column='UserID', default=0)
     name = models.CharField(max_length=50, unique=True, db_column='Name')
     shortname = models.CharField(max_length=25, unique=True, db_column='ShortName')
-    active = models.BooleanField(default=False, db_column='Active')
-    admin_id = models.IntegerField(null=True, blank=True, db_column='UserID')
+    active = models.BooleanField(default=True, db_column='Active')
     created_at = models.DateTimeField(auto_now_add=True, db_column='CreatedDateTime')
 
     class Meta:
@@ -134,10 +134,10 @@ class RelationMas(models.Model):
 
 class ReligionMas(models.Model):
     id = models.AutoField(primary_key=True, db_column='Code')
+    admin_id = models.IntegerField(null=True, blank=True, db_column='UserID', default=0)
     name = models.CharField(max_length=50, unique=True, db_column='Name')
     shortname = models.CharField(max_length=25, unique=True, db_column='ShortName')
-    active = models.BooleanField(default=False, db_column='Active')
-    admin_id = models.IntegerField(null=True, blank=True, db_column='UserID')
+    active = models.BooleanField(default=True, db_column='Active')
     created_at = models.DateTimeField(auto_now_add=True, db_column='CreatedDateTime')
 
     class Meta:
@@ -150,11 +150,11 @@ class ReligionMas(models.Model):
 
 class OccupationMas(models.Model):
     id = models.AutoField(primary_key=True, db_column='Code')
+    admin_id = models.IntegerField(null=True, blank=True, db_column='UserID', default=0)
     name = models.CharField(max_length=50, unique=True, db_column='Name')
     shortname = models.CharField(max_length=25, unique=True, db_column='ShortName')
-    active = models.BooleanField(default=False, db_column='Active')
-    admin_id = models.IntegerField(null=True, blank=True, db_column='UserID')
-    created_at = models.DateTimeField(null=True, blank=True, db_column='CreatedDateTime')
+    active = models.BooleanField(default=True, db_column='Active')
+    created_at = models.DateTimeField(auto_now_add=True, db_column='CreatedDateTime')
 
     class Meta:
         app_label = 'textile'

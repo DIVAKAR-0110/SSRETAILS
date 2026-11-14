@@ -16,30 +16,87 @@ class CountrySerializer(serializers.ModelSerializer):
         fields = ["id", "admin_id", "name", "shortname", "active", "created_at"]
         read_only_fields = ["id", "created_at"]
 
+    def validate_name(self, value):
+        val = value.strip().upper()
+        if not val:
+            raise serializers.ValidationError("Country name is required.")
+        if len(val) > 50:
+            raise serializers.ValidationError("Country name cannot exceed 50 characters.")
+        return val
+
+    def validate_shortname(self, value):
+        val = value.strip().upper()
+        if not val:
+            raise serializers.ValidationError("Short name is required.")
+        if len(val) > 25:
+            raise serializers.ValidationError("Short name cannot exceed 25 characters.")
+        return val
+
 
 class StateSerializer(serializers.ModelSerializer):
+    country_name = serializers.SerializerMethodField(read_only=True)
+
     class Meta:
         model = StateMas
-        fields = ["id", "admin_id", "name", "shortname", "country_id", "active", "created_at"]
+        fields = ["id", "admin_id", "name", "shortname", "country_id", "country_name", "active", "created_at"]
         read_only_fields = ["id", "created_at"]
+
+    def get_country_name(self, obj):
+        if obj.country_id:
+            c = CountryMas.objects.filter(id=obj.country_id).first()
+            if c:
+                return c.name
+        return None
+
+    def validate_name(self, value):
+        val = value.strip().upper()
+        if not val:
+            raise serializers.ValidationError("State name is required.")
+        if len(val) > 50:
+            raise serializers.ValidationError("State name cannot exceed 50 characters.")
+        return val
+
+    def validate_shortname(self, value):
+        val = value.strip().upper()
+        if not val:
+            raise serializers.ValidationError("Short name is required.")
+        if len(val) > 25:
+            raise serializers.ValidationError("Short name cannot exceed 25 characters.")
+        return val
 
 
 class CitySerializer(serializers.ModelSerializer):
-    country_id = serializers.SerializerMethodField(read_only=True)
+    state_name = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = CityMas
         fields = [
-            "id", "admin_id", "name", "shortname", "state_id", "country_id", "active", "created_at"
+            "id", "admin_id", "name", "shortname", "state_id", "state_name", "active", "created_at"
         ]
         read_only_fields = ["id", "created_at"]
 
-    def get_country_id(self, obj):
+    def get_state_name(self, obj):
         if obj.state_id:
             state = StateMas.objects.filter(id=obj.state_id).first()
             if state:
-                return state.country_id
+                return state.name
         return None
+
+    def validate_name(self, value):
+        val = value.strip().upper()
+        if not val:
+            raise serializers.ValidationError("City name is required.")
+        if len(val) > 50:
+            raise serializers.ValidationError("City name cannot exceed 50 characters.")
+        return val
+
+    def validate_shortname(self, value):
+        val = value.strip().upper()
+        if not val:
+            raise serializers.ValidationError("Short name is required.")
+        if len(val) > 25:
+            raise serializers.ValidationError("Short name cannot exceed 25 characters.")
+        return val
 
 
 class TitleSerializer(serializers.ModelSerializer):
@@ -48,12 +105,44 @@ class TitleSerializer(serializers.ModelSerializer):
         fields = ["id", "admin_id", "name", "shortname", "active", "created_at"]
         read_only_fields = ["id", "created_at"]
 
+    def validate_name(self, value):
+        val = value.strip().upper()
+        if not val:
+            raise serializers.ValidationError("Title name is required.")
+        if len(val) > 50:
+            raise serializers.ValidationError("Title name cannot exceed 50 characters.")
+        return val
+
+    def validate_shortname(self, value):
+        val = value.strip().upper()
+        if not val:
+            raise serializers.ValidationError("Short name is required.")
+        if len(val) > 25:
+            raise serializers.ValidationError("Short name cannot exceed 25 characters.")
+        return val
+
 
 class GradeSerializer(serializers.ModelSerializer):
     class Meta:
         model = GradeMas
         fields = ["id", "admin_id", "name", "shortname", "active", "created_at"]
         read_only_fields = ["id", "created_at"]
+
+    def validate_name(self, value):
+        val = value.strip().upper()
+        if not val:
+            raise serializers.ValidationError("Grade name is required.")
+        if len(val) > 50:
+            raise serializers.ValidationError("Grade name cannot exceed 50 characters.")
+        return val
+
+    def validate_shortname(self, value):
+        val = value.strip().upper()
+        if not val:
+            raise serializers.ValidationError("Short name is required.")
+        if len(val) > 25:
+            raise serializers.ValidationError("Short name cannot exceed 25 characters.")
+        return val
 
 
 class GroupSerializer(serializers.ModelSerializer):
@@ -62,12 +151,44 @@ class GroupSerializer(serializers.ModelSerializer):
         fields = ["id", "admin_id", "name", "shortname", "active", "created_at"]
         read_only_fields = ["id", "created_at"]
 
+    def validate_name(self, value):
+        val = value.strip().upper()
+        if not val:
+            raise serializers.ValidationError("Group name is required.")
+        if len(val) > 50:
+            raise serializers.ValidationError("Group name cannot exceed 50 characters.")
+        return val
+
+    def validate_shortname(self, value):
+        val = value.strip().upper()
+        if not val:
+            raise serializers.ValidationError("Short name is required.")
+        if len(val) > 25:
+            raise serializers.ValidationError("Short name cannot exceed 25 characters.")
+        return val
+
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = CategoryMas
         fields = ["id", "admin_id", "name", "shortname", "active", "created_at"]
         read_only_fields = ["id", "created_at"]
+
+    def validate_name(self, value):
+        val = value.strip().upper()
+        if not val:
+            raise serializers.ValidationError("Category name is required.")
+        if len(val) > 50:
+            raise serializers.ValidationError("Category name cannot exceed 50 characters.")
+        return val
+
+    def validate_shortname(self, value):
+        val = value.strip().upper()
+        if not val:
+            raise serializers.ValidationError("Short name is required.")
+        if len(val) > 25:
+            raise serializers.ValidationError("Short name cannot exceed 25 characters.")
+        return val
 
 
 class RelationSerializer(serializers.ModelSerializer):
@@ -76,6 +197,22 @@ class RelationSerializer(serializers.ModelSerializer):
         fields = ["id", "admin_id", "name", "shortname", "active", "created_at"]
         read_only_fields = ["id", "created_at"]
 
+    def validate_name(self, value):
+        val = value.strip().upper()
+        if not val:
+            raise serializers.ValidationError("Relation name is required.")
+        if len(val) > 50:
+            raise serializers.ValidationError("Relation name cannot exceed 50 characters.")
+        return val
+
+    def validate_shortname(self, value):
+        val = value.strip().upper()
+        if not val:
+            raise serializers.ValidationError("Short name is required.")
+        if len(val) > 25:
+            raise serializers.ValidationError("Short name cannot exceed 25 characters.")
+        return val
+
 
 class ReligionSerializer(serializers.ModelSerializer):
     class Meta:
@@ -83,12 +220,44 @@ class ReligionSerializer(serializers.ModelSerializer):
         fields = ["id", "admin_id", "name", "shortname", "active", "created_at"]
         read_only_fields = ["id", "created_at"]
 
+    def validate_name(self, value):
+        val = value.strip().upper()
+        if not val:
+            raise serializers.ValidationError("Religion name is required.")
+        if len(val) > 50:
+            raise serializers.ValidationError("Religion name cannot exceed 50 characters.")
+        return val
+
+    def validate_shortname(self, value):
+        val = value.strip().upper()
+        if not val:
+            raise serializers.ValidationError("Short name is required.")
+        if len(val) > 25:
+            raise serializers.ValidationError("Short name cannot exceed 25 characters.")
+        return val
+
 
 class OccupationSerializer(serializers.ModelSerializer):
     class Meta:
         model = OccupationMas
         fields = ["id", "admin_id", "name", "shortname", "active", "created_at"]
         read_only_fields = ["id", "created_at"]
+
+    def validate_name(self, value):
+        val = value.strip().upper()
+        if not val:
+            raise serializers.ValidationError("Occupation name is required.")
+        if len(val) > 50:
+            raise serializers.ValidationError("Occupation name cannot exceed 50 characters.")
+        return val
+
+    def validate_shortname(self, value):
+        val = value.strip().upper()
+        if not val:
+            raise serializers.ValidationError("Short name is required.")
+        if len(val) > 25:
+            raise serializers.ValidationError("Short name cannot exceed 25 characters.")
+        return val
 
 
 class BankSerializer(serializers.ModelSerializer):

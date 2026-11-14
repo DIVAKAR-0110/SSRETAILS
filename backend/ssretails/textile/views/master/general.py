@@ -46,7 +46,7 @@ class TitleViewSet(viewsets.ModelViewSet):
 
 
 class GradeViewSet(viewsets.ModelViewSet):
-    queryset = GradeMas.objects.all().order_by("created_at")
+    queryset = GradeMas.objects.all().order_by("-created_at")
     serializer_class = GradeSerializer
     permission_classes = [AllowAny]
 

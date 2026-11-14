@@ -195,10 +195,19 @@ export default function Tools({
 
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
-        setMessage(data.detail || Object.values(data)[0] || "Failed to save record.");
+        let errText = "Failed to save record.";
+        if (data.detail) {
+          errText = data.detail;
+        } else if (typeof data === "object" && Object.keys(data).length > 0) {
+          errText = Object.entries(data)
+            .map(([k, v]) => `${k.toUpperCase()}: ${Array.isArray(v) ? v.join(" ") : v}`)
+            .join(" | ");
+        }
+        setMessage(errText);
       } else {
         setMode(null);
         setFormData({});
+        setMessage("");
         fetchData();
       }
     } catch (err) {
@@ -276,6 +285,8 @@ export default function Tools({
         onChange={handleChange}
         required={c.required}
         disabled={disabled}
+        maxLength={c.maxLength}
+        minLength={c.minLength}
         step={c.type === "number" ? c.step || "any" : undefined}
         placeholder={c.placeholder || ""}
         className="erp-input"
@@ -819,22 +830,25 @@ export default function Tools({
               </div>
 
               <div className="erp-modal-footer">
-                <button
-                  type="button"
-                  className="erp-btn erp-btn-secondary"
-                  onClick={() => setMode(null)}
-                >
-                  {mode === "view" ? "Close" : "Cancel"}
-                </button>
-                {mode !== "view" && (
+                {message && <div className="erp-modal-error-text">{message}</div>}
+                <div className="erp-modal-actions">
                   <button
-                    type="submit"
-                    className="erp-btn erp-btn-primary"
-                    disabled={loading}
+                    type="button"
+                    className="erp-btn erp-btn-secondary"
+                    onClick={() => setMode(null)}
                   >
-                    {loading ? "Saving..." : "Save"}
+                    {mode === "view" ? "Close" : "Cancel"}
                   </button>
-                )}
+                  {mode !== "view" && (
+                    <button
+                      type="submit"
+                      className="erp-btn erp-btn-primary"
+                      disabled={loading}
+                    >
+                      {loading ? "Saving..." : "Save"}
+                    </button>
+                  )}
+                </div>
               </div>
             </form>
           </div>

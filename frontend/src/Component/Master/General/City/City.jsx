@@ -3,29 +3,24 @@ import { useEffect, useState, useMemo } from "react";
 import Tools from "../../../Tools";
 
 export default function City({ adminId, onExit }) {
-  const [countries, setCountries] = useState([]);
   const [states, setStates] = useState([]);
-  const [loadingMaster, setLoadingMaster] = useState(false);
+  const [loadingStates, setLoadingStates] = useState(false);
 
-  // load all countries and states once
+  // Load state masters for dropdown
   useEffect(() => {
-    async function loadMasters() {
+    async function loadStates() {
       try {
-        setLoadingMaster(true);
-        const [cRes, sRes] = await Promise.all([
-          fetch("http://localhost:8000/countries/"),
-          fetch("http://localhost:8000/states/"),
-        ]);
-        const [cData, sData] = await Promise.all([cRes.json(), sRes.json()]);
-        setCountries(cData);
-        setStates(sData);
+        setLoadingStates(true);
+        const res = await fetch("http://localhost:8000/states/");
+        const data = await res.json();
+        setStates(Array.isArray(data) ? data : []);
       } catch (err) {
-        console.error("Failed to load country/state masters", err);
+        console.error("Failed to load state master", err);
       } finally {
-        setLoadingMaster(false);
+        setLoadingStates(false);
       }
     }
-    loadMasters();
+    loadStates();
   }, []);
 
   const columns = useMemo(
@@ -33,25 +28,20 @@ export default function City({ adminId, onExit }) {
       {
         name: "name",
         label: "City Name",
+        type: "text",
         required: true,
+        maxLength: 50,
+        placeholder: "ENTER CITY NAME",
         transform: (value) => value.toUpperCase(),
       },
       {
         name: "shortname",
         label: "Short Name",
+        type: "text",
         required: true,
+        maxLength: 25,
+        placeholder: "ENTER SHORT CODE",
         transform: (value) => value.toUpperCase(),
-      },
-      {
-        name: "country_id",
-        label: "Country",
-        type: "select",
-        options: countries.map((c) => ({
-          value: c.id,
-          label: c.name,
-        })),
-        disableWhileLoading: loadingMaster,
-        required: true,
       },
       {
         name: "state_id",
@@ -60,18 +50,18 @@ export default function City({ adminId, onExit }) {
         options: states.map((s) => ({
           value: s.id,
           label: s.name,
-          country_id: s.country_id, // used for filtering
         })),
-        disableWhileLoading: loadingMaster,
+        disableWhileLoading: loadingStates,
         required: true,
       },
       {
         name: "active",
         label: "Active",
         type: "boolean",
+        default: true,
       },
     ],
-    [countries, states, loadingMaster]
+    [states, loadingStates]
   );
 
   return (

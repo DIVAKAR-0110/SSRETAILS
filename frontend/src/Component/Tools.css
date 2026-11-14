@@ -461,17 +461,51 @@
 }
 
 .erp-input {
-  padding: 6px 8px;
+  padding: 6px 10px;
   border: 1px solid #b8ab9a;
   border-radius: 3px;
   font-size: 0.85rem;
   background: #ffffff;
   outline: none;
+  color: #222222;
+  box-sizing: border-box;
+  width: 100%;
 }
 
 .erp-input:focus {
   border-color: #8c6838;
   box-shadow: 0 0 0 1px #8c6838;
+}
+
+/* Custom ERP Dropdown Select with Prominent Large Icon */
+select.erp-input {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2364462e' stroke-width='2.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: calc(100% - 10px) center;
+  background-size: 15px 15px;
+  padding-right: 34px;
+  cursor: pointer;
+  background-color: #ffffff;
+}
+
+select.erp-input:hover {
+  border-color: #8c6838;
+}
+
+select.erp-input:disabled {
+  background-color: #f5f2eb;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+select.erp-input option {
+  padding: 6px 10px;
+  font-size: 0.85rem;
+  background: #ffffff;
+  color: #222222;
 }
 
 .erp-form-checkbox {
@@ -486,11 +520,28 @@
 .erp-modal-footer {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
   gap: 8px;
   padding: 8px 12px;
   background: #eee8de;
   border-top: 1px solid #d4cbbd;
+}
+
+.erp-modal-error-text {
+  font-size: 0.78rem;
+  color: #a94442;
+  font-weight: 600;
+  max-width: 60%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.erp-modal-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
 }
 
 .erp-btn {

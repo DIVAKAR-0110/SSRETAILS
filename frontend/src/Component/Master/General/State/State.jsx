@@ -26,13 +26,19 @@ export default function State({ adminId, onExit }) {
     {
       name: "name",
       label: "State Name",
+      type: "text",
       required: true,
+      maxLength: 50,
+      placeholder: "ENTER STATE NAME",
       transform: (value) => value.toUpperCase(),
     },
     {
       name: "shortname",
       label: "Short Name",
+      type: "text",
       required: true,
+      maxLength: 25,
+      placeholder: "ENTER SHORT CODE",
       transform: (value) => value.toUpperCase(),
     },
     {
@@ -50,6 +56,7 @@ export default function State({ adminId, onExit }) {
       name: "active",
       label: "Active",
       type: "boolean",
+      default: true,
     },
   ];
 
