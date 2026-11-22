@@ -28,15 +28,36 @@ export default function Floor({ adminId, onExit }) {
       label: "Location",
       type: "select",
       options: locations.map((loc) => ({
-        value: loc.id, // saved to location_id
-        label: loc.name, // shown in dropdown
+        value: loc.id,
+        label: loc.name,
       })),
       disableWhileLoading: loadingLocations,
       required: false,
     },
-    { name: "name", label: "Floor Name", required: true },
-    { name: "short_name", label: "Short Name", required: true },
-    { name: "active", label: "Active", type: "boolean" },
+    {
+      name: "name",
+      label: "Floor Name",
+      type: "text",
+      required: true,
+      maxLength: 50,
+      placeholder: "ENTER FLOOR NAME",
+      transform: (value) => value.toUpperCase(),
+    },
+    {
+      name: "shortname",
+      label: "Short Name",
+      type: "text",
+      required: true,
+      maxLength: 25,
+      placeholder: "ENTER SHORT CODE",
+      transform: (value) => value.toUpperCase(),
+    },
+    {
+      name: "active",
+      label: "Active",
+      type: "boolean",
+      default: true,
+    },
   ];
 
   const extraPayload = {

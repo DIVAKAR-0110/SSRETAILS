@@ -5,7 +5,7 @@ from django import forms
 from textile.models import (
     CountryMas, StateMas, CityMas, TitleMas, GradeMas, GroupMas, CategoryMas,
     RelationMas, ReligionMas, OccupationMas, BankMas, TaxTypeMas, SystemMas,
-    SystemCounterIntegrationMas, CounterMas, CounterGroupMas, IncomeAndExpenseMas,
+    SystemCounterMas, SystemCounterDet, CounterMas, CounterGroupMas, IncomeAndExpenseMas,
     GiftvoucherMas, PaymentModeMas, DiscountTypeMas, DepartmentMas, FloorMas,
     TransferModeMas, StarMas, EmployeeMas
 )
@@ -181,20 +181,29 @@ class BankAdmin(admin.ModelAdmin):
     ordering = ("-created_at",)
 
 
-@admin.register(SystemCounterIntegrationMas)
-class SystemCounterIntegrationAdmin(admin.ModelAdmin):
+@admin.register(SystemCounterMas)
+class SystemCounterAdmin(admin.ModelAdmin):
     list_display = (
-        "id", "location_id", "counter_id", "system_id", "admin_id", "created_at",
+        "id", "location_id", "counter_id", "counter_type", "admin_id", "created_at",
     )
-    list_filter = ("location_id", "counter_id")
-    search_fields = ("system_id",)
+    list_filter = ("location_id", "counter_type")
+    search_fields = ("counter_type",)
     ordering = ("-created_at",)
+
+
+@admin.register(SystemCounterDet)
+class SystemCounterDetAdmin(admin.ModelAdmin):
+    list_display = (
+        "id", "location_id", "counter_id", "system_id", "counter_type",
+    )
+    list_filter = ("location_id", "counter_type")
+    search_fields = ("counter_id", "system_id")
 
 
 @admin.register(SystemMas)
 class SystemMasAdmin(admin.ModelAdmin):
     list_display = (
-        "id", "name", "short_name", "location_id", "floor_code", "mac_id",
+        "id", "name", "short_name", "location_id", "floor_id", "mac_id",
         "active", "allow_scheme", "admin_id", "created_at",
     )
     list_filter = ("active", "allow_scheme")
@@ -229,22 +238,22 @@ class CounterAdmin(admin.ModelAdmin):
 @admin.register(CounterGroupMas)
 class CounterGroupAdmin(admin.ModelAdmin):
     list_display = (
-        "id", "name", "short_name", "location_code", "active", "admin_id", "created_at",
+        "id", "name", "shortname", "location_id", "active", "admin_id", "created_at",
     )
-    list_filter = ("active", "location_code")
-    search_fields = ("name", "short_name")
+    list_filter = ("active", "location_id")
+    search_fields = ("name", "shortname")
     ordering = ("-created_at",)
 
 
 @admin.register(IncomeAndExpenseMas)
 class IncomeAndExpenseAdmin(admin.ModelAdmin):
     list_display = (
-        "id", "name", "short_name", "account_head_name", "account_head_code",
+        "id", "name", "shortname", "account_head_name", "account_head_code",
         "active", "head_type", "account_post", "admin_id", "created_at",
     )
     list_filter = ("active", "head_type", "account_post")
-    search_fields = ("name", "short_name", "account_head_name")
-    ordering = ("-created_at",)
+    search_fields = ("name", "shortname", "account_head_name")
+    ordering = ("name",)
 
 
 @admin.register(GiftvoucherMas)
@@ -284,10 +293,10 @@ class DepartmentAdmin(admin.ModelAdmin):
 @admin.register(FloorMas)
 class FloorAdmin(admin.ModelAdmin):
     list_display = (
-        "id", "name", "short_name", "get_location_id", "active", "admin_id", "created_at",
+        "id", "name", "shortname", "get_location_id", "active", "admin_id", "created_at",
     )
     list_filter = ("active",)
-    search_fields = ("name", "short_name")
+    search_fields = ("name", "shortname")
     ordering = ("-created_at",)
 
     def get_location_id(self, obj):

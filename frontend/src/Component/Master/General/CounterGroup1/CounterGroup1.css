@@ -1,0 +1,93 @@
+/* frontend/src/Component/Master/General/CounterGroup1/CounterGroup1.css */
+
+.cg-form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: #f7f3e8;
+  font-family: Tahoma, "Segoe UI", Arial, sans-serif;
+  font-size: 11px;
+  color: #333333;
+  padding: 8px 12px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.cg-fieldset {
+  border: 1px solid #c9bca6;
+  border-radius: 4px;
+  padding: 12px 18px;
+  background-color: #fcfbf9;
+  position: relative;
+  margin-bottom: 8px;
+}
+
+.cg-legend {
+  font-weight: bold;
+  font-size: 11px;
+  color: #4a3622;
+  padding: 0 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.cg-form-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  gap: 8px;
+}
+
+.cg-form-label {
+  width: 130px;
+  text-align: right;
+  font-weight: 500;
+  color: #333333;
+  flex-shrink: 0;
+}
+
+.cg-form-label.required::after {
+  content: " *";
+  color: #cc0000;
+  font-weight: bold;
+}
+
+.cg-form-input {
+  flex: 1;
+  max-width: 320px;
+  padding: 3px 6px;
+  font-size: 11px;
+  font-family: inherit;
+  border: 1px solid #8ba0b5;
+  border-radius: 2px;
+  background-color: #ffffff;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.cg-form-input:focus {
+  border-color: #0066cc;
+  box-shadow: 0 0 2px rgba(0, 102, 204, 0.4);
+}
+
+.cg-form-input:disabled,
+.cg-form-input.readonly {
+  background-color: #eae7db;
+  color: #555555;
+  cursor: not-allowed;
+}
+
+.cg-checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+  margin-left: 138px;
+}
+
+.cg-checkbox-label {
+  font-weight: 500;
+  cursor: pointer;
+  color: #333333;
+  user-select: none;
+}

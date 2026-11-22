@@ -1,0 +1,113 @@
+/* frontend/src/Component/Master/General/System/SystemMas.css */
+
+.system-form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: #f7f3e8;
+  font-family: Tahoma, "Segoe UI", Arial, sans-serif;
+  font-size: 11px;
+  color: #333333;
+  padding: 8px 12px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.system-fieldset {
+  border: 1px solid #c9bca6;
+  border-radius: 4px;
+  padding: 12px 18px;
+  background-color: #fcfbf9;
+  position: relative;
+  margin-bottom: 8px;
+}
+
+.system-legend {
+  font-weight: bold;
+  font-size: 11px;
+  color: #4a3622;
+  padding: 0 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.system-form-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  gap: 8px;
+}
+
+.system-form-label {
+  width: 150px;
+  text-align: right;
+  font-weight: 500;
+  color: #333333;
+  flex-shrink: 0;
+}
+
+.system-form-label.required::after {
+  content: " *";
+  color: #cc0000;
+  font-weight: bold;
+}
+
+.system-form-input {
+  flex: 1;
+  max-width: 320px;
+  padding: 3px 6px;
+  font-size: 11px;
+  font-family: inherit;
+  border: 1px solid #8ba0b5;
+  border-radius: 2px;
+  background-color: #ffffff;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.system-form-input:focus {
+  border-color: #0066cc;
+  box-shadow: 0 0 2px rgba(0, 102, 204, 0.4);
+}
+
+.system-form-input:disabled,
+.system-form-input.readonly {
+  background-color: #eae7db;
+  color: #555555;
+  cursor: not-allowed;
+}
+
+.system-mac-btn {
+  padding: 3px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  background: linear-gradient(to bottom, #fdfbf7, #e2d7c5);
+  border: 1px solid #9c8a74;
+  border-radius: 3px;
+  color: #3b2816;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.system-mac-btn:hover {
+  background: linear-gradient(to bottom, #f4eee2, #d5c7b0);
+}
+
+.system-mac-btn:active {
+  background: #c5b69c;
+}
+
+.system-checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+  margin-left: 158px;
+}
+
+.system-checkbox-label {
+  font-weight: 500;
+  cursor: pointer;
+  color: #333333;
+  user-select: none;
+}

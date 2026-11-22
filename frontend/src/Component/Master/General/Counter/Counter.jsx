@@ -1,79 +1,218 @@
-// src/pages/Counter.jsx
-import { useEffect, useState } from "react";
+// frontend/src/Component/Master/General/Counter/Counter.jsx
+import React, { useEffect, useState, useCallback, useMemo } from "react";
 import Tools from "../../../Tools";
+import "./Counter.css";
 
-export default function Counter({ adminId, onExit }) {
+const API_ROOT = "http://localhost:8000";
+
+export default function Counter({ adminId = 1, onExit }) {
   const [locations, setLocations] = useState([]);
   const [counterGroups, setCounterGroups] = useState([]);
   const [loadingMasters, setLoadingMasters] = useState(false);
 
   useEffect(() => {
+    let isMounted = true;
     async function loadMasters() {
       try {
         setLoadingMasters(true);
         const [locRes, grpRes] = await Promise.all([
-          fetch("http://localhost:8000/locations/"),
-          fetch("http://localhost:8000/counter-groups/"),
+          fetch(`${API_ROOT}/locations/`).then((r) => r.json()).catch(() => []),
+          fetch(`${API_ROOT}/counter-groups/`).then((r) => r.json()).catch(() => []),
         ]);
-        const [locData, grpData] = await Promise.all([
-          locRes.json(),
-          grpRes.json(),
-        ]);
-        setLocations(locData);
-        setCounterGroups(grpData);
+
+        if (isMounted) {
+          setLocations(Array.isArray(locRes) ? locRes : []);
+          setCounterGroups(Array.isArray(grpRes) ? grpRes : []);
+        }
       } catch (err) {
-        console.error("Failed to load masters for Counter", err);
+        console.error("Failed to load Counter lookups:", err);
       } finally {
-        setLoadingMasters(false);
+        if (isMounted) setLoadingMasters(false);
       }
     }
     loadMasters();
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
-  const columns = [
-    {
-      name: "location_id",
-      label: "Location",
-      type: "select",
-      options: locations.map((l) => ({
-        value: l.id, // stored in location_id
-        label: l.name, // shown in dropdown
-      })),
-      disableWhileLoading: loadingMasters,
-      required: false,
+  const columns = useMemo(
+    () => [
+      {
+        name: "name",
+        label: "Counter Name",
+        type: "text",
+        required: true,
+        maxLength: 50,
+      },
+      {
+        name: "short_name",
+        label: "Short Name",
+        type: "text",
+        required: true,
+        maxLength: 25,
+      },
+      {
+        name: "location_name",
+        label: "Location",
+        type: "text",
+      },
+      {
+        name: "counter_group_name",
+        label: "Counter Group",
+        type: "text",
+      },
+      {
+        name: "counter_order",
+        label: "Order",
+        type: "number",
+      },
+      {
+        name: "active",
+        label: "Active",
+        type: "boolean",
+      },
+    ],
+    []
+  );
+
+  const renderCustomForm = useCallback(
+    ({ formData, setFormData, handleChange, mode }) => {
+      const isReadOnly = mode === "view";
+
+      return (
+        <div className="counter-form-container">
+          <fieldset className="counter-fieldset">
+            <legend className="counter-legend">COUNTER MASTER</legend>
+
+            {/* Location row */}
+            <div className="counter-form-row">
+              <label className="counter-form-label required">Location</label>
+              <select
+                name="location_id"
+                value={formData.location_id || ""}
+                onChange={handleChange}
+                disabled={isReadOnly}
+                className="counter-form-input"
+                required
+              >
+                <option value="">[SELECT LOCATION]</option>
+                {locations.map((loc) => (
+                  <option key={loc.id} value={loc.id}>
+                    {loc.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Name */}
+            <div className="counter-form-row">
+              <label className="counter-form-label required">Name</label>
+              <input
+                type="text"
+                name="name"
+                value={formData.name || ""}
+                onChange={(e) =>
+                  handleChange({
+                    target: { name: "name", value: e.target.value.toUpperCase() },
+                  })
+                }
+                disabled={isReadOnly}
+                className="counter-form-input"
+                maxLength={50}
+                required
+              />
+            </div>
+
+            {/* Short Name */}
+            <div className="counter-form-row">
+              <label className="counter-form-label required">Short Name</label>
+              <input
+                type="text"
+                name="short_name"
+                value={formData.short_name || ""}
+                onChange={(e) =>
+                  handleChange({
+                    target: {
+                      name: "short_name",
+                      value: e.target.value.toUpperCase(),
+                    },
+                  })
+                }
+                disabled={isReadOnly}
+                className="counter-form-input"
+                maxLength={25}
+                required
+              />
+            </div>
+
+            {/* Counter Group */}
+            <div className="counter-form-row">
+              <label className="counter-form-label">Counter Group</label>
+              <select
+                name="counter_group_id"
+                value={formData.counter_group_id || 0}
+                onChange={handleChange}
+                disabled={isReadOnly}
+                className="counter-form-input"
+              >
+                <option value="0">[SELECT]</option>
+                {counterGroups.map((g) => (
+                  <option key={g.id} value={g.id}>
+                    {g.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Counter Order */}
+            <div className="counter-form-row">
+              <label className="counter-form-label">Counter Order</label>
+              <input
+                type="number"
+                name="counter_order"
+                value={formData.counter_order !== undefined ? formData.counter_order : 0}
+                onChange={handleChange}
+                disabled={isReadOnly}
+                className="counter-form-input"
+                min="0"
+                step="1"
+              />
+            </div>
+
+            {/* Active Checkbox */}
+            <div className="counter-checkbox-row">
+              <input
+                type="checkbox"
+                id="counter_active"
+                name="active"
+                checked={formData.active !== undefined ? !!formData.active : true}
+                onChange={(e) =>
+                  handleChange({
+                    target: { name: "active", value: e.target.checked },
+                  })
+                }
+                disabled={isReadOnly}
+              />
+              <label htmlFor="counter_active" className="counter-checkbox-label">
+                Active
+              </label>
+            </div>
+          </fieldset>
+        </div>
+      );
     },
-    { name: "name", label: "Counter Name", required: true },
-    { name: "short_name", label: "Short Name", required: true },
-    {
-      name: "counter_group_id",
-      label: "Counter Group",
-      type: "select",
-      options: counterGroups.map((g) => ({
-        value: g.id, // stored in counter_group_id
-        label: g.name, // shown in dropdown
-      })),
-      disableWhileLoading: loadingMasters,
-      required: false,
-    },
-    {
-      name: "section_code",
-      label: "Section Code",
-    },
-    {
-      name: "counter_order",
-      label: "Counter Order",
-      type: "number",
-      step: "1",
-    },
-    { name: "active", label: "Active", type: "boolean" },
-  ];
+    [locations, counterGroups]
+  );
 
   return (
     <Tools
       title="Counter Master"
       columns={columns}
-      apiBase="http://localhost:8000/counters/"
+      apiBase={`${API_ROOT}/counters/`}
       extraPayload={{ admin_id: adminId }}
+      customForm={renderCustomForm}
+      modalWidth="560px"
       onExit={onExit}
     />
   );

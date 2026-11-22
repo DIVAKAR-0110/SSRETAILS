@@ -1,0 +1,161 @@
+/* frontend/src/Component/Master/General/SystemCounterIngestion/SystemCounterIntegration.css */
+
+.sci-form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: #f7f3e8;
+  font-family: Tahoma, "Segoe UI", Arial, sans-serif;
+  font-size: 11px;
+  color: #333333;
+  padding: 8px 12px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.sci-fieldset {
+  border: 1px solid #c9bca6;
+  border-radius: 4px;
+  padding: 12px 18px;
+  background-color: #fcfbf9;
+  position: relative;
+  margin-bottom: 8px;
+}
+
+.sci-legend {
+  font-weight: bold;
+  font-size: 11px;
+  color: #4a3622;
+  padding: 0 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.sci-form-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  gap: 8px;
+}
+
+.sci-form-label {
+  width: 120px;
+  text-align: right;
+  font-weight: 500;
+  color: #333333;
+  flex-shrink: 0;
+}
+
+.sci-form-label.required::after {
+  content: " *";
+  color: #cc0000;
+  font-weight: bold;
+}
+
+.sci-form-input {
+  flex: 1;
+  max-width: 320px;
+  padding: 3px 6px;
+  font-size: 11px;
+  font-family: inherit;
+  border: 1px solid #8ba0b5;
+  border-radius: 2px;
+  background-color: #ffffff;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.sci-form-input:focus {
+  border-color: #0066cc;
+  box-shadow: 0 0 2px rgba(0, 102, 204, 0.4);
+}
+
+.sci-form-input:disabled,
+.sci-form-input.readonly {
+  background-color: #eae7db;
+  color: #555555;
+  cursor: not-allowed;
+}
+
+.sci-radio-group {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-left: 128px;
+  margin-bottom: 8px;
+}
+
+.sci-radio-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.sci-table-wrapper {
+  margin-top: 10px;
+  border: 1px solid #c9bca6;
+  border-radius: 3px;
+  background-color: #ffffff;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.sci-subgrid {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+}
+
+.sci-subgrid th {
+  background: linear-gradient(to bottom, #eae2d3, #dcd2bf);
+  color: #3d2b1f;
+  font-weight: 600;
+  padding: 5px 8px;
+  border-bottom: 1px solid #b8a892;
+  border-right: 1px solid #b8a892;
+  text-align: left;
+}
+
+.sci-subgrid td {
+  padding: 4px 8px;
+  border-bottom: 1px solid #eae2d3;
+  border-right: 1px solid #eae2d3;
+}
+
+.sci-subgrid tr:hover {
+  background-color: #f7f3e8;
+}
+
+.sci-btn-add {
+  margin-top: 8px;
+  padding: 3px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  background: linear-gradient(to bottom, #fdfbf7, #e2d7c5);
+  border: 1px solid #9c8a74;
+  border-radius: 3px;
+  color: #3b2816;
+  cursor: pointer;
+}
+
+.sci-btn-add:hover {
+  background: linear-gradient(to bottom, #f4eee2, #d5c7b0);
+}
+
+.sci-btn-remove {
+  padding: 1px 6px;
+  font-size: 10px;
+  font-weight: bold;
+  color: #cc0000;
+  background: #fff;
+  border: 1px solid #e0c8b0;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.sci-btn-remove:hover {
+  background: #fbeee8;
+  border-color: #cc0000;
+}

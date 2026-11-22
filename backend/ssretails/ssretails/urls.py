@@ -18,6 +18,12 @@ urlpatterns = [
     path("", include("ssretails.URLS.Master.General")),
     path("", include("ssretails.URLS.Master.ItemDefinition")),
     path("", include("ssretails.URLS.Master.Location")),
+    path("", include("ssretails.URLS.Master.PurchaseType")),
+    path("", include("ssretails.URLS.Master.DocumentType")),
+    path("", include("ssretails.URLS.Master.Company")),
+    path("", include("ssretails.URLS.Master.JobWork")),
     path("", include("ssretails.URLS.Master.Tally")),
     path("", include("ssretails.URLS.Master.Intractors")),
+    path("", include("ssretails.URLS.Master.CourierType")),
+    path("", include("ssretails.URLS.Master.Accounts")),
 ]

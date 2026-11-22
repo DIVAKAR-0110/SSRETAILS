@@ -1,0 +1,168 @@
+/* frontend/src/Component/Master/Intractors/Courier/Courier.css */
+
+.courier-form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background-color: #f7f3e8;
+  font-family: Tahoma, "Segoe UI", Arial, sans-serif;
+  font-size: 11px;
+  color: #333333;
+  padding: 6px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.courier-fieldset {
+  border: 1px solid #c9bca6;
+  border-radius: 4px;
+  padding: 10px 14px;
+  background-color: #fcfbf9;
+  position: relative;
+  margin-bottom: 8px;
+}
+
+.courier-legend {
+  font-weight: bold;
+  font-size: 11px;
+  color: #4a3622;
+  padding: 0 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.courier-two-col-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.courier-form-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 6px;
+  gap: 8px;
+}
+
+.courier-form-label {
+  width: 120px;
+  text-align: right;
+  font-weight: 500;
+  color: #333333;
+  flex-shrink: 0;
+}
+
+.courier-form-label.required::after {
+  content: " *";
+  color: #cc0000;
+  font-weight: bold;
+}
+
+.courier-form-input {
+  flex: 1;
+  padding: 3px 6px;
+  font-size: 11px;
+  font-family: inherit;
+  border: 1px solid #8ba0b5;
+  border-radius: 2px;
+  background-color: #ffffff;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.courier-form-input:focus {
+  border-color: #0066cc;
+  box-shadow: 0 0 2px rgba(0, 102, 204, 0.4);
+}
+
+.courier-form-input:disabled,
+.courier-form-input.readonly {
+  background-color: #eae7db;
+  color: #555555;
+  border-color: #b5ac98;
+}
+
+.courier-form-textarea {
+  flex: 1;
+  padding: 4px 6px;
+  font-size: 11px;
+  font-family: inherit;
+  border: 1px solid #8ba0b5;
+  border-radius: 2px;
+  background-color: #ffffff;
+  resize: vertical;
+  min-height: 48px;
+  box-sizing: border-box;
+}
+
+.courier-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/* Grids Table */
+.courier-grid-table-container {
+  max-height: 180px;
+  overflow-y: auto;
+  overflow-x: auto;
+  border: 1px solid #b39b7d;
+  background-color: #ffffff;
+  margin-top: 6px;
+}
+
+.courier-grid-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+}
+
+.courier-grid-table th {
+  background: linear-gradient(180deg, #ede3d2 0%, #d8caa7 100%);
+  color: #3b2a1a;
+  padding: 4px 6px;
+  text-align: left;
+  font-weight: bold;
+  border: 1px solid #c9bca6;
+  white-space: nowrap;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.courier-grid-table td {
+  padding: 2px 4px;
+  border: 1px solid #e0d8c3;
+  white-space: nowrap;
+}
+
+.courier-grid-table tr:hover {
+  background-color: #fbf5e6;
+}
+
+.courier-grid-input {
+  width: 100%;
+  padding: 2px 4px;
+  font-size: 11px;
+  border: 1px solid #c9bca6;
+  background-color: #ffffff;
+  box-sizing: border-box;
+}
+
+.courier-grid-action-btn {
+  background: linear-gradient(180deg, #f7f3e8 0%, #dcd3b8 100%);
+  border: 1px solid #8c7355;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 2px;
+}
+
+.courier-grid-action-btn:hover {
+  background: #fff6df;
+  border-color: #614d34;
+}

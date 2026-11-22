@@ -3,13 +3,35 @@ import Tools from "../../../Tools";
 
 export default function TransferMode({ adminId, onExit }) {
   const columns = [
-    { name: "name", label: "Transfer Mode Name", required: true },
-    { name: "shortname", label: "Short Name", required: false },
-    { name: "active", label: "Active", type: "boolean" },
+    {
+      name: "name",
+      label: "Transfer Mode Name",
+      type: "text",
+      maxLength: 50,
+      required: true,
+      placeholder: "ENTER TRANSFER MODE",
+      transform: (val) => val.toUpperCase(),
+    },
+    {
+      name: "shortname",
+      label: "Short Name",
+      type: "text",
+      maxLength: 25,
+      required: false,
+      placeholder: "ENTER SHORT CODE",
+      transform: (val) => val.toUpperCase(),
+    },
     {
       name: "numgeneration",
       label: "Number Generation",
       type: "boolean",
+      default: false,
+    },
+    {
+      name: "active",
+      label: "Active",
+      type: "boolean",
+      default: true,
     },
   ];
 

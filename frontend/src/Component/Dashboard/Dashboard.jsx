@@ -5,6 +5,7 @@ import "./Dashboard.css";
 
 import Navbar from "../Navbar/Navbar.jsx";
 import Tools from "../Tools.jsx";
+import Dialog from "../Common/Dialog.jsx";
 
 // 1. General Masters
 import Country from "../Master/General/Country/Country.jsx";
@@ -33,24 +34,44 @@ import Floor from "../Master/General/Floor/Floor.jsx";
 import TransferMode from "../Master/General/TransferMode/TransferMode.jsx";
 import Star from "../Master/General/Star/Star.jsx";
 
-// 2. Location
+// 2. Location & Company
 import Location from "../Master/Location/Location.jsx";
+import Company from "../Master/Company/Company.jsx";
+
+// 2.1 Purchase Type & Document Type
+import PurchaseType from "../Master/PurchaseType/PurchaseType.jsx";
+import DocumentType from "../Master/DocumentType/DocumentType.jsx";
+import CourierType from "../Master/CourierType/CourierType.jsx";
+
+// 2.2 Job Work
+import JobWorkChargeHead from "../Master/JobWork/JobWorkChargeHead/JobWorkChargeHead.jsx";
+import Tailor from "../Master/JobWork/Tailor/Tailor.jsx";
+import ConsumptionMaster from "../Master/JobWork/ConsumptionMaster/ConsumptionMaster.jsx";
 
 // 3. Tally
 import GroupHead from "../Master/Tally/GroupHead/GroupHead.jsx";
 import AccountHead from "../Master/Tally/AccountHead/AccountHead.jsx";
 
-// 4. Item Definition -> Item Categories
-import Brand from "../Master/ItemDefinition/ItemCategories/Brand/Brand.jsx";
-import Type from "../Master/ItemDefinition/ItemCategories/Type/Type.jsx";
-import Style from "../Master/ItemDefinition/ItemCategories/Style/Style.jsx";
-import Pattern from "../Master/ItemDefinition/ItemCategories/Pattern/Pattern.jsx";
-import Color from "../Master/ItemDefinition/ItemCategories/Color/Color.jsx";
-import FloorCategory from "../Master/ItemDefinition/ItemCategories/Floor/FloorCategory.jsx";
-import Section from "../Master/ItemDefinition/ItemCategories/Section/Section.jsx";
-import SectionGroup from "../Master/ItemDefinition/ItemCategories/SectionGroup/SectionGroup.jsx";
-import HsnCode from "../Master/ItemDefinition/ItemCategories/HsnCode/HsnCode.jsx";
-import Sizeorder from "../Master/ItemDefinition/ItemCategories/Size Order/Sizeorder.jsx";
+// 3.1 Accounts
+import AccountsGroupHead from "../Master/Accounts/AccountsGroupHead/AccountsGroupHead.jsx";
+import Naration from "../Master/Accounts/Naration/Naration.jsx";
+import TransactionHead from "../Master/Accounts/TransactionHead/TransactionHead.jsx";
+
+// 4. Item Definition -> Item Categories & Core Masters
+import ItemCategory from "../Master/ItemDefinition/ItemCategories/ItemCategory.jsx";
+import Item from "../Master/ItemDefinition/Item/Item.jsx";
+import UOM from "../Master/ItemDefinition/UOM/UOM.jsx";
+import Product from "../Master/ItemDefinition/Product/Product.jsx";
+import CommodityCode from "../Master/ItemDefinition/CommodityCode/CommodityCode.jsx";
+import ROL from "../Master/ItemDefinition/ROL/ROL.jsx";
+
+// 5. Intractors
+import Supplier from "../Master/Intractors/Supplier/Supplier.jsx";
+import Agent from "../Master/Intractors/Agent/Agent.jsx";
+import Manufacture from "../Master/Intractors/Manufacture/Manufacture.jsx";
+import Customer from "../Master/Intractors/Customer/Customer.jsx";
+import Courier from "../Master/Intractors/Courier/Courier.jsx";
+import Transport from "../Master/Intractors/Transport/Transport.jsx";
 
 // Helper function to format tab title like classic ERP (e.g. "Location Listing", "Supplier Listing")
 function getTabTitle(label) {
@@ -73,6 +94,7 @@ export default function Dashboard() {
   // Multi-Tab MDI State
   const [tabs, setTabs] = useState([]);
   const [activeTab, setActiveTab] = useState(null);
+  const [dialog, setDialog] = useState(null);
 
   // Redirect to login if unauthenticated
   useEffect(() => {
@@ -83,10 +105,22 @@ export default function Dashboard() {
 
   const adminId = admin ? admin.id : null;
 
-  const handleLogout = () => {
-    localStorage.removeItem("admin");
-    navigate("/", { replace: true });
-  };
+  const handleLogout = useCallback(() => {
+    setDialog({
+      isOpen: true,
+      title: "Confirm Log Off",
+      message: "Are you sure you want to log off and exit SSRetails ERP?",
+      type: "confirm",
+      confirmText: "Log Off",
+      cancelText: "Cancel",
+      onConfirm: () => {
+        setDialog(null);
+        localStorage.removeItem("admin");
+        navigate("/", { replace: true });
+      },
+      onCancel: () => setDialog(null),
+    });
+  }, [navigate]);
 
   // Open a new tab or focus existing one
   const handleNavigate = useCallback((label) => {
@@ -134,18 +168,6 @@ export default function Dashboard() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [activeTab, handleCloseTab]);
 
-  // Protect against accidental browser window close when tabs are open
-  useEffect(() => {
-    const handleBeforeUnload = (e) => {
-      if (tabs.length > 0) {
-        e.preventDefault();
-        e.returnValue = "";
-      }
-    };
-    window.addEventListener("beforeunload", handleBeforeUnload);
-    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
-  }, [tabs.length]);
-
   if (!admin) return null;
 
   // Render component for each tab
@@ -181,12 +203,20 @@ export default function Dashboard() {
       case "Tax Type":
         return <TaxType adminId={adminId} onExit={onExit} />;
       case "System":
+      case "System Master":
+      case "SystemMas":
         return <SystemMas adminId={adminId} onExit={onExit} />;
       case "Counter":
+      case "Counters":
+      case "Counter Master":
         return <Counter adminId={adminId} onExit={onExit} />;
       case "System Counter Integration 2":
+      case "System Counter Integration":
+      case "System-Counter Integration":
         return <SystemCounterIntegration adminId={adminId} onExit={onExit} />;
       case "Counter Group 1":
+      case "Counter Group":
+      case "Counter Group Master":
         return <CounterGroup1 adminId={adminId} onExit={onExit} />;
       case "Gift Voucher":
       case "Gift voucher":
@@ -196,6 +226,9 @@ export default function Dashboard() {
       case "Discount Type":
         return <DiscountType adminId={adminId} onExit={onExit} />;
       case "Income and Expenses 3":
+      case "Income and Expenses":
+      case "Income And Expense":
+      case "Income and Expense":
         return <IncomeAndExpense adminId={adminId} onExit={onExit} />;
       case "Department":
         return <Department adminId={adminId} onExit={onExit} />;
@@ -206,9 +239,33 @@ export default function Dashboard() {
       case "Star":
         return <Star adminId={adminId} onExit={onExit} />;
 
-      // Location
+      // Location & Company
       case "Location":
         return <Location adminId={adminId} onExit={onExit} />;
+      case "Company":
+        return <Company adminId={adminId} onExit={onExit} />;
+
+      // Purchase Type & Document Type
+      case "Purchase Type":
+        return <PurchaseType adminId={adminId} onExit={onExit} />;
+      case "Document Type":
+        return <DocumentType adminId={adminId} onExit={onExit} />;
+      case "Courier Type":
+      case "Courier Type Mas":
+        return <CourierType adminId={adminId} onExit={onExit} />;
+
+      // Job Work
+      case "Job Work Charged Header":
+      case "Job Work Charged Head":
+      case "Job Work Charge Head":
+        return <JobWorkChargeHead adminId={adminId} onExit={onExit} />;
+      case "Tailor Mas":
+      case "Tailor":
+      case "Tailor Master":
+        return <Tailor adminId={adminId} onExit={onExit} />;
+      case "Consumption Master":
+      case "Consumption":
+        return <ConsumptionMaster adminId={adminId} onExit={onExit} />;
 
       // Tally
       case "Group Head":
@@ -216,28 +273,70 @@ export default function Dashboard() {
       case "Account Head":
         return <AccountHead adminId={adminId} onExit={onExit} />;
 
-      // Item Categories
+      // Accounts
+      case "Accounts Group Head":
+      case "Account Group Head":
+        return <AccountsGroupHead adminId={adminId} onExit={onExit} />;
+      case "Naration":
+        return <Naration adminId={adminId} onExit={onExit} />;
+      case "Transaction Head":
+        return <TransactionHead adminId={adminId} onExit={onExit} />;
+
+      // Item Definition Masters
+      case "Item":
+      case "Item Master":
+        return <Item adminId={adminId} onExit={onExit} />;
+      case "UOM":
+      case "UOM Master":
+        return <UOM adminId={adminId} onExit={onExit} />;
+      case "Product":
+      case "Product Master":
+        return <Product adminId={adminId} onExit={onExit} />;
+      case "Commodity Code":
+      case "Commodity code":
+      case "Commodity Code Master":
+      case "Commudity Code":
+        return <CommodityCode adminId={adminId} onExit={onExit} />;
+      case "ROL":
+      case "ROL Master":
+        return <ROL adminId={adminId} onExit={onExit} />;
+
+      // Intractors
+      case "Supplier":
+      case "Supplier Master":
+        return <Supplier adminId={adminId} onExit={onExit} />;
+      case "Agent":
+      case "Agent Master":
+        return <Agent adminId={adminId} onExit={onExit} />;
+      case "Manufacture":
+      case "Manufacture Master":
+        return <Manufacture adminId={adminId} onExit={onExit} />;
+      case "Customer":
+      case "Customer Master":
+        return <Customer adminId={adminId} onExit={onExit} />;
+      case "Courier":
+      case "Courier Master":
+      case "courier":
+        return <Courier adminId={adminId} onExit={onExit} />;
+      case "Transport":
+      case "Transport Master":
+      case "transport":
+        return <Transport adminId={adminId} onExit={onExit} />;
+
+      // Item Categories (Unified ItemCategory component)
       case "Brand":
-        return <Brand adminId={adminId} onExit={onExit} />;
       case "Type":
-        return <Type adminId={adminId} onExit={onExit} />;
       case "Style":
-        return <Style adminId={adminId} onExit={onExit} />;
       case "Pattern":
-        return <Pattern adminId={adminId} onExit={onExit} />;
       case "Color":
-        return <Color adminId={adminId} onExit={onExit} />;
+      case "Floor":
       case "Floor Category":
       case "Floors":
-        return <FloorCategory adminId={adminId} onExit={onExit} />;
       case "Section":
-        return <Section adminId={adminId} onExit={onExit} />;
       case "Section Group":
-        return <SectionGroup adminId={adminId} onExit={onExit} />;
       case "Hsn Code":
-        return <HsnCode adminId={adminId} onExit={onExit} />;
       case "Size Order":
-        return <Sizeorder adminId={adminId} onExit={onExit} />;
+        return <ItemCategory categoryKey={tabKey} adminId={adminId} onExit={onExit} />;
 
       // Fallback for all other unmapped masters (Supplier, Agent, Customer, etc.)
       default:
@@ -334,6 +433,20 @@ export default function Dashboard() {
           ))
         )}
       </main>
+
+      {/* Reusable ERP Dialog Box */}
+      {dialog && (
+        <Dialog
+          isOpen={dialog.isOpen}
+          title={dialog.title}
+          message={dialog.message}
+          type={dialog.type}
+          confirmText={dialog.confirmText}
+          cancelText={dialog.cancelText}
+          onConfirm={dialog.onConfirm}
+          onCancel={dialog.onCancel}
+        />
+      )}
     </div>
   );
 }

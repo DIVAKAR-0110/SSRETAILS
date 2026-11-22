@@ -1,0 +1,186 @@
+/* src/Component/Common/Dialog.css */
+
+.erp-dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(30, 20, 10, 0.45);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  animation: erpDialogFadeIn 0.15s ease-out;
+}
+
+@keyframes erpDialogFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.erp-dialog-box {
+  background: #fdfbf7;
+  border: 2px solid #8c6838;
+  border-radius: 6px;
+  box-shadow: 0 12px 32px rgba(40, 25, 10, 0.35), 0 2px 6px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 440px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  animation: erpDialogScaleIn 0.15s ease-out;
+}
+
+@keyframes erpDialogScaleIn {
+  from {
+    transform: scale(0.94);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Header */
+.erp-dialog-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 14px;
+  background: linear-gradient(180deg, #7a4f32 0%, #57341e 100%);
+  color: #ffffff;
+  border-bottom: 2px solid #b89758;
+}
+
+.erp-dialog-header.danger {
+  background: linear-gradient(180deg, #a83232 0%, #7e1e1e 100%);
+  border-bottom-color: #d9534f;
+}
+
+.erp-dialog-header.info {
+  background: linear-gradient(180deg, #325a7a 0%, #1e3a57 100%);
+  border-bottom-color: #5bc0de;
+}
+
+.erp-dialog-title-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.erp-dialog-icon {
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.erp-dialog-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.erp-dialog-close {
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0 4px;
+  line-height: 1;
+  opacity: 0.85;
+  transition: opacity 0.15s ease, color 0.15s ease;
+}
+
+.erp-dialog-close:hover {
+  opacity: 1;
+  color: #ffcccc;
+}
+
+/* Body */
+.erp-dialog-body {
+  padding: 20px 22px;
+  background: #fdfbf7;
+  color: #2b1f14;
+  font-size: 0.92rem;
+  line-height: 1.45;
+  border-bottom: 1px solid #ebd9c5;
+}
+
+.erp-dialog-message {
+  margin: 0;
+  word-break: break-word;
+}
+
+.erp-dialog-message strong {
+  color: #7a4f32;
+}
+
+/* Footer / Action Buttons */
+.erp-dialog-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 10px 16px;
+  background: linear-gradient(180deg, #faf5eb 0%, #ede2d1 100%);
+}
+
+.erp-dialog-btn {
+  padding: 6px 18px;
+  font-size: 0.84rem;
+  font-weight: 700;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  min-width: 80px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+  letter-spacing: 0.3px;
+}
+
+.erp-dialog-btn-cancel {
+  background: linear-gradient(180deg, #ffffff 0%, #ebe4d8 100%);
+  border: 1px solid #b8ab9a;
+  color: #57341e;
+}
+
+.erp-dialog-btn-cancel:hover {
+  background: linear-gradient(180deg, #f5efe6 0%, #ded3c1 100%);
+  border-color: #8c7865;
+}
+
+.erp-dialog-btn-primary {
+  background: linear-gradient(180deg, #8c6838 0%, #634621 100%);
+  border: 1px solid #4a3319;
+  color: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.erp-dialog-btn-primary:hover {
+  background: linear-gradient(180deg, #9d7642 0%, #755328 100%);
+}
+
+.erp-dialog-btn-danger {
+  background: linear-gradient(180deg, #c9302c 0%, #992420 100%);
+  border: 1px solid #771916;
+  color: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+}
+
+.erp-dialog-btn-danger:hover {
+  background: linear-gradient(180deg, #d9433f 0%, #ab2925 100%);
+}
+
+.erp-dialog-btn:focus-visible {
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px #8c6838;
+}

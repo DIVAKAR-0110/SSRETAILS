@@ -1,0 +1,404 @@
+/* frontend/src/Component/Master/General/Employee/Employee.css */
+/* Classic ERP Parchment Layout for Employee Master (2-Column Form) */
+
+.emp-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #2b231d;
+  padding: 6px;
+  font-size: 0.82rem;
+}
+
+.emp-header-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #5a3825;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid #d4c7b5;
+  padding-bottom: 4px;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+}
+
+/* 2-Column Grid */
+.emp-form-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.emp-col {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Field Row: Label on left, Input on right */
+.emp-field-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.emp-field-row-top {
+  align-items: flex-start;
+}
+
+.emp-label {
+  width: 110px;
+  font-size: 0.81rem;
+  font-weight: 600;
+  color: #43362a;
+  text-align: left;
+  flex-shrink: 0;
+}
+
+.emp-label-req::after {
+  content: " *";
+  color: #b91c1c;
+  font-weight: bold;
+}
+
+.emp-input-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.emp-input {
+  width: 100%;
+  padding: 4px 8px;
+  font-size: 0.82rem;
+  font-family: inherit;
+  color: #222;
+  background-color: #ffffff;
+  border: 1px solid #b8a994;
+  border-radius: 2px;
+  box-sizing: border-box;
+  height: 28px;
+}
+
+.emp-textarea {
+  width: 100%;
+  padding: 4px 8px;
+  font-size: 0.82rem;
+  font-family: inherit;
+  color: #222;
+  background-color: #ffffff;
+  border: 1px solid #b8a994;
+  border-radius: 2px;
+  box-sizing: border-box;
+  resize: vertical;
+}
+
+.emp-input:focus,
+.emp-textarea:focus,
+.emp-select:focus {
+  outline: none;
+  border-color: #8c5b36;
+  box-shadow: 0 0 0 1px #8c5b36;
+  background-color: #fffffb;
+}
+
+.emp-input-upper {
+  text-transform: uppercase;
+}
+
+.emp-select {
+  width: 100%;
+  padding: 4px 6px;
+  font-size: 0.82rem;
+  font-family: inherit;
+  color: #222;
+  background-color: #ffffff;
+  border: 1px solid #b8a994;
+  border-radius: 2px;
+  box-sizing: border-box;
+  height: 28px;
+  cursor: pointer;
+}
+
+.emp-badge {
+  position: absolute;
+  right: 6px;
+  font-size: 0.68rem;
+  color: #8c7865;
+  background: #f0ebe1;
+  padding: 1px 4px;
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+/* Side-by-side State & Country Row */
+.emp-state-country-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.emp-sub-field {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+}
+
+.emp-sub-label {
+  font-size: 0.81rem;
+  font-weight: 600;
+  color: #43362a;
+  flex-shrink: 0;
+}
+
+.emp-input-readonly {
+  background-color: #f6f3ed;
+  color: #444;
+  cursor: not-allowed;
+}
+
+/* Login Checkbox & Login Option Box */
+.emp-login-checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+  cursor: pointer;
+  user-select: none;
+  font-weight: 600;
+}
+
+.emp-login-box {
+  border: 1px solid #c9bea9;
+  border-radius: 3px;
+  background: #fbf9f5;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: opacity 0.2s ease;
+}
+
+.emp-login-box-disabled {
+  opacity: 0.5;
+  pointer-events: none;
+  background: #f3efe8;
+}
+
+.emp-login-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #63432b;
+  border-bottom: 1px dashed #d5cab9;
+  padding-bottom: 3px;
+  margin-bottom: 2px;
+}
+
+.emp-rights-btn-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 4px;
+}
+
+.emp-rights-btn {
+  padding: 4px 14px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background: #f4eee2;
+  border: 1px solid #b8a994;
+  border-radius: 3px;
+  color: #3f2a1b;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.emp-rights-btn:hover {
+  background: #e8ded0;
+}
+
+/* DOL (Date of Leaving) Row with Checkbox */
+.emp-dol-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.emp-dol-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.emp-checkbox-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  user-select: none;
+  font-weight: 600;
+}
+
+.emp-checkbox-inline input[type="checkbox"],
+.emp-login-checkbox-row input[type="checkbox"] {
+  accent-color: #7a4f32;
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+}
+
+/* Commission Allowed Row */
+.emp-commission-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.emp-commission-input {
+  width: 80px;
+  height: 28px;
+  text-align: right;
+  padding: 4px 6px;
+  font-size: 0.82rem;
+  border: 1px solid #b8a994;
+  border-radius: 2px;
+}
+
+/* Incentives Options Row */
+.emp-incentive-opts-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  background: #faf6ee;
+  border: 1px solid #e2d9c8;
+  padding: 6px 8px;
+  border-radius: 3px;
+}
+
+.emp-opt-field {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.emp-opt-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #554433;
+}
+
+.emp-opt-input {
+  width: 65px;
+  height: 26px;
+  text-align: right;
+  padding: 2px 4px;
+  font-size: 0.8rem;
+  border: 1px solid #b8a994;
+  border-radius: 2px;
+}
+
+/* Incentive Details Grid */
+.emp-incentive-section {
+  border: 1px solid #c9bea9;
+  border-radius: 3px;
+  background: #ffffff;
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+.emp-incentive-header {
+  background: #ece4d5;
+  padding: 5px 8px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #533927;
+  border-bottom: 1px solid #c9bea9;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.emp-incentive-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.79rem;
+}
+
+.emp-incentive-table th {
+  background: #f7f2ea;
+  color: #4a3829;
+  font-weight: 600;
+  padding: 5px 6px;
+  border: 1px solid #dcd3c4;
+  text-align: center;
+}
+
+.emp-incentive-table td {
+  padding: 4px 6px;
+  border: 1px solid #e6ded0;
+  text-align: center;
+}
+
+.emp-table-input {
+  width: 100%;
+  padding: 2px 4px;
+  font-size: 0.79rem;
+  text-align: right;
+  border: 1px solid #b8a994;
+  border-radius: 2px;
+  box-sizing: border-box;
+}
+
+.emp-row-btn {
+  background: #e76f51;
+  color: #fff;
+  border: none;
+  border-radius: 2px;
+  padding: 2px 6px;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.emp-row-btn:hover {
+  background: #d64024;
+}
+
+.emp-add-tier-btn {
+  margin: 6px;
+  padding: 3px 10px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  background: #ebd8c2;
+  border: 1px solid #baa68f;
+  border-radius: 3px;
+  color: #422915;
+  cursor: pointer;
+}
+
+.emp-add-tier-btn:hover {
+  background: #dec7ae;
+}
+
+/* Bottom Controls */
+.emp-bottom-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid #d4c7b5;
+}
+
+.emp-error-banner {
+  background-color: #fee2e2;
+  border: 1px solid #f87171;
+  color: #b91c1c;
+  padding: 6px 10px;
+  border-radius: 3px;
+  font-size: 0.8rem;
+  margin-bottom: 6px;
+}

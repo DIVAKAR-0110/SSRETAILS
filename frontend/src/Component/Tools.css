@@ -386,7 +386,8 @@
 
 .erp-modal-window {
   width: 90%;
-  max-width: 600px;
+  min-width: 600px;
+  max-width: fit-content;
   background: #ffffff;
   border: 2px solid #8c6544;
   border-radius: 4px;
@@ -395,11 +396,142 @@
   animation: modalFadeIn 0.15s ease-out;
 }
 
+.erp-modal-window.modal-wide {
+  max-width: 820px;
+}
+
+.erp-modal-window.modal-company {
+  max-width: 980px;
+  width: 95vw;
+}
+
+/* Sub-Tab Header Banner */
+.erp-subtab-banner {
+  background: linear-gradient(180deg, #fdfbf7 0%, #ece2d2 100%);
+  border-bottom: 2px solid #b89758;
+  padding: 6px 14px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #4a3319;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.erp-subtab-badge {
+  background: #7a4f32;
+  color: #ffffff;
+  padding: 2px 8px;
+  border-radius: 3px;
+  font-size: 0.75rem;
+}
+
+/* 2-Column Grid Layout */
+.erp-two-col-layout {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.erp-col-left,
+.erp-col-right {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Inset Framed Box for Cal Type */
+.erp-framed-group {
+  background: #f5efe6;
+  border: 1px solid #dcd1c2;
+  border-radius: 4px;
+  padding: 8px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: opacity 0.2s ease;
+}
+
+.erp-framed-group.disabled {
+  opacity: 0.55;
+  pointer-events: none;
+  background: #ece6dc;
+}
+
+.erp-framed-title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #553b26;
+  margin-bottom: 2px;
+}
+
+/* Radio Button Group */
+.erp-radio-group {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.erp-radio-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #333333;
+  cursor: pointer;
+  user-select: none;
+}
+
+.erp-radio-label input[type="radio"] {
+  accent-color: #8c6838;
+  cursor: pointer;
+}
+
+/* 2x2 Applicability Checkbox Matrix */
+.erp-checkbox-matrix {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 14px;
+  background: #fdfcf9;
+  border: 1px solid #e2dacd;
+  border-radius: 4px;
+  padding: 8px 12px;
+}
+
+.erp-matrix-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #333333;
+  cursor: pointer;
+  user-select: none;
+}
+
+.erp-matrix-check input[type="checkbox"] {
+  accent-color: #7a4f32;
+  cursor: pointer;
+}
+
+/* Bottom Row for Active Checkbox */
+.erp-form-bottom-row {
+  margin-top: 14px;
+  padding-top: 10px;
+  border-top: 1px solid #e8dfd2;
+  display: flex;
+  align-items: center;
+}
+
 @keyframes modalFadeIn {
   from {
     transform: scale(0.96);
     opacity: 0;
   }
+
   to {
     transform: scale(1);
     opacity: 1;
@@ -450,10 +582,26 @@
   gap: 4px;
 }
 
+.erp-form-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .erp-form-group label {
   font-size: 0.8rem;
   font-weight: 600;
   color: #444;
+}
+
+.erp-char-limit-badge {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #8c7865;
+  background: #f0ebe1;
+  padding: 1px 6px;
+  border-radius: 3px;
+  border: 1px solid #d4c8b8;
 }
 
 .req {
@@ -470,6 +618,37 @@
   color: #222222;
   box-sizing: border-box;
   width: 100%;
+}
+
+/* Input with Suffix (e.g. Perc (%)) */
+.erp-input-suffix-wrapper {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+}
+
+.erp-input.with-suffix {
+  flex: 1;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.erp-input-suffix {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 12px;
+  background: linear-gradient(180deg, #fdfbf7 0%, #ece2d2 100%);
+  border: 1px solid #b8ab9a;
+  border-left: none;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #57341e;
+  white-space: nowrap;
+  user-select: none;
+  box-sizing: border-box;
 }
 
 .erp-input:focus {

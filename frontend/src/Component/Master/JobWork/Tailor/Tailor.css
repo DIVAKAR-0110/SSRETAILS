@@ -1,0 +1,249 @@
+/* src/Component/Master/JobWork/Tailor/Tailor.css */
+
+.tailor-form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  color: #333;
+  font-family: inherit;
+}
+
+.tailor-fieldset {
+  border: 1px solid #dcd4c4;
+  border-radius: 4px;
+  padding: 14px 18px;
+  background-color: #ffffff;
+}
+
+.tailor-legend {
+  font-size: 12px;
+  font-weight: 700;
+  color: #554433;
+  padding: 0 6px;
+}
+
+.tailor-grid-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.tailor-col {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tailor-row {
+  display: flex;
+  align-items: center;
+}
+
+.tailor-label {
+  width: 110px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #333;
+  flex-shrink: 0;
+}
+
+.tailor-label-req::after {
+  content: " *";
+  color: #d9534f;
+}
+
+.tailor-input-wrap {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.tailor-input,
+.tailor-select {
+  width: 100%;
+  padding: 4px 6px;
+  font-size: 11px;
+  border: 1px solid #b5a995;
+  border-radius: 3px;
+  background-color: #fff;
+  color: #222;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.tailor-input:focus,
+.tailor-select:focus {
+  border-color: #7a4f32;
+  box-shadow: 0 0 3px rgba(122, 79, 50, 0.3);
+}
+
+.tailor-textarea {
+  width: 100%;
+  padding: 4px 6px;
+  font-size: 11px;
+  border: 1px solid #b5a995;
+  border-radius: 3px;
+  resize: vertical;
+  min-height: 48px;
+  outline: none;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.tailor-input-readonly {
+  background-color: #f7f5ef;
+  color: #555;
+}
+
+.tailor-inline-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+}
+
+.tailor-char-badge {
+  position: absolute;
+  right: 6px;
+  font-size: 10px;
+  color: #888;
+  pointer-events: none;
+}
+
+/* Bank Details Panel */
+.tailor-bank-panel {
+  border: 1px solid #d8cfbe;
+  border-radius: 3px;
+  background-color: #fcfbf9;
+  padding: 10px 12px;
+  margin-top: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.tailor-bank-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: #665038;
+  border-bottom: 1px dashed #d8cfbe;
+  padding-bottom: 3px;
+  margin-bottom: 2px;
+}
+
+/* Sub-Grids Section */
+.tailor-subgrids {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 10px;
+}
+
+.tailor-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(180deg, #f0ebd9 0%, #e2d9c2 100%);
+  border: 1px solid #c8bba8;
+  border-radius: 3px 3px 0 0;
+  padding: 5px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #4a3b2c;
+  cursor: pointer;
+}
+
+.tailor-grid-wrapper {
+  border: 1px solid #c8bba8;
+  border-top: none;
+  background-color: #ffffff;
+  overflow-x: auto;
+  max-height: 180px;
+}
+
+.tailor-grid-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+}
+
+.tailor-grid-table th {
+  background: linear-gradient(180deg, #eae4d5 0%, #ded6c2 100%);
+  color: #3e3325;
+  font-weight: 700;
+  padding: 5px 6px;
+  text-align: left;
+  border: 1px solid #c8bba8;
+  white-space: nowrap;
+}
+
+.tailor-grid-table td {
+  padding: 3px 4px;
+  border: 1px solid #e2dac9;
+}
+
+.tailor-grid-table tr:hover {
+  background-color: #f5f2e9;
+}
+
+.tailor-subgrid-input {
+  width: 100%;
+  padding: 2px 4px;
+  font-size: 11px;
+  border: 1px solid #c0b4a0;
+  border-radius: 2px;
+  box-sizing: border-box;
+}
+
+.tailor-subgrid-select {
+  width: 100%;
+  padding: 2px 4px;
+  font-size: 11px;
+  border: 1px solid #c0b4a0;
+  border-radius: 2px;
+  box-sizing: border-box;
+}
+
+.tailor-grid-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  background-color: #f4f0e6;
+  border: 1px solid #c8bba8;
+  border-top: none;
+  padding: 5px 12px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #4a3b2c;
+}
+
+/* Dual Grids Row (Charges & Consumption side-by-side) */
+.tailor-dual-grids {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.tailor-btn-sm {
+  padding: 2px 8px;
+  font-size: 10px;
+  font-weight: 600;
+  background-color: #7a4f32;
+  color: #fff;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.tailor-btn-del {
+  padding: 1px 5px;
+  font-size: 10px;
+  background-color: #d9534f;
+  color: #fff;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+}

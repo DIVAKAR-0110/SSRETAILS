@@ -1,0 +1,233 @@
+/* frontend/src/Component/Master/ItemDefinition/ItemCategories/ItemCategory.css */
+/* Classic ERP Parchment Layout for Unified Item Categories */
+
+.item-cat-modal-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #2b231d;
+}
+
+.item-cat-header-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #5a3825;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid #d4c7b5;
+  padding-bottom: 4px;
+  margin-bottom: 2px;
+}
+
+.item-cat-top-fields {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.item-cat-field-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.item-cat-field-label {
+  width: 100px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #43362a;
+  text-align: left;
+  flex-shrink: 0;
+}
+
+.item-cat-field-input-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.item-cat-input {
+  width: 100%;
+  padding: 5px 8px;
+  font-size: 0.84rem;
+  font-family: inherit;
+  color: #222;
+  background-color: #ffffff;
+  border: 1px solid #b8a994;
+  border-radius: 2px;
+  box-sizing: border-box;
+  text-transform: uppercase;
+}
+
+.item-cat-input:focus {
+  outline: none;
+  border-color: #8c5b36;
+  box-shadow: 0 0 0 1px #8c5b36;
+  background-color: #fffff8;
+}
+
+.item-cat-input-number {
+  text-transform: none;
+  text-align: right;
+  max-width: 180px;
+}
+
+.item-cat-badge {
+  position: absolute;
+  right: 6px;
+  font-size: 0.7rem;
+  color: #8c7865;
+  background: #f0ebe1;
+  padding: 1px 5px;
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+/* Product Mapping Grid */
+.item-cat-grid-wrapper {
+  margin-top: 4px;
+  border: 1px solid #b3a48e;
+  background: #ffffff;
+  border-radius: 2px;
+  display: flex;
+  flex-direction: column;
+}
+
+.item-cat-grid-scroll {
+  max-height: 240px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.item-cat-product-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+}
+
+.item-cat-product-table th {
+  position: sticky;
+  top: 0;
+  background: linear-gradient(180deg, #f7f1e6 0%, #ebe2cf 100%);
+  color: #4a3829;
+  font-weight: 700;
+  text-align: left;
+  padding: 5px 8px;
+  border-bottom: 1px solid #b8a892;
+  border-right: 1px solid #d4c8b6;
+  font-size: 0.78rem;
+  user-select: none;
+}
+
+.item-cat-product-table th:last-child {
+  border-right: none;
+}
+
+.item-cat-product-table td {
+  padding: 4px 8px;
+  border-bottom: 1px solid #ede4d6;
+  border-right: 1px solid #ede4d6;
+  vertical-align: middle;
+}
+
+.item-cat-product-table td:last-child {
+  border-right: none;
+}
+
+.item-cat-row {
+  cursor: pointer;
+  transition: background-color 0.1s ease;
+}
+
+.item-cat-row:hover {
+  background-color: #faf5ea;
+}
+
+.item-cat-row-selected {
+  background-color: #eff5fa;
+}
+
+.item-cat-row-selected:hover {
+  background-color: #e4eff8;
+}
+
+.item-cat-col-num {
+  width: 36px;
+  text-align: center;
+  color: #776a5b;
+  font-size: 0.75rem;
+}
+
+.item-cat-col-prod {
+  font-weight: 500;
+  color: #222;
+}
+
+.item-cat-col-check {
+  width: 65px;
+  text-align: center;
+}
+
+.item-cat-col-check input[type="checkbox"] {
+  accent-color: #7a4f32;
+  cursor: pointer;
+  width: 15px;
+  height: 15px;
+  margin: 0;
+  vertical-align: middle;
+}
+
+/* Footer row below grid */
+.item-cat-footer-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 4px 2px 4px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.item-cat-disc-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.item-cat-disc-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #43362a;
+}
+
+.item-cat-checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.item-cat-checkbox-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #33271d;
+  cursor: pointer;
+  user-select: none;
+}
+
+.item-cat-checkbox-label input[type="checkbox"] {
+  accent-color: #7a4f32;
+  cursor: pointer;
+  width: 15px;
+  height: 15px;
+}
+
+.item-cat-loading-grid {
+  padding: 24px;
+  text-align: center;
+  color: #7a6855;
+  font-size: 0.82rem;
+}

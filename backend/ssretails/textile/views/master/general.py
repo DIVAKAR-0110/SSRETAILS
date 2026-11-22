@@ -1,23 +1,29 @@
 # textile/views/master/general.py
-from rest_framework import viewsets
+from rest_framework import viewsets, status
+from rest_framework.decorators import action
+from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from django.utils import timezone
+from django.db import transaction
 
 from textile.models import (
     CountryMas, StateMas, CityMas, TitleMas, GradeMas, GroupMas, CategoryMas,
     RelationMas, ReligionMas, OccupationMas, BankMas, EmployeeMas, TaxTypeMas,
-    SystemMas, CounterMas, SystemCounterIntegrationMas, CounterGroupMas,
+    SystemMas, CounterMas, SystemCounterIntegrationMas, SystemCounterMas, SystemCounterDet,
+    CounterGroupMas, PrintFunctionMas,
     GiftvoucherMas, PaymentModeMas, DiscountTypeMas, IncomeAndExpenseMas,
-    DepartmentMas, FloorMas, TransferModeMas, StarMas
+    DepartmentMas, FloorMas, TransferModeMas, StarMas, UserGroup, EmployeeIncentiveMas
 )
 from textile.serializers import (
     CountrySerializer, StateSerializer, CitySerializer, TitleSerializer, GradeSerializer,
     GroupSerializer, CategorySerializer, RelationSerializer, ReligionSerializer,
     OccupationSerializer, BankSerializer, EmployeeSerializer, TaxTypeSerializer,
     SystemMasSerializer, CounterSerializer, SystemCounterIntegrationSerializer,
-    CounterGroupSerializer, GiftvoucherSerializer, PaymentModeSerializer,
+    SystemCounterDetSerializer, CounterGroupSerializer, PrintFunctionSerializer,
+    GiftvoucherSerializer, PaymentModeSerializer,
     DiscountTypeSerializer, IncomeAndExpenseSerializer, DepartmentSerializer,
-    FloorSerializer, TransferModeSerializer, StarSerializer
+    FloorSerializer, TransferModeSerializer, StarSerializer, UserGroupSerializer,
+    EmployeeIncentiveSerializer
 )
 
 
@@ -94,8 +100,20 @@ class BankViewSet(viewsets.ModelViewSet):
 
 
 class EmployeeViewSet(viewsets.ModelViewSet):
-    queryset = EmployeeMas.objects.all().order_by("-created_at")
+    queryset = EmployeeMas.objects.all().order_by("name")
     serializer_class = EmployeeSerializer
+    permission_classes = [AllowAny]
+
+    @action(detail=True, methods=["get"])
+    def incentives(self, request, pk=None):
+        incentives = EmployeeIncentiveMas.objects.filter(employee_code=pk).order_by("id")
+        serializer = EmployeeIncentiveSerializer(incentives, many=True)
+        return Response(serializer.data)
+
+
+class UserGroupViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = UserGroup.objects.filter(active=True).order_by("name")
+    serializer_class = UserGroupSerializer
     permission_classes = [AllowAny]
 
 
@@ -118,8 +136,94 @@ class CounterViewSet(viewsets.ModelViewSet):
 
 
 class SystemCounterIntegrationViewSet(viewsets.ModelViewSet):
-    queryset = SystemCounterIntegrationMas.objects.all().order_by("-created_at")
+    queryset = SystemCounterMas.objects.all().order_by("-created_at")
     serializer_class = SystemCounterIntegrationSerializer
+    permission_classes = [AllowAny]
+
+    def _attach_child_data(self, instance, data):
+        child_rows = SystemCounterDet.objects.filter(
+            location_id=instance.location_id,
+            counter_id=instance.counter_id,
+            counter_type=instance.counter_type
+        )
+        data["systems"] = SystemCounterDetSerializer(child_rows, many=True).data
+        return data
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        serializer = self.get_serializer(queryset, many=True)
+        data = []
+        for obj, s_data in zip(queryset, serializer.data):
+            row_dict = dict(s_data)
+            self._attach_child_data(obj, row_dict)
+            data.append(row_dict)
+        return Response(data)
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        data = dict(serializer.data)
+        data = self._attach_child_data(instance, data)
+        return Response(data)
+
+    def _sync_child_records(self, instance, raw_data):
+        systems_data = raw_data.get("systems")
+        if systems_data is not None:
+            SystemCounterDet.objects.filter(
+                location_id=instance.location_id,
+                counter_id=instance.counter_id,
+                counter_type=instance.counter_type
+            ).delete()
+            for item in systems_data:
+                sys_id = item.get("system_id") or item.get("id")
+                if sys_id:
+                    SystemCounterDet.objects.create(
+                        location_id=instance.location_id,
+                        counter_id=instance.counter_id,
+                        system_id=int(sys_id),
+                        counter_type=instance.counter_type
+                    )
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        with transaction.atomic():
+            instance = serializer.save()
+            self._sync_child_records(instance, request.data)
+
+        headers = self.get_success_headers(serializer.data)
+        data = dict(serializer.data)
+        data = self._attach_child_data(instance, data)
+        return Response(data, status=status.HTTP_201_CREATED, headers=headers)
+
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        with transaction.atomic():
+            instance = serializer.save()
+            self._sync_child_records(instance, request.data)
+
+        data = dict(serializer.data)
+        data = self._attach_child_data(instance, data)
+        return Response(data)
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        with transaction.atomic():
+            SystemCounterDet.objects.filter(
+                location_id=instance.location_id,
+                counter_id=instance.counter_id,
+                counter_type=instance.counter_type
+            ).delete()
+            instance.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class PrintFunctionViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = PrintFunctionMas.objects.all().order_by("name")
+    serializer_class = PrintFunctionSerializer
     permission_classes = [AllowAny]
 
 
@@ -148,7 +252,7 @@ class DiscountTypeViewSet(viewsets.ModelViewSet):
 
 
 class IncomeAndExpenseViewSet(viewsets.ModelViewSet):
-    queryset = IncomeAndExpenseMas.objects.all().order_by("-created_at")
+    queryset = IncomeAndExpenseMas.objects.all().order_by("name")
     serializer_class = IncomeAndExpenseSerializer
     permission_classes = [AllowAny]
 

@@ -5,14 +5,13 @@ from textile.models import GroupHeadMas, AccountHeadMas
 
 @admin.register(GroupHeadMas)
 class GroupHeadMasAdmin(admin.ModelAdmin):
-    list_display = ("id", "name", "short_name", "active", "created_at")
+    list_display = ("id", "name", "shortname", "active", "created_at")
     list_filter = ("active", "created_at")
-    search_fields = ("name", "short_name")
+    search_fields = ("name", "shortname")
 
 
 @admin.register(AccountHeadMas)
 class AccountHeadMasAdmin(admin.ModelAdmin):
-    list_display = ("id", "name", "short_name", "active", "created_at")
+    list_display = ("id", "name", "shortname", "active", "created_at")
     list_filter = ("active", "created_at")
-    search_fields = ("name", "short_name")
-
+    search_fields = ("name", "shortname")

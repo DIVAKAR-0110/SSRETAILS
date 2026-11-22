@@ -166,13 +166,13 @@ class OccupationMas(models.Model):
 
 class BankMas(models.Model):
     id = models.AutoField(primary_key=True, db_column='Code')
+    admin_id = models.IntegerField(null=True, blank=True, db_column='UserID', default=0)
     name = models.CharField(max_length=50, unique=True, db_column='Name')
     shortname = models.CharField(max_length=25, unique=True, db_column='Shortname')
-    cardservicecharge = models.DecimalField(max_digits=18, decimal_places=3, db_column='CardServiceCharge')
-    active = models.BooleanField(default=False, db_column='Active')
-    admin_id = models.IntegerField(null=True, blank=True, db_column='UserID')
+    cardservicecharge = models.DecimalField(max_digits=18, decimal_places=2, default=0.00, db_column='CardServiceCharge')
+    active = models.BooleanField(default=True, db_column='Active')
     created_at = models.DateTimeField(auto_now_add=True, db_column='CreatedDateTime')
-    altered_at = models.DateTimeField(auto_now_add=True, db_column='AlterdDateTime')
+    altered_at = models.DateTimeField(null=True, blank=True, db_column='AlterdDateTime')
 
     class Meta:
         app_label = 'textile'
@@ -183,48 +183,49 @@ class BankMas(models.Model):
 
 
 class TaxTypeMas(models.Model):
-    TAX_TYPE = "TAX_TYPE"
-    ADD_LESS = "ADD_LESS"
+    TAX_TYPE = "TAX TYPE"
+    ADD_LESS = "ADD / LESS"
 
     ENTRY_TYPE_CHOICES = [
-        (TAX_TYPE, "Tax Type"),
-        (ADD_LESS, "ADD/LESS"),
+        (TAX_TYPE, "TAX TYPE"),
+        (ADD_LESS, "ADD / LESS"),
     ]
 
-    id = models.AutoField(primary_key=True)
+    id = models.AutoField(primary_key=True, db_column='Code')
     entry_type = models.CharField(
         max_length=10,
         choices=ENTRY_TYPE_CHOICES,
         null=True,
         blank=True,
+        db_column='EntryType'
     )
-    name = models.CharField(max_length=50)
-    short_name = models.CharField(max_length=25)
-    tax_percent = models.DecimalField(max_digits=10, decimal_places=5)
-    tax_on = models.PositiveSmallIntegerField(null=True, blank=True)
-    include = models.BooleanField(default=False)
-    active = models.BooleanField(default=False)
-    created_at = models.DateTimeField(auto_now_add=True)
-    admin_id = models.IntegerField(null=True, blank=True)
-    is_discount = models.BooleanField(default=False)
-    allow_sales = models.BooleanField(default=False)
-    allow_purchase = models.BooleanField(default=False)
-    acc_head_name = models.CharField(max_length=100, null=True, blank=True)
-    account_post = models.BooleanField(default=False)
+    name = models.CharField(max_length=50, db_column='Name')
+    short_name = models.CharField(max_length=25, db_column='ShortName')
+    tax_percent = models.DecimalField(max_digits=10, decimal_places=5, default=0.00000, db_column='TaxPercent')
+    tax_on = models.PositiveSmallIntegerField(null=True, blank=True, default=0, db_column='TaxOn')
+    include = models.BooleanField(default=False, db_column='Include')
+    active = models.BooleanField(default=True, db_column='Active')
+    created_at = models.DateTimeField(auto_now_add=True, db_column='CreatedDateTime')
+    admin_id = models.IntegerField(null=True, blank=True, default=0, db_column='UserID')
+    is_discount = models.BooleanField(default=False, db_column='isDiscount')
+    allow_sales = models.BooleanField(default=False, db_column='AllowSales')
+    allow_purchase = models.BooleanField(default=False, db_column='AllowPurchase')
+    acc_head_name = models.CharField(max_length=100, null=True, blank=True, db_column='AccHeadName')
+    account_post = models.BooleanField(default=False, db_column='AccountPost')
 
-    account_head_id = models.IntegerField(null=True, blank=True)
-    account_sales_head_id = models.IntegerField(null=True, blank=True)
-    ss_pur_acc_head_id = models.IntegerField(null=True, blank=True)
-    ss_sal_acc_head_id = models.IntegerField(null=True, blank=True)
+    account_head_id = models.IntegerField(null=True, blank=True, default=0, db_column='AccountHeadCode')
+    account_sales_head_id = models.IntegerField(null=True, blank=True, default=0, db_column='AccountSalesHeadCode')
+    ss_pur_acc_head_id = models.IntegerField(null=True, blank=True, default=0, db_column='SSPurAccHeadCode')
+    ss_sal_acc_head_id = models.IntegerField(null=True, blank=True, default=0, db_column='SSSalAccHeadCode')
 
-    tax_amt_cal_type = models.PositiveSmallIntegerField(null=True, blank=True)
-    allow_tax_amt_cal = models.BooleanField(default=False)
-    commodity_code = models.CharField(max_length=15, null=True, blank=True)
-    section = models.CharField(max_length=15, null=True, blank=True)
-    local_category = models.CharField(max_length=15, null=True, blank=True)
-    other_category = models.CharField(max_length=15, null=True, blank=True)
-    import_category = models.CharField(max_length=15, null=True, blank=True)
-    category = models.CharField(max_length=15, null=True, blank=True)
+    tax_amt_cal_type = models.PositiveSmallIntegerField(null=True, blank=True, default=1, db_column='TaxAmtCalType')
+    allow_tax_amt_cal = models.BooleanField(default=False, db_column='AllowTaxAmtCal')
+    commodity_code = models.CharField(max_length=15, null=True, blank=True, default='', db_column='CommodityCode')
+    section = models.CharField(max_length=15, null=True, blank=True, default='', db_column='Section')
+    local_category = models.CharField(max_length=15, null=True, blank=True, default='', db_column='LocalCategory')
+    other_category = models.CharField(max_length=15, null=True, blank=True, default='', db_column='OtherCategory')
+    import_category = models.CharField(max_length=15, null=True, blank=True, default='', db_column='ImportCategory')
+    category = models.CharField(max_length=15, null=True, blank=True, default='', db_column='Category')
 
     class Meta:
         app_label = 'textile'
@@ -235,102 +236,145 @@ class TaxTypeMas(models.Model):
 
 
 class SystemMas(models.Model):
-    id = models.AutoField(primary_key=True)
-    location_id = models.IntegerField(null=True, blank=True)
-    name = models.CharField(max_length=50)
-    short_name = models.CharField(max_length=25)
-    mac_id = models.CharField(max_length=50, null=True, blank=True)
-    print_function_code = models.IntegerField(null=True, blank=True)
-    group_bill_prefix = models.CharField(max_length=10, null=True, blank=True)
-    seperator = models.CharField(max_length=35, null=True, blank=True)
-    no_length = models.PositiveSmallIntegerField(null=True, blank=True)
-    last_no = models.IntegerField(null=True, blank=True)
-    active = models.BooleanField(default=False)
-    admin_id = models.IntegerField(null=True, blank=True)
-    created_at = models.DateTimeField(null=True, blank=True)
-    floor_code = models.IntegerField(null=True, blank=True)
-    return_system = models.PositiveSmallIntegerField(null=True, blank=True)
-    settlement_print_function_code = models.IntegerField(null=True, blank=True)
-    sys_ref_no = models.CharField(max_length=50, null=True, blank=True)
-    allow_scheme = models.BooleanField(default=False)
-    printer_port_code = models.IntegerField(null=True, blank=True)
+    id = models.AutoField(primary_key=True, db_column='Code')
+    location_id = models.IntegerField(default=0, db_column='LocationCode')
+    floor_id = models.IntegerField(default=0, db_column='FloorCode')
+    name = models.CharField(max_length=50, db_column='Name')
+    short_name = models.CharField(max_length=25, db_column='ShortName')
+    mac_id = models.CharField(max_length=50, null=True, blank=True, db_column='MACID')
+    print_function_code = models.IntegerField(default=0, db_column='PrintFunctionCode')
+    group_bill_prefix = models.CharField(max_length=10, null=True, blank=True, db_column='GroupBillPrefix')
+    seperator = models.CharField(max_length=5, default='/', null=True, blank=True, db_column='Seperator')
+    no_length = models.PositiveSmallIntegerField(default=6, db_column='NoLength')
+    last_no = models.IntegerField(default=0, db_column='LastNo')
+    active = models.BooleanField(default=True, db_column='Active')
+    admin_id = models.IntegerField(default=0, db_column='UserID')
+    created_at = models.DateTimeField(auto_now_add=True, db_column='CreatedDateTime')
+    return_system = models.PositiveSmallIntegerField(default=0, db_column='ReturnSystem')
+    settlement_print_function_code = models.IntegerField(default=0, db_column='SettlementPrintFunctionCode')
+    sys_ref_no = models.CharField(max_length=50, null=True, blank=True, db_column='SysRefNo')
+    allow_scheme = models.BooleanField(default=False, db_column='AllowScheme')
+    printer_port_code = models.IntegerField(default=0, db_column='PRINTERPORTCODE')
 
     class Meta:
         app_label = 'textile'
         db_table = 'SystemMas'
+        managed = False
 
     def __str__(self):
         return self.name
-
-
-class SystemCounterIntegrationMas(models.Model):
-    id = models.AutoField(primary_key=True)
-    counter_id = models.IntegerField(null=True, blank=True)
-    system_id = models.CharField(max_length=25)
-    admin_id = models.IntegerField(null=True, blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    location_id = models.IntegerField(null=True, blank=True)
-
-    class Meta:
-        app_label = 'textile'
-        db_table = 'SystemCounterIntegrationMas'
-
-    def __str__(self):
-        return f"{self.system_id} / {self.counter_id}"
 
 
 class CounterMas(models.Model):
     id = models.AutoField(primary_key=True, db_column='Code')
-    location_id = models.IntegerField(null=True, blank=True, db_column='LocationCode')
+    location_id = models.IntegerField(default=0, db_column='LocationCode')
     name = models.CharField(max_length=50, db_column='Name')
     short_name = models.CharField(max_length=25, db_column='ShortName')
-    counter_group_id = models.IntegerField(null=True, blank=True, db_column='CounterGroupCode')
-    active = models.BooleanField(default=False, db_column='Active')
-    admin_id = models.IntegerField(null=True, blank=True, db_column='UserID')
+    counter_group_id = models.IntegerField(default=0, db_column='CounterGroupCode')
+    active = models.BooleanField(default=True, db_column='Active')
+    admin_id = models.IntegerField(default=0, db_column='UserID')
     created_at = models.DateTimeField(auto_now_add=True, db_column='CreatedDateTime')
-    section_code = models.IntegerField(null=True, blank=True, db_column='SectionCode')
-    counter_order = models.IntegerField(null=True, blank=True, db_column='CounterOrder')
+    section_code = models.IntegerField(default=0, db_column='SectionCode')
+    counter_order = models.IntegerField(default=0, db_column='CounterOrder')
 
     class Meta:
         app_label = 'textile'
         db_table = "CounterMas"
+        managed = False
 
     def __str__(self):
         return self.name
 
 
+class SystemCounterMas(models.Model):
+    id = models.AutoField(primary_key=True, db_column='Code')
+    location_id = models.IntegerField(default=0, db_column='LocationCode')
+    counter_id = models.IntegerField(default=0, db_column='CounterCode')
+    counter_type = models.CharField(max_length=25, db_column='CounterType')
+    admin_id = models.IntegerField(default=0, db_column='UserID')
+    created_at = models.DateTimeField(auto_now_add=True, db_column='UserEntryDateTime')
+
+    class Meta:
+        app_label = 'textile'
+        db_table = 'SystemCounterMas'
+        managed = False
+
+    def __str__(self):
+        return f"Counter {self.counter_id} ({self.counter_type})"
+
+
+# Alias for backward compatibility
+SystemCounterIntegrationMas = SystemCounterMas
+
+
+class SystemCounterDet(models.Model):
+    id = models.AutoField(primary_key=True, db_column='EntryOrderID')
+    location_id = models.IntegerField(default=0, db_column='LocationCode')
+    counter_id = models.IntegerField(default=0, db_column='CounterCode')
+    system_id = models.IntegerField(default=0, db_column='SystemCode')
+    counter_type = models.CharField(max_length=15, db_column='CounterType')
+
+    class Meta:
+        app_label = 'textile'
+        db_table = 'SystemCounterDet'
+        managed = False
+
+    def __str__(self):
+        return f"Counter {self.counter_id} System {self.system_id} ({self.counter_type})"
+
+
 class CounterGroupMas(models.Model):
     id = models.AutoField(primary_key=True, db_column='Code')
-    location_code = models.IntegerField(null=True, blank=True, db_column='LocationCode')
+    location_id = models.IntegerField(default=0, db_column='LocationCode')
     name = models.CharField(max_length=50, db_column='Name')
-    short_name = models.CharField(max_length=25, db_column='ShortName')
-    active = models.BooleanField(default=False, db_column='Active')
-    admin_id = models.IntegerField(null=True, blank=True, db_column='UserID')
+    shortname = models.CharField(max_length=25, db_column='ShortName')
+    active = models.BooleanField(default=True, db_column='Active')
+    admin_id = models.IntegerField(default=0, db_column='UserID')
     created_at = models.DateTimeField(auto_now_add=True, db_column='CreatedDateTime')
 
     class Meta:
         app_label = 'textile'
         db_table = "CounterGroupMas"
+        managed = False
+
+    def __str__(self):
+        return self.name
+
+
+class PrintFunctionMas(models.Model):
+    id = models.AutoField(primary_key=True, db_column='Code')
+    name = models.CharField(max_length=50, db_column='Name')
+    short_name = models.CharField(max_length=50, db_column='ShortName')
+    active = models.BooleanField(default=True, db_column='Active')
+    admin_id = models.IntegerField(default=0, db_column='UserID')
+    created_at = models.DateTimeField(auto_now_add=True, db_column='CreatedDateTime')
+    cashier_print = models.BooleanField(default=False, db_column='CashierPrint')
+
+    class Meta:
+        app_label = 'textile'
+        db_table = "PrintFunctionMas"
+        managed = False
 
     def __str__(self):
         return self.name
 
 
 class IncomeAndExpenseMas(models.Model):
-    id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=50)
-    short_name = models.CharField(max_length=25)
-    active = models.BooleanField(default=False)
-    admin_id = models.IntegerField(null=True, blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    head_type = models.BooleanField(default=False)
-    account_head_name = models.CharField(max_length=100, null=True, blank=True)
-    account_post = models.BooleanField(default=False)
-    account_head_code = models.IntegerField(null=True, blank=True)
+    id = models.AutoField(primary_key=True, db_column='Code')
+    name = models.CharField(max_length=50, unique=True, db_column='Name')
+    shortname = models.CharField(max_length=25, unique=True, db_column='Shortname')
+    active = models.BooleanField(default=True, db_column='Active')
+    admin_id = models.IntegerField(null=True, blank=True, default=0, db_column='UserID')
+    created_at = models.DateTimeField(auto_now_add=True, db_column='CreatedDateTime')
+    head_type = models.BooleanField(default=False, db_column='HeadType')  # Advance Checkbox
+    account_head_name = models.CharField(max_length=100, null=True, blank=True, db_column='AccountHeadName')
+    account_post = models.BooleanField(default=False, db_column='AccountPost')
+    account_head_code = models.IntegerField(default=0, db_column='AccountHeadCode')
 
     class Meta:
         app_label = 'textile'
         db_table = "IncomeAndExpenseMas"
+        managed = False
 
     def __str__(self):
         return self.name
@@ -338,10 +382,10 @@ class IncomeAndExpenseMas(models.Model):
 
 class GiftvoucherMas(models.Model):
     id = models.AutoField(primary_key=True, db_column='Code')
-    name = models.CharField(max_length=150, unique=True, db_column='Name')
-    shortname = models.CharField(max_length=35, unique=True, db_column='ShortName')
-    active = models.BooleanField(default=False, db_column='Active')
-    admin_id = models.IntegerField(null=True, blank=True, db_column='UserID')
+    name = models.CharField(max_length=50, unique=True, db_column='Name')
+    shortname = models.CharField(max_length=25, unique=True, db_column='ShortName')
+    active = models.BooleanField(default=True, db_column='Active')
+    admin_id = models.IntegerField(null=True, blank=True, db_column='UserID', default=0)
     created_at = models.DateTimeField(auto_now_add=True, db_column='CreatedDateTime')
 
     class Meta:
@@ -356,8 +400,8 @@ class PaymentModeMas(models.Model):
     id = models.AutoField(primary_key=True, db_column='Code')
     name = models.CharField(max_length=50, unique=True, db_column='Name')
     shortname = models.CharField(max_length=25, unique=True, db_column='ShortName')
-    active = models.BooleanField(default=False, db_column='Active')
-    admin_id = models.IntegerField(null=True, blank=True, db_column='UserID')
+    active = models.BooleanField(default=True, db_column='Active')
+    admin_id = models.IntegerField(null=True, blank=True, default=0, db_column='UserID')
     created_at = models.DateTimeField(auto_now_add=True, db_column='CreatedDateTime')
 
     class Meta:
@@ -373,9 +417,9 @@ class DiscountTypeMas(models.Model):
     name = models.CharField(max_length=50, unique=True, db_column='Name')
     shortname = models.CharField(max_length=25, unique=True, db_column='ShortName')
     active = models.BooleanField(default=True, db_column='Active')
-    admin_id = models.IntegerField(null=True, blank=True, db_column='UserID')
+    admin_id = models.IntegerField(null=True, blank=True, default=0, db_column='UserID')
     created_at = models.DateTimeField(auto_now_add=True, db_column='CreatedDateTime')
-    discper = models.DecimalField(max_digits=18, decimal_places=2, db_column='DiscPer')
+    discper = models.DecimalField(max_digits=18, decimal_places=2, default=0.00, db_column='DiscPer')
 
     class Meta:
         app_label = 'textile'
@@ -387,16 +431,17 @@ class DiscountTypeMas(models.Model):
 
 class DepartmentMas(models.Model):
     id = models.AutoField(primary_key=True, db_column='Code')
+    admin_id = models.IntegerField(null=True, blank=True, db_column='UserID', default=0)
     name = models.CharField(max_length=50, null=True, blank=True, db_column='Name')
     shortname = models.CharField(max_length=25, null=True, blank=True, db_column='Shortname')
-    active = models.BooleanField(default=False, db_column='Active')
-    admin_id = models.IntegerField(null=True, blank=True, db_column='UserID')
-    created_at = models.DateTimeField(auto_now_add=True, db_column='CreatedDateTime')
     perdaycommission = models.DecimalField(
         max_digits=18,
         decimal_places=5,
+        default=0.00000,
         db_column='PerDayCommission'
     )
+    active = models.BooleanField(default=True, db_column='Active')
+    created_at = models.DateTimeField(auto_now_add=True, db_column='CreatedDateTime')
 
     class Meta:
         app_label = 'textile'
@@ -408,11 +453,11 @@ class DepartmentMas(models.Model):
 
 class FloorMas(models.Model):
     id = models.AutoField(primary_key=True, db_column='Code')
-    location_id = models.IntegerField(null=True, blank=True, db_column='LocationCode')
+    admin_id = models.IntegerField(null=True, blank=True, db_column='UserID', default=0)
+    location_id = models.IntegerField(null=True, blank=True, db_column='LocationCode', default=0)
     name = models.CharField(max_length=50, null=True, blank=True, db_column='Name')
-    short_name = models.CharField(max_length=25, null=True, blank=True, db_column='Shortname')
-    active = models.BooleanField(default=False, db_column='Active')
-    admin_id = models.IntegerField(null=True, blank=True, db_column='UserID')
+    shortname = models.CharField(max_length=25, null=True, blank=True, db_column='Shortname')
+    active = models.BooleanField(default=True, db_column='Active')
     created_at = models.DateTimeField(auto_now_add=True, db_column='CreatedDateTime')
 
     class Meta:
@@ -425,12 +470,12 @@ class FloorMas(models.Model):
 
 class TransferModeMas(models.Model):
     id = models.AutoField(primary_key=True, db_column='Code')
-    name = models.CharField(max_length=150, db_column='Name')
+    name = models.CharField(max_length=50, db_column='Name')
     shortname = models.CharField(max_length=25, null=True, blank=True, db_column='ShortName')
-    active = models.BooleanField(default=False, db_column='Active')
-    admin_id = models.IntegerField(null=True, blank=True, db_column='UserID')
+    numgeneration = models.BooleanField(default=False, db_column='NumGeneration')
+    active = models.BooleanField(default=True, db_column='Active')
+    admin_id = models.IntegerField(null=True, blank=True, db_column='UserID', default=0)
     created_at = models.DateTimeField(auto_now_add=True, db_column='CreatedDateTime')
-    numgeneration = models.BooleanField(db_column='NumGeneration')
 
     class Meta:
         app_label = 'textile'
@@ -444,8 +489,8 @@ class StarMas(models.Model):
     id = models.AutoField(primary_key=True, db_column='Code')
     starname = models.CharField(max_length=10, unique=True, db_column='Starname')
     starvalue = models.DecimalField(max_digits=9, decimal_places=2, db_column='Starvalue')
-    active = models.BooleanField(default=False, db_column='Active')
-    admin_id = models.IntegerField(null=True, blank=True, db_column='UserID')
+    active = models.BooleanField(default=True, db_column='Active')
+    admin_id = models.IntegerField(null=True, blank=True, db_column='UserID', default=0)
     created_at = models.DateTimeField(auto_now_add=True, db_column='CreatedDateTime')
 
     class Meta:
@@ -553,8 +598,40 @@ class EmployeeMas(models.Model):
     class Meta:
         app_label = 'textile'
         db_table = "EmployeeMas"
-        managed = True
+        managed = False
 
     def __str__(self):
         return self.name
+
+
+class UserGroup(models.Model):
+    id = models.AutoField(primary_key=True, db_column='Code')
+    name = models.CharField(max_length=50, null=True, blank=True, db_column='Name')
+    shortname = models.CharField(max_length=25, null=True, blank=True, db_column='ShortName')
+    active = models.BooleanField(default=True, db_column='Active')
+
+    class Meta:
+        app_label = 'textile'
+        db_table = "UserGroup"
+        managed = False
+
+    def __str__(self):
+        return self.name or f"UserGroup {self.id}"
+
+
+class EmployeeIncentiveMas(models.Model):
+    id = models.AutoField(primary_key=True, db_column='EntryOrderID')
+    employee_code = models.IntegerField(db_column='EmployeeCode')
+    range_from = models.DecimalField(max_digits=18, decimal_places=5, default=0, db_column='RangeFrom')
+    range_to = models.DecimalField(max_digits=18, decimal_places=5, default=0, db_column='RangeTo')
+    incentive_percentage = models.DecimalField(max_digits=10, decimal_places=5, default=0, db_column='IncentivePercentage')
+    incentive_amount = models.DecimalField(max_digits=18, decimal_places=5, default=0, db_column='IncentiveAmount')
+
+    class Meta:
+        app_label = 'textile'
+        db_table = "EmployeeIncentiveMas"
+        managed = False
+
+    def __str__(self):
+        return f"Incentive Emp {self.employee_code} ({self.range_from} - {self.range_to})"
 

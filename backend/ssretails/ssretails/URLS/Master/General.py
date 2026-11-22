@@ -47,9 +47,13 @@ urlpatterns = [
     path("banks/", views.BankViewSet.as_view({"get": "list", "post": "create"}), name="banks"),
     path("banks/<int:pk>/", views.BankViewSet.as_view({"get": "retrieve", "put": "update", "delete": "destroy"}), name="bank-detail"),
 
-    # 12. Employee
+    # 12. Employee & User Groups
     path("employees/", views.EmployeeViewSet.as_view({"get": "list", "post": "create"}), name="employee"),
     path("employees/<int:pk>/", views.EmployeeViewSet.as_view({"get": "retrieve", "put": "update", "patch": "partial_update", "delete": "destroy"}), name="employee-detail"),
+    path("employees/<int:pk>/incentives/", views.EmployeeViewSet.as_view({"get": "incentives"}), name="employee-incentives"),
+    path("employee/", views.EmployeeViewSet.as_view({"get": "list", "post": "create"}), name="employee-alias"),
+    path("employee/<int:pk>/", views.EmployeeViewSet.as_view({"get": "retrieve", "put": "update", "patch": "partial_update", "delete": "destroy"}), name="employee-alias-detail"),
+    path("user-groups/", views.UserGroupViewSet.as_view({"get": "list"}), name="user-groups"),
 
     # 13. Tax Type
     path("tax-types/", views.TaxTypeViewSet.as_view({"get": "list", "post": "create"}), name="tax-type"),
@@ -86,6 +90,10 @@ urlpatterns = [
     # 21. Income and Expenses 3
     path("income-expenses/", views.IncomeAndExpenseViewSet.as_view({"get": "list", "post": "create"}), name="income-expense"),
     path("income-expenses/<int:pk>/", views.IncomeAndExpenseViewSet.as_view({"get": "retrieve", "put": "update", "delete": "destroy"}), name="income-expense-detail"),
+    path("income-and-expense/", views.IncomeAndExpenseViewSet.as_view({"get": "list", "post": "create"}), name="income-and-expense-alias"),
+    path("income-and-expense/<int:pk>/", views.IncomeAndExpenseViewSet.as_view({"get": "retrieve", "put": "update", "delete": "destroy"}), name="income-and-expense-alias-detail"),
+    path("income-and-expenses/", views.IncomeAndExpenseViewSet.as_view({"get": "list", "post": "create"}), name="income-and-expenses-alias"),
+    path("income-and-expenses/<int:pk>/", views.IncomeAndExpenseViewSet.as_view({"get": "retrieve", "put": "update", "delete": "destroy"}), name="income-and-expenses-alias-detail"),
 
     # 22. Department
     path("departments/", views.DepartmentViewSet.as_view({"get": "list", "post": "create"}), name="departments"),
@@ -102,5 +110,9 @@ urlpatterns = [
     # 25. Star
     path("stars/", views.StarViewSet.as_view({"get": "list", "post": "create"}), name="stars"),
     path("stars/<int:pk>/", views.StarViewSet.as_view({"get": "retrieve", "put": "update", "delete": "destroy"}), name="star-detail"),
+
+    # 26. Print Functions (Lookup for System Master)
+    path("print-functions/", views.PrintFunctionViewSet.as_view({"get": "list"}), name="print-functions"),
+    path("print-functions/<int:pk>/", views.PrintFunctionViewSet.as_view({"get": "retrieve"}), name="print-function-detail"),
 ]
 

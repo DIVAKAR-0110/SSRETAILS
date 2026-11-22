@@ -1,34 +1,6 @@
-// src/pages/Country.jsx
-import Tools from "../../../../Tools";
+// frontend/src/Component/Master/ItemDefinition/ItemCategories/HsnCode/HsnCode.jsx
+import ItemCategory from "../ItemCategory";
 
-export default function HsnCode({ adminId, onExit }) {
-  const columns = [
-    {
-      name: "name",
-      label: "Hsn Code Name",
-      required: true,
-      transform: (value) => value.toUpperCase(),
-    },
-    {
-      name: "shortname",
-      label: "Short Name",
-      required: true,
-      transform: (value) => value.toUpperCase(),
-    },
-    {
-      name: "active",
-      label: "Active",
-      type: "boolean",
-    },
-  ];
-
-  return (
-    <Tools
-      title="Hsn Code Category"
-      columns={columns}
-      apiBase="http://localhost:8000/hsn_code/"
-      extraPayload={{ admin_id: adminId }}
-      onExit={onExit}
-    />
-  );
+export default function HsnCode(props) {
+  return <ItemCategory categoryKey="hsn code" {...props} />;
 }

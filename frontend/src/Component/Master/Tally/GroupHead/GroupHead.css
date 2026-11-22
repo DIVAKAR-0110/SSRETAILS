@@ -1,0 +1,189 @@
+/* frontend/src/Component/Master/Tally/GroupHead/GroupHead.css */
+/* Classic ERP Parchment Layout for Group Head Master */
+
+.gh-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #2b231d;
+  padding: 6px;
+  font-size: 0.82rem;
+}
+
+.gh-header-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #5a3825;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid #d4c7b5;
+  padding-bottom: 4px;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+}
+
+.gh-field-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.gh-label {
+  width: 90px;
+  font-size: 0.81rem;
+  font-weight: 600;
+  color: #43362a;
+  text-align: left;
+  flex-shrink: 0;
+}
+
+.gh-label-req::after {
+  content: " *";
+  color: #b91c1c;
+  font-weight: bold;
+}
+
+.gh-input-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.gh-input {
+  width: 100%;
+  padding: 4px 8px;
+  font-size: 0.82rem;
+  font-family: inherit;
+  color: #222;
+  background-color: #ffffff;
+  border: 1px solid #b8a994;
+  border-radius: 2px;
+  box-sizing: border-box;
+  height: 28px;
+}
+
+.gh-input:focus,
+.gh-select:focus {
+  outline: none;
+  border-color: #8c5b36;
+  box-shadow: 0 0 0 1px #8c5b36;
+  background-color: #fffffb;
+}
+
+.gh-input-upper {
+  text-transform: uppercase;
+}
+
+.gh-select {
+  width: 100%;
+  padding: 4px 6px;
+  font-size: 0.82rem;
+  font-family: inherit;
+  color: #222;
+  background-color: #ffffff;
+  border: 1px solid #b8a994;
+  border-radius: 2px;
+  box-sizing: border-box;
+  height: 28px;
+  cursor: pointer;
+}
+
+.gh-badge {
+  position: absolute;
+  right: 6px;
+  font-size: 0.68rem;
+  color: #8c7865;
+  background: #f0ebe1;
+  padding: 1px 4px;
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+/* Classification Frame / Box */
+.gh-class-box {
+  border: 1px solid #c9bea9;
+  border-radius: 3px;
+  background: #fbf9f5;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.gh-class-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.gh-check-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  user-select: none;
+  font-weight: 600;
+  font-size: 0.81rem;
+  flex-shrink: 0;
+}
+
+.gh-check-inline input[type="checkbox"] {
+  accent-color: #7a4f32;
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+}
+
+/* Radio buttons row */
+.gh-type-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.gh-type-label {
+  width: 45px;
+  font-size: 0.81rem;
+  font-weight: 600;
+  color: #43362a;
+}
+
+.gh-radios-wrap {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.gh-radio-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  user-select: none;
+  font-size: 0.81rem;
+  font-weight: 500;
+  color: #33271d;
+}
+
+.gh-radio-label input[type="radio"] {
+  accent-color: #7a4f32;
+  cursor: pointer;
+}
+
+.gh-disabled {
+  opacity: 0.45;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+/* Bottom Active row */
+.gh-bottom-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-top: 6px;
+  padding-top: 6px;
+  border-top: 1px solid #d4c7b5;
+}

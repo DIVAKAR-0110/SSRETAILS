@@ -1,0 +1,93 @@
+/* frontend/src/Component/Master/ItemDefinition/ROL/ROL.css */
+
+.rol-form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background-color: #f7f3e8;
+  font-family: Tahoma, "Segoe UI", Arial, sans-serif;
+  font-size: 11px;
+  color: #333333;
+  padding: 6px;
+}
+
+.rol-fieldset {
+  border: 1px solid #c9bca6;
+  border-radius: 4px;
+  padding: 12px 16px;
+  background-color: #fcfbf9;
+}
+
+.rol-legend {
+  font-weight: bold;
+  font-size: 11px;
+  color: #4a3622;
+  padding: 0 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.rol-table-wrapper {
+  overflow-x: auto;
+  border: 1px solid #b39b7d;
+  background-color: #ffffff;
+  border-radius: 2px;
+  margin-top: 6px;
+}
+
+.rol-grid-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+}
+
+.rol-grid-table th {
+  background: linear-gradient(180deg, #ede4d3 0%, #d8caa7 100%);
+  color: #4a3622;
+  font-weight: bold;
+  padding: 6px 10px;
+  text-align: left;
+  border-right: 1px solid #b39b7d;
+  border-bottom: 1px solid #b39b7d;
+  white-space: nowrap;
+}
+
+.rol-grid-table td {
+  padding: 6px 10px;
+  border-right: 1px solid #e0d5c1;
+  border-bottom: 1px solid #e0d5c1;
+  vertical-align: middle;
+}
+
+.rol-form-input,
+.rol-form-select {
+  width: 100%;
+  height: 24px;
+  padding: 2px 6px;
+  border: 1px solid #b39b7d;
+  border-radius: 2px;
+  font-size: 11px;
+  background-color: #ffffff;
+  color: #222222;
+  box-sizing: border-box;
+}
+
+.rol-form-input:disabled,
+.rol-form-select:disabled {
+  background-color: #f0ebe0;
+  color: #555555;
+  cursor: not-allowed;
+}
+
+.rol-form-input:focus,
+.rol-form-select:focus {
+  outline: none;
+  border-color: #7b5836;
+  box-shadow: 0 0 3px rgba(123, 88, 54, 0.4);
+}
+
+.rol-checkbox-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

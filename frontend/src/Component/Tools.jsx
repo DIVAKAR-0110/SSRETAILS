@@ -1,15 +1,27 @@
 // src/Component/Tools.jsx
 import { useEffect, useState, useMemo, useCallback, useRef } from "react";
+import Dialog from "./Common/Dialog.jsx";
 import "./Tools.css";
 
 export default function Tools({
   title,
   columns,
   apiBase,
+  endpoint,
   onExit,
   extraPayload,
   showTabHeader = false,
+  customForm,
+  modalWidth,
 }) {
+  const resolvedApiBase =
+    apiBase ||
+    (endpoint
+      ? endpoint.startsWith("http")
+        ? endpoint
+        : `http://localhost:8000/${endpoint.replace(/^\/|\/$/g, "")}/`
+      : "");
+
   const [rows, setRows] = useState([]);
   const [selectedId, setSelectedId] = useState(null);
   const [mode, setMode] = useState(null); // "add" | "edit" | "view"
@@ -18,15 +30,17 @@ export default function Tools({
   const [message, setMessage] = useState("");
   const [search, setSearch] = useState("");
   const [showReportMenu, setShowReportMenu] = useState(false);
+  const [dialog, setDialog] = useState(null);
   const reportDropdownRef = useRef(null);
 
   const selectedRow = rows.find((r) => r.id === selectedId);
 
   const fetchData = useCallback(async () => {
+    if (!resolvedApiBase) return;
     try {
       setLoading(true);
       setMessage("");
-      const res = await fetch(apiBase);
+      const res = await fetch(resolvedApiBase);
       if (!res.ok) throw new Error("Server returned " + res.status);
       const data = await res.json();
       setRows(Array.isArray(data) ? data : []);
@@ -35,11 +49,11 @@ export default function Tools({
       }
     } catch (err) {
       console.error(err);
-      setMessage("Failed to load records from " + apiBase);
+      setMessage("Failed to load records from " + resolvedApiBase);
     } finally {
       setLoading(false);
     }
-  }, [apiBase, selectedId]);
+  }, [resolvedApiBase, selectedId]);
 
   useEffect(() => {
     fetchData();
@@ -70,24 +84,50 @@ export default function Tools({
     setFormData({ ...selectedRow });
   }, [selectedRow]);
 
-  const handleDelete = useCallback(async () => {
+  const executeDelete = useCallback(
+    async (recordToDelete) => {
+      setDialog(null);
+      if (!recordToDelete) return;
+      try {
+        setLoading(true);
+        setMessage("");
+        const res = await fetch(`${resolvedApiBase}${recordToDelete.id}/`, {
+          method: "DELETE",
+        });
+        if (!res.ok) throw new Error("Delete failed");
+        setSelectedId(null);
+        fetchData();
+      } catch (err) {
+        setDialog({
+          isOpen: true,
+          title: "Delete Failed",
+          message: "Failed to delete record. It may be referenced by other transactions.",
+          type: "alert",
+          confirmText: "OK",
+          onConfirm: () => setDialog(null),
+          onCancel: () => setDialog(null),
+        });
+      } finally {
+        setLoading(false);
+      }
+    },
+    [resolvedApiBase, fetchData]
+  );
+
+  const handleDelete = useCallback(() => {
     if (!selectedRow) return;
-    if (!window.confirm(`Delete record: ${selectedRow.name || selectedRow.id}?`)) return;
-    try {
-      setLoading(true);
-      setMessage("");
-      const res = await fetch(`${apiBase}${selectedRow.id}/`, {
-        method: "DELETE",
-      });
-      if (!res.ok) throw new Error("Delete failed");
-      setSelectedId(null);
-      fetchData();
-    } catch (err) {
-      setMessage("Failed to delete record.");
-    } finally {
-      setLoading(false);
-    }
-  }, [apiBase, selectedRow, fetchData]);
+    const identifier = selectedRow.name || selectedRow.shortname || selectedRow.id;
+    setDialog({
+      isOpen: true,
+      title: "Confirm Delete",
+      message: `Delete record: ${identifier}?`,
+      type: "danger",
+      confirmText: "Delete",
+      cancelText: "Cancel",
+      onConfirm: () => executeDelete(selectedRow),
+      onCancel: () => setDialog(null),
+    });
+  }, [selectedRow, executeDelete]);
 
   // Close report dropdown on click outside
   useEffect(() => {
@@ -157,14 +197,24 @@ export default function Tools({
 
   function handleChange(e) {
     const { type, checked, value, name } = e.target;
+    const col = columns.find((c) => c.name === name);
+
+    let finalVal = value;
+    if (type === "checkbox") {
+      finalVal = checked;
+    } else if (type === "number" || type === "date" || type === "datetime-local") {
+      finalVal = value;
+    } else {
+      finalVal = value.toUpperCase();
+      // Enforce max_length directly in frontend input handler
+      if (col && col.maxLength && finalVal.length > col.maxLength) {
+        finalVal = finalVal.slice(0, col.maxLength);
+      }
+    }
+
     setFormData((prev) => ({
       ...prev,
-      [name]:
-        type === "checkbox"
-          ? checked
-          : type === "date" || type === "datetime-local"
-            ? value
-            : value.toUpperCase(),
+      [name]: finalVal,
     }));
   }
 
@@ -177,14 +227,51 @@ export default function Tools({
 
       const method = mode === "add" ? "POST" : "PUT";
       const url =
-        mode === "add" ? apiBase : `${apiBase}${formData.id || selectedId}/`;
+        mode === "add"
+          ? resolvedApiBase
+          : `${resolvedApiBase}${formData.id || selectedId}/`;
 
-      const payload = {};
-      columns.forEach((c) => {
-        payload[c.name] = formData[c.name];
-      });
+      const payload = customForm ? { ...formData } : {};
+      if (!customForm) {
+        columns.forEach((c) => {
+          payload[c.name] = formData[c.name];
+        });
+      }
       if (mode === "add" && extraPayload) {
         Object.assign(payload, extraPayload);
+      }
+
+      // Frontend data type and constraint validation
+      for (const col of columns) {
+        const val = payload[col.name];
+        if (col.required && (val === undefined || val === null || String(val).trim() === "")) {
+          setMessage(`${col.label} is required.`);
+          setLoading(false);
+          return;
+        }
+        if (col.maxLength && val && String(val).length > col.maxLength) {
+          setMessage(`${col.label} cannot exceed ${col.maxLength} characters.`);
+          setLoading(false);
+          return;
+        }
+        if (col.type === "number" && val !== undefined && val !== null && val !== "") {
+          const num = Number(val);
+          if (isNaN(num)) {
+            setMessage(`${col.label} must be a valid number.`);
+            setLoading(false);
+            return;
+          }
+          if (col.min !== undefined && num < Number(col.min)) {
+            setMessage(`${col.label} cannot be less than ${col.min}.`);
+            setLoading(false);
+            return;
+          }
+          if (col.max !== undefined && num > Number(col.max)) {
+            setMessage(`${col.label} cannot exceed ${col.max}.`);
+            setLoading(false);
+            return;
+          }
+        }
       }
 
       const res = await fetch(url, {
@@ -277,7 +364,7 @@ export default function Tools({
     }
 
     const inputType = c.type === "number" ? "number" : "text";
-    return (
+    const inputElement = (
       <input
         type={inputType}
         name={c.name}
@@ -287,11 +374,24 @@ export default function Tools({
         disabled={disabled}
         maxLength={c.maxLength}
         minLength={c.minLength}
+        min={c.type === "number" ? c.min : undefined}
+        max={c.type === "number" ? c.max : undefined}
         step={c.type === "number" ? c.step || "any" : undefined}
         placeholder={c.placeholder || ""}
-        className="erp-input"
+        className={`erp-input ${c.suffix ? "with-suffix" : ""}`}
       />
     );
+
+    if (c.suffix) {
+      return (
+        <div className="erp-input-suffix-wrapper">
+          {inputElement}
+          <span className="erp-input-suffix">{c.suffix}</span>
+        </div>
+      );
+    }
+
+    return inputElement;
   }
 
   const filteredRows = useMemo(() => {
@@ -806,7 +906,7 @@ export default function Tools({
       {/* Modal for Add / Edit / View */}
       {mode && (
         <div className="erp-modal-overlay">
-          <div className="erp-modal-window">
+          <div className={`erp-modal-window ${modalWidth ? `modal-${modalWidth}` : ""}`}>
             <div className="erp-modal-header">
               <span>{mode.toUpperCase()} RECORD - {title.toUpperCase()}</span>
               <button
@@ -819,14 +919,33 @@ export default function Tools({
 
             <form onSubmit={handleSubmit} className="erp-modal-form">
               <div className="erp-modal-body">
-                <div className="erp-form-grid">
-                  {columns.map((c) => (
-                    <div className="erp-form-group" key={c.name}>
-                      <label>{c.label} {c.required && <span className="req">*</span>}</label>
-                      {renderFieldControl(c)}
-                    </div>
-                  ))}
-                </div>
+                {customForm ? (
+                  customForm({
+                    formData,
+                    setFormData,
+                    handleChange,
+                    mode,
+                    loading,
+                    columns,
+                    renderFieldControl,
+                  })
+                ) : (
+                  <div className="erp-form-grid">
+                    {columns.map((c) => (
+                      <div className="erp-form-group" key={c.name}>
+                        <div className="erp-form-label-row">
+                          <label>{c.label} {c.required && <span className="req">*</span>}</label>
+                          {c.maxLength && (
+                            <span className="erp-char-limit-badge">
+                              {(formData[c.name] || "").length} / {c.maxLength}
+                            </span>
+                          )}
+                        </div>
+                        {renderFieldControl(c)}
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
 
               <div className="erp-modal-footer">
@@ -853,6 +972,20 @@ export default function Tools({
             </form>
           </div>
         </div>
+      )}
+
+      {/* Reusable ERP Dialog Box */}
+      {dialog && (
+        <Dialog
+          isOpen={dialog.isOpen}
+          title={dialog.title}
+          message={dialog.message}
+          type={dialog.type}
+          confirmText={dialog.confirmText}
+          cancelText={dialog.cancelText}
+          onConfirm={dialog.onConfirm}
+          onCancel={dialog.onCancel}
+        />
       )}
     </div>
   );

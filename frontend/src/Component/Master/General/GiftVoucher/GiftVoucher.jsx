@@ -3,9 +3,30 @@ import Tools from "../../../Tools";
 
 export default function GiftVoucher({ adminId, onExit }) {
   const columns = [
-    { name: "name", label: "Gift Voucher Name", required: true },
-    { name: "shortname", label: "Short Name", required: true },
-    { name: "active", label: "Active", type: "boolean" },
+    {
+      name: "name",
+      label: "Gift Voucher Name",
+      type: "text",
+      maxLength: 50,
+      required: true,
+      placeholder: "ENTER VOUCHER NAME",
+      transform: (val) => val.toUpperCase(),
+    },
+    {
+      name: "shortname",
+      label: "Short Name",
+      type: "text",
+      maxLength: 25,
+      required: true,
+      placeholder: "ENTER SHORT CODE",
+      transform: (val) => val.toUpperCase(),
+    },
+    {
+      name: "active",
+      label: "Active",
+      type: "boolean",
+      default: true,
+    },
   ];
 
   const extraPayload = {

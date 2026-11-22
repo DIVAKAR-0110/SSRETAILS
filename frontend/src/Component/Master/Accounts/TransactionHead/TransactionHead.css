@@ -1,0 +1,333 @@
+/* frontend/src/Component/Master/Accounts/TransactionHead/TransactionHead.css */
+/* Classic ERP Parchment Layout for Transaction Head Master */
+
+.th-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #2b231d;
+  padding: 6px;
+  font-size: 0.82rem;
+}
+
+.th-header-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #5a3825;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid #d4c7b5;
+  padding-bottom: 4px;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+}
+
+/* 2-Column Form */
+.th-form-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.th-col {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Field Row: Label on left, Input on right */
+.th-field-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.th-field-row-top {
+  align-items: flex-start;
+}
+
+.th-label {
+  width: 140px;
+  font-size: 0.81rem;
+  font-weight: 600;
+  color: #43362a;
+  text-align: left;
+  flex-shrink: 0;
+}
+
+.th-label-req::after {
+  content: " *";
+  color: #b91c1c;
+  font-weight: bold;
+}
+
+.th-input-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.th-input {
+  width: 100%;
+  padding: 4px 8px;
+  font-size: 0.82rem;
+  font-family: inherit;
+  color: #222;
+  background-color: #ffffff;
+  border: 1px solid #b8a994;
+  border-radius: 2px;
+  box-sizing: border-box;
+  height: 28px;
+}
+
+.th-textarea {
+  width: 100%;
+  padding: 4px 8px;
+  font-size: 0.82rem;
+  font-family: inherit;
+  color: #222;
+  background-color: #ffffff;
+  border: 1px solid #b8a994;
+  border-radius: 2px;
+  box-sizing: border-box;
+  resize: vertical;
+}
+
+.th-input:focus,
+.th-textarea:focus,
+.th-select:focus {
+  outline: none;
+  border-color: #8c5b36;
+  box-shadow: 0 0 0 1px #8c5b36;
+  background-color: #fffffb;
+}
+
+.th-input-upper {
+  text-transform: uppercase;
+}
+
+.th-select {
+  width: 100%;
+  padding: 4px 6px;
+  font-size: 0.82rem;
+  font-family: inherit;
+  color: #222;
+  background-color: #ffffff;
+  border: 1px solid #b8a994;
+  border-radius: 2px;
+  box-sizing: border-box;
+  height: 28px;
+  cursor: pointer;
+}
+
+.th-badge {
+  position: absolute;
+  right: 6px;
+  font-size: 0.68rem;
+  color: #8c7865;
+  background: #f0ebe1;
+  padding: 1px 4px;
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+/* Radio buttons row */
+.th-radio-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  background: #fbf9f5;
+  border: 1px solid #b8a994;
+  padding: 4px 8px;
+  border-radius: 2px;
+  height: 28px;
+  box-sizing: border-box;
+}
+
+.th-radio-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.78rem;
+  color: #443322;
+  cursor: pointer;
+}
+
+.th-radio-label input[type="radio"] {
+  accent-color: #7a4f32;
+  cursor: pointer;
+}
+
+/* Readonly input styling */
+.th-input-readonly {
+  background-color: #f6f3ed;
+  color: #555;
+  cursor: not-allowed;
+}
+
+/* Side-by-side State & Country */
+.th-state-country-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.th-sub-field {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+}
+
+.th-sub-label {
+  font-size: 0.81rem;
+  font-weight: 600;
+  color: #43362a;
+  flex-shrink: 0;
+}
+
+/* Agent Search Dropdown & Grid Popup */
+.th-agent-wrap {
+  flex: 1;
+  position: relative;
+}
+
+.th-agent-popup {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #ffffff;
+  border: 1px solid #8c5b36;
+  border-radius: 2px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  z-index: 100;
+  max-height: 180px;
+  overflow-y: auto;
+}
+
+.th-agent-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.78rem;
+}
+
+.th-agent-table th {
+  background: #ede6d8;
+  color: #43362a;
+  padding: 4px 6px;
+  border-bottom: 1px solid #d4c7b5;
+  text-align: left;
+  position: sticky;
+  top: 0;
+}
+
+.th-agent-table td {
+  padding: 4px 6px;
+  border-bottom: 1px solid #f0ebe1;
+  cursor: pointer;
+}
+
+.th-agent-table tr:hover td {
+  background-color: #f3ece1;
+}
+
+/* Multi-input Row (e.g. TDS & ProfitLoss, DD COMM) */
+.th-multi-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.th-inline-field {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.th-inline-label {
+  font-size: 0.79rem;
+  font-weight: 600;
+  color: #43362a;
+  width: 80px;
+  flex-shrink: 0;
+}
+
+.th-input-number {
+  width: 100%;
+  text-align: right;
+  padding: 4px 6px;
+  font-size: 0.82rem;
+  border: 1px solid #b8a994;
+  border-radius: 2px;
+  height: 28px;
+  box-sizing: border-box;
+}
+
+/* Company Details Section */
+.th-company-section {
+  border: 1px solid #c9bea9;
+  border-radius: 3px;
+  background: #ffffff;
+  overflow: hidden;
+  margin-top: 8px;
+}
+
+.th-company-header {
+  background: #ece4d5;
+  padding: 5px 8px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #533927;
+  border-bottom: 1px solid #c9bea9;
+  text-transform: uppercase;
+}
+
+.th-company-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+}
+
+.th-company-table th {
+  background: #f7f2ea;
+  color: #4a3829;
+  font-weight: 600;
+  padding: 5px 8px;
+  border: 1px solid #dcd3c4;
+  text-align: center;
+}
+
+.th-company-table td {
+  padding: 4px 8px;
+  border: 1px solid #e6ded0;
+  text-align: center;
+}
+
+.th-company-table input[type="checkbox"] {
+  accent-color: #7a4f32;
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+}
+
+/* Checkbox Inline */
+.th-checkbox-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  user-select: none;
+  font-weight: 600;
+  font-size: 0.81rem;
+}
+
+.th-checkbox-inline input[type="checkbox"] {
+  accent-color: #7a4f32;
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+}

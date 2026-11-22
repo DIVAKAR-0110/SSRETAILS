@@ -1,0 +1,151 @@
+/* frontend/src/Component/Master/General/IncomeAndExpense/IncomeAndExpense.css */
+/* Classic ERP Parchment Layout for Income and Expense Master */
+
+.inc-exp-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #2b231d;
+  padding: 4px;
+}
+
+.inc-exp-header-title {
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: #5a3825;
+  letter-spacing: 0.4px;
+  border-bottom: 1px solid #d4c7b5;
+  padding-bottom: 4px;
+  margin-bottom: 4px;
+}
+
+.inc-exp-field-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.inc-exp-label {
+  width: 140px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #43362a;
+  text-align: left;
+  flex-shrink: 0;
+}
+
+.inc-exp-input-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.inc-exp-input {
+  width: 100%;
+  padding: 5px 8px;
+  font-size: 0.84rem;
+  font-family: inherit;
+  color: #222;
+  background-color: #ffffff;
+  border: 1px solid #b8a994;
+  border-radius: 2px;
+  box-sizing: border-box;
+}
+
+.inc-exp-input:focus {
+  outline: none;
+  border-color: #8c5b36;
+  box-shadow: 0 0 0 1px #8c5b36;
+  background-color: #fffff8;
+}
+
+.inc-exp-input-upper {
+  text-transform: uppercase;
+}
+
+.inc-exp-badge {
+  position: absolute;
+  right: 6px;
+  font-size: 0.7rem;
+  color: #8c7865;
+  background: #f0ebe1;
+  padding: 1px 5px;
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+/* Row 4: AccountPost checkbox + AccountHeadCode dropdown */
+.inc-exp-post-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 4px;
+}
+
+.inc-exp-check-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #33271d;
+  cursor: pointer;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.inc-exp-check-label input[type="checkbox"] {
+  accent-color: #7a4f32;
+  cursor: pointer;
+  width: 15px;
+  height: 15px;
+}
+
+.inc-exp-dropdown-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.inc-exp-dropdown-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #43362a;
+  white-space: nowrap;
+}
+
+.inc-exp-select {
+  flex: 1;
+  padding: 4px 8px;
+  font-size: 0.84rem;
+  font-family: inherit;
+  color: #222;
+  background-color: #ffffff;
+  border: 1px solid #b8a994;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.inc-exp-select:disabled {
+  background-color: #f2eee8;
+  color: #999;
+  cursor: not-allowed;
+}
+
+.inc-exp-select:focus {
+  outline: none;
+  border-color: #8c5b36;
+  box-shadow: 0 0 0 1px #8c5b36;
+}
+
+/* Row 5: Advance checkbox + Active checkbox */
+.inc-exp-bottom-checks {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+  margin-top: 6px;
+  padding-top: 4px;
+}

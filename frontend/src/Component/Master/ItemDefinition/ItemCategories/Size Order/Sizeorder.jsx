@@ -1,34 +1,6 @@
-// src/pages/Country.jsx
-import Tools from "../../../../Tools";
+// frontend/src/Component/Master/ItemDefinition/ItemCategories/Size Order/Sizeorder.jsx
+import ItemCategory from "../ItemCategory";
 
-export default function Sizeorder({ adminId, onExit }) {
-  const columns = [
-    {
-      name: "name",
-      label: "Size Order Name",
-      required: true,
-      transform: (value) => value.toUpperCase(),
-    },
-    {
-      name: "shortname",
-      label: "Short Name",
-      required: true,
-      transform: (value) => value.toUpperCase(),
-    },
-    {
-      name: "active",
-      label: "Active",
-      type: "boolean",
-    },
-  ];
-
-  return (
-    <Tools
-      title="Size Order Category"
-      columns={columns}
-      apiBase="http://localhost:8000/sizeorder/"
-      extraPayload={{ admin_id: adminId }}
-      onExit={onExit}
-    />
-  );
+export default function Sizeorder(props) {
+  return <ItemCategory categoryKey="size order" {...props} />;
 }

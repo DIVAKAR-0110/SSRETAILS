@@ -1,0 +1,159 @@
+/* src/Component/Master/JobWork/ConsumptionMaster/ConsumptionMaster.css */
+
+.consumption-form-box {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  color: #333;
+  font-family: inherit;
+}
+
+.consumption-fieldset {
+  border: 1px solid #dcd4c4;
+  border-radius: 4px;
+  padding: 14px 18px;
+  background-color: #ffffff;
+}
+
+.consumption-legend {
+  font-size: 12px;
+  font-weight: 700;
+  color: #554433;
+  padding: 0 6px;
+}
+
+.consumption-header-row {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 12px;
+}
+
+.consumption-field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.consumption-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #333;
+}
+
+.consumption-select {
+  padding: 4px 6px;
+  font-size: 11px;
+  border: 1px solid #b5a995;
+  border-radius: 3px;
+  background-color: #fff;
+  color: #222;
+  outline: none;
+  min-width: 180px;
+}
+
+.consumption-grids-box {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.consumption-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(180deg, #f0ebd9 0%, #e2d9c2 100%);
+  border: 1px solid #c8bba8;
+  border-radius: 3px 3px 0 0;
+  padding: 5px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #4a3b2c;
+}
+
+.consumption-grid-wrapper {
+  border: 1px solid #c8bba8;
+  border-top: none;
+  background-color: #ffffff;
+  overflow-x: auto;
+  max-height: 160px;
+}
+
+.consumption-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+}
+
+.consumption-table th {
+  background: linear-gradient(180deg, #eae4d5 0%, #ded6c2 100%);
+  color: #3e3325;
+  font-weight: 700;
+  padding: 5px 6px;
+  text-align: left;
+  border: 1px solid #c8bba8;
+  white-space: nowrap;
+}
+
+.consumption-table td {
+  padding: 3px 4px;
+  border: 1px solid #e2dac9;
+}
+
+.consumption-table tr:hover {
+  background-color: #f5f2e9;
+}
+
+.consumption-input {
+  width: 100%;
+  padding: 2px 4px;
+  font-size: 11px;
+  border: 1px solid #c0b4a0;
+  border-radius: 2px;
+  box-sizing: border-box;
+}
+
+.consumption-grid-select {
+  width: 100%;
+  padding: 2px 4px;
+  font-size: 11px;
+  border: 1px solid #c0b4a0;
+  border-radius: 2px;
+  box-sizing: border-box;
+}
+
+.consumption-grid-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  background-color: #f4f0e6;
+  border: 1px solid #c8bba8;
+  border-top: none;
+  padding: 5px 12px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #4a3b2c;
+}
+
+.consumption-btn-sm {
+  padding: 2px 8px;
+  font-size: 10px;
+  font-weight: 600;
+  background-color: #7a4f32;
+  color: #fff;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.consumption-btn-del {
+  padding: 1px 5px;
+  font-size: 10px;
+  background-color: #d9534f;
+  color: #fff;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+}

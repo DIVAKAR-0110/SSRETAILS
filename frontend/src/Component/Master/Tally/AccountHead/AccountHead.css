@@ -1,0 +1,128 @@
+/* frontend/src/Component/Master/Tally/AccountHead/AccountHead.css */
+/* Classic ERP Parchment Layout for Account Head Master */
+
+.ah-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #2b231d;
+  padding: 6px;
+  font-size: 0.82rem;
+}
+
+.ah-header-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #5a3825;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid #d4c7b5;
+  padding-bottom: 4px;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+}
+
+.ah-field-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ah-label {
+  width: 130px;
+  font-size: 0.81rem;
+  font-weight: 600;
+  color: #43362a;
+  text-align: left;
+  flex-shrink: 0;
+}
+
+.ah-label-req::after {
+  content: " *";
+  color: #b91c1c;
+  font-weight: bold;
+}
+
+.ah-input-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.ah-input {
+  width: 100%;
+  padding: 4px 8px;
+  font-size: 0.82rem;
+  font-family: inherit;
+  color: #222;
+  background-color: #ffffff;
+  border: 1px solid #b8a994;
+  border-radius: 2px;
+  box-sizing: border-box;
+  height: 28px;
+}
+
+.ah-input:focus,
+.ah-select:focus {
+  outline: none;
+  border-color: #8c5b36;
+  box-shadow: 0 0 0 1px #8c5b36;
+  background-color: #fffffb;
+}
+
+.ah-input-upper {
+  text-transform: uppercase;
+}
+
+.ah-select {
+  width: 100%;
+  padding: 4px 6px;
+  font-size: 0.82rem;
+  font-family: inherit;
+  color: #222;
+  background-color: #ffffff;
+  border: 1px solid #b8a994;
+  border-radius: 2px;
+  box-sizing: border-box;
+  height: 28px;
+  cursor: pointer;
+}
+
+.ah-badge {
+  position: absolute;
+  right: 6px;
+  font-size: 0.68rem;
+  color: #8c7865;
+  background: #f0ebe1;
+  padding: 1px 4px;
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+/* Bottom Checkboxes Row */
+.ah-bottom-row {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-top: 6px;
+  padding-top: 8px;
+  border-top: 1px solid #d4c7b5;
+}
+
+.ah-check-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  user-select: none;
+  font-weight: 600;
+  font-size: 0.81rem;
+}
+
+.ah-check-inline input[type="checkbox"] {
+  accent-color: #7a4f32;
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+}
