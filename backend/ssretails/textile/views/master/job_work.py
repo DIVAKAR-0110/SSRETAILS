@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from django.db import transaction, connection
 from django.db.models import Q
+from textile.utils import StoredProcedureMasterViewSetMixin, execute_master_sp
 
 from textile.models.master.job_work import (
     JobWorkChargeHeadMas,
@@ -26,7 +27,8 @@ from textile.serializers.master.job_work import (
 )
 
 
-class JobWorkChargeHeadViewSet(viewsets.ModelViewSet):
+class JobWorkChargeHeadViewSet(StoredProcedureMasterViewSetMixin, viewsets.ModelViewSet):
+    stored_proc_name = "SPJOBWORKCHARGEHEADMAS"
     queryset = JobWorkChargeHeadMas.objects.all().order_by("name")
     serializer_class = JobWorkChargeHeadSerializer
     permission_classes = [AllowAny]
@@ -86,7 +88,8 @@ class TailorMasViewSet(viewsets.ModelViewSet):
         serializer.is_valid(raise_exception=True)
 
         with transaction.atomic():
-            tailor = serializer.save()
+            new_id = execute_master_sp("SPTAILORMAS", mode=0, data=serializer.validated_data)
+            tailor = TailorMas.objects.get(pk=new_id)
 
             # Save contacts
             for idx, c in enumerate(contacts_data, start=1):
@@ -167,7 +170,8 @@ class TailorMasViewSet(viewsets.ModelViewSet):
         serializer.is_valid(raise_exception=True)
 
         with transaction.atomic():
-            tailor = serializer.save()
+            execute_master_sp("SPTAILORMAS", mode=1, code=tailor.pk, data=serializer.validated_data)
+            tailor.refresh_from_db()
 
             # Clean existing child records matching SPTAILORMAS Mode 1
             ContactDetailsMas.objects.filter(mas_code=tailor.id, mas_from="TAILOR").delete()
@@ -248,7 +252,7 @@ class TailorMasViewSet(viewsets.ModelViewSet):
             ContactDetailsMas.objects.filter(mas_code=tailor.id, mas_from="TAILOR").delete()
             TailorChargeMas.objects.filter(tailor_id=tailor.id).delete()
             TailorConsumptionMas.objects.filter(tailor_id=tailor.id).delete()
-            tailor.delete()
+            execute_master_sp("SPTAILORMAS", mode=2, code=tailor.pk)
         return Response({"message": "Tailor deleted successfully."}, status=status.HTTP_200_OK)
 
 

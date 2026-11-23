@@ -10,9 +10,11 @@ from textile.serializers import (
     AccountSideSerializer,
     AgentLookupSerializer,
 )
+from textile.utils import StoredProcedureMasterViewSetMixin
 
 
-class AccountsGroupHeadViewSet(viewsets.ModelViewSet):
+class AccountsGroupHeadViewSet(StoredProcedureMasterViewSetMixin, viewsets.ModelViewSet):
+    stored_proc_name = "spGroupHead"
     queryset = GroupHead.objects.all().order_by("name")
     serializer_class = AccountsGroupHeadSerializer
     permission_classes = [AllowAny]
@@ -25,13 +27,15 @@ class AgentLookupViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [AllowAny]
 
 
-class NarationViewSet(viewsets.ModelViewSet):
+class NarationViewSet(StoredProcedureMasterViewSetMixin, viewsets.ModelViewSet):
+    stored_proc_name = "spNaration"
     queryset = Naration.objects.all().order_by("id")
     serializer_class = NarationSerializer
     permission_classes = [AllowAny]
 
 
-class TransactionHeadViewSet(viewsets.ModelViewSet):
+class TransactionHeadViewSet(StoredProcedureMasterViewSetMixin, viewsets.ModelViewSet):
+    stored_proc_name = "SPACCOUNTHEADMAS"
     queryset = TransactionHead.objects.all().order_by("name")
     serializer_class = TransactionHeadSerializer
     permission_classes = [AllowAny]

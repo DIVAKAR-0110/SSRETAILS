@@ -4,9 +4,11 @@ from rest_framework.permissions import AllowAny
 
 from textile.models import CompanyMas
 from textile.serializers import CompanySerializer
+from textile.utils import StoredProcedureMasterViewSetMixin
 
 
-class CompanyViewSet(viewsets.ModelViewSet):
+class CompanyViewSet(StoredProcedureMasterViewSetMixin, viewsets.ModelViewSet):
+    stored_proc_name = "SPCOMPANYMAS"
     queryset = CompanyMas.objects.all().order_by("-created_at")
     serializer_class = CompanySerializer
     permission_classes = [AllowAny]

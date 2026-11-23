@@ -4,15 +4,18 @@ from rest_framework.permissions import AllowAny
 
 from textile.models import GroupHeadMas, AccountHeadMas
 from textile.serializers import GroupHeadSerializer, AccountHeadSerializer
+from textile.utils import StoredProcedureMasterViewSetMixin
 
 
-class GroupHeadViewSet(viewsets.ModelViewSet):
+class GroupHeadViewSet(StoredProcedureMasterViewSetMixin, viewsets.ModelViewSet):
+    stored_proc_name = "SPGROUPHEADMAS"
     queryset = GroupHeadMas.objects.all().order_by("name")
     serializer_class = GroupHeadSerializer
     permission_classes = [AllowAny]
 
 
-class AccountHeadViewSet(viewsets.ModelViewSet):
+class AccountHeadViewSet(StoredProcedureMasterViewSetMixin, viewsets.ModelViewSet):
+    stored_proc_name = "SPACCOUNTHEADMAS"
     queryset = AccountHeadMas.objects.all().order_by("name")
     serializer_class = AccountHeadSerializer
     permission_classes = [AllowAny]

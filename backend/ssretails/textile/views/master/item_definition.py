@@ -4,6 +4,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from django.db import transaction
+from textile.utils import StoredProcedureMasterViewSetMixin, execute_master_sp
 
 from textile.models import (
     ItemCategoryMas1, ItemCategoryMas2, ItemCategoryMas3, ItemCategoryMas4,
@@ -21,7 +22,7 @@ from textile.serializers import (
 )
 
 
-class BaseCategoryViewSet(viewsets.ModelViewSet):
+class BaseCategoryViewSet(StoredProcedureMasterViewSetMixin, viewsets.ModelViewSet):
     permission_classes = [AllowAny]
     category_code = None
 
@@ -37,64 +38,77 @@ class BaseCategoryViewSet(viewsets.ModelViewSet):
                     {"detail": f"Cannot delete '{instance.name}' because it is currently linked to {linked_count} product(s) in ProductCategoryValuesMas."},
                     status=status.HTTP_400_BAD_REQUEST
                 )
+        if self.stored_proc_name:
+            execute_master_sp(self.stored_proc_name, mode=2, code=instance.pk)
+            return Response(status=status.HTTP_204_NO_CONTENT)
         return super().destroy(request, *args, **kwargs)
 
 
 class BrandViewSet(BaseCategoryViewSet):
+    stored_proc_name = "SPITEMCATEGORYMAS1"
     queryset = ItemCategoryMas1.objects.all().order_by('name')
     serializer_class = BrandSerializer
     category_code = 1
 
 
 class TypeViewSet(BaseCategoryViewSet):
+    stored_proc_name = "SPITEMCATEGORYMAS2"
     queryset = ItemCategoryMas2.objects.all().order_by('name')
     serializer_class = TypeSerializer
     category_code = 2
 
 
 class StyleViewSet(BaseCategoryViewSet):
+    stored_proc_name = "SPITEMCATEGORYMAS3"
     queryset = ItemCategoryMas3.objects.all().order_by('name')
     serializer_class = StyleSerializer
     category_code = 3
 
 
 class PatternViewSet(BaseCategoryViewSet):
+    stored_proc_name = "SPITEMCATEGORYMAS4"
     queryset = ItemCategoryMas4.objects.all().order_by('name')
     serializer_class = PatternSerializer
     category_code = 4
 
 
 class ColorViewSet(BaseCategoryViewSet):
+    stored_proc_name = "SPITEMCATEGORYMAS5"
     queryset = ItemCategoryMas5.objects.all().order_by('name')
     serializer_class = ColorSerializer
     category_code = 5
 
 
 class HsnCodeViewSet(BaseCategoryViewSet):
+    stored_proc_name = "SPITEMCATEGORYMAS6"
     queryset = ItemCategoryMas6.objects.all().order_by('name')
     serializer_class = HsnCodeSerializer
     category_code = 6
 
 
 class FloorsViewSet(BaseCategoryViewSet):
+    stored_proc_name = "SPITEMCATEGORYMAS7"
     queryset = ItemCategoryMas7.objects.all().order_by('name')
     serializer_class = FloorsSerializer
     category_code = 7
 
 
 class SectionViewSet(BaseCategoryViewSet):
+    stored_proc_name = "SPITEMCATEGORYMAS8"
     queryset = ItemCategoryMas8.objects.all().order_by('name')
     serializer_class = SectionSerializer
     category_code = 8
 
 
 class SectionGroupViewSet(BaseCategoryViewSet):
+    stored_proc_name = "SPITEMCATEGORYMAS9"
     queryset = ItemCategoryMas9.objects.all().order_by('name')
     serializer_class = SectionGroupSerializer
     category_code = 9
 
 
 class SizeOrderViewSet(BaseCategoryViewSet):
+    stored_proc_name = "SPITEMCATEGORYMAS10"
     queryset = ItemCategoryMas10.objects.all().order_by('name')
     serializer_class = SizeOrderSerializer
     category_code = 10
@@ -104,7 +118,8 @@ class SizeOrderViewSet(BaseCategoryViewSet):
 # Item, UOM, ItemType, Product ViewSets
 # =========================================================================
 
-class ItemMasViewSet(viewsets.ModelViewSet):
+class ItemMasViewSet(StoredProcedureMasterViewSetMixin, viewsets.ModelViewSet):
+    stored_proc_name = "SPITEMMAS"
     queryset = ItemMas.objects.all().order_by('name')
     serializer_class = ItemSerializer
     permission_classes = [AllowAny]
@@ -117,10 +132,12 @@ class ItemMasViewSet(viewsets.ModelViewSet):
                 {"detail": f"Cannot delete '{instance.name}' because it is linked to {linked_products} product(s)."},
                 status=status.HTTP_400_BAD_REQUEST
             )
-        return super().destroy(request, *args, **kwargs)
+        execute_master_sp(self.stored_proc_name, mode=2, code=instance.pk)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-class UomMasViewSet(viewsets.ModelViewSet):
+class UomMasViewSet(StoredProcedureMasterViewSetMixin, viewsets.ModelViewSet):
+    stored_proc_name = "SPUOMMAS"
     queryset = UomMas.objects.all().order_by('name')
     serializer_class = UomSerializer
     permission_classes = [AllowAny]
@@ -139,10 +156,12 @@ class UomMasViewSet(viewsets.ModelViewSet):
                 {"detail": f"Cannot delete '{instance.name}' because it is used as UOM in {linked_products} product reference(s)."},
                 status=status.HTTP_400_BAD_REQUEST
             )
-        return super().destroy(request, *args, **kwargs)
+        execute_master_sp(self.stored_proc_name, mode=2, code=instance.pk)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-class ItemTypeMasViewSet(viewsets.ModelViewSet):
+class ItemTypeMasViewSet(StoredProcedureMasterViewSetMixin, viewsets.ModelViewSet):
+    stored_proc_name = "SPSUPPLIERITEMTYPEMAS"
     queryset = ItemTypeMas.objects.all().order_by('name')
     serializer_class = ItemTypeSerializer
     permission_classes = [AllowAny]
@@ -158,7 +177,8 @@ class ItemTypeMasViewSet(viewsets.ModelViewSet):
         return super().destroy(request, *args, **kwargs)
 
 
-class ProductMasViewSet(viewsets.ModelViewSet):
+class ProductMasViewSet(StoredProcedureMasterViewSetMixin, viewsets.ModelViewSet):
+    stored_proc_name = "SPPRODUCTMAS"
     queryset = ProductMas.objects.all().order_by('name')
     serializer_class = ProductSerializer
     permission_classes = [AllowAny]
@@ -200,17 +220,19 @@ class ProductMasViewSet(viewsets.ModelViewSet):
         instance = self.get_object()
         with transaction.atomic():
             ProductCategoryValuesMas.objects.filter(product_code=instance.id).delete()
-            instance.delete()
+            execute_master_sp(self.stored_proc_name, mode=2, code=instance.pk)
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-class CommodityCodeMasViewSet(viewsets.ModelViewSet):
+class CommodityCodeMasViewSet(StoredProcedureMasterViewSetMixin, viewsets.ModelViewSet):
+    stored_proc_name = "SPCOMMODITYCODEMAS"
     queryset = CommodityCodeMas.objects.all().order_by('name')
     serializer_class = CommodityCodeSerializer
     permission_classes = [AllowAny]
 
 
-class ProductRolMasViewSet(viewsets.ModelViewSet):
+class ProductRolMasViewSet(StoredProcedureMasterViewSetMixin, viewsets.ModelViewSet):
+    stored_proc_name = "SPPRODUCTROLMAS"
     queryset = ProductRolMas.objects.all().order_by('-id')
     serializer_class = ProductRolSerializer
     permission_classes = [AllowAny]

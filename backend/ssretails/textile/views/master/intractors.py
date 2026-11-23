@@ -3,6 +3,7 @@ from rest_framework import viewsets, status
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from django.db import transaction
+from textile.utils import execute_master_sp
 
 from textile.models.master.intractors import (
     SupplierMas, SupplierCompanyMas, SupplierItemTypeMas,
@@ -111,12 +112,14 @@ class SupplierViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         with transaction.atomic():
-            supplier = serializer.save()
+            new_id = execute_master_sp("SPSUPPLIERMAS", mode=0, data=serializer.validated_data)
+            supplier = SupplierMas.objects.get(pk=new_id)
+            serializer.instance = supplier
             self._sync_child_records(supplier.id, request.data)
 
-        headers = self.get_success_headers(serializer.data)
-        data = dict(serializer.data)
+        data = dict(self.get_serializer(supplier).data)
         data = self._attach_child_data(supplier.id, data)
+        headers = self.get_success_headers(data)
         return Response(data, status=status.HTTP_201_CREATED, headers=headers)
 
     def update(self, request, *args, **kwargs):
@@ -125,11 +128,12 @@ class SupplierViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(instance, data=request.data, partial=partial)
         serializer.is_valid(raise_exception=True)
         with transaction.atomic():
-            supplier = serializer.save()
-            self._sync_child_records(supplier.id, request.data)
+            execute_master_sp("SPSUPPLIERMAS", mode=1, code=instance.pk, data=serializer.validated_data)
+            instance.refresh_from_db()
+            self._sync_child_records(instance.id, request.data)
 
-        data = dict(serializer.data)
-        data = self._attach_child_data(supplier.id, data)
+        data = dict(self.get_serializer(instance).data)
+        data = self._attach_child_data(instance.id, data)
         return Response(data)
 
     def destroy(self, request, *args, **kwargs):
@@ -140,7 +144,7 @@ class SupplierViewSet(viewsets.ModelViewSet):
             ).delete()
             SupplierCompanyMas.objects.filter(supplier_id=instance.id).delete()
             SupplierItemTypeMas.objects.filter(supplier_id=instance.id).delete()
-            instance.delete()
+            execute_master_sp("SPSUPPLIERMAS", mode=2, code=instance.pk)
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
@@ -218,12 +222,14 @@ class AgentViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         with transaction.atomic():
-            agent = serializer.save()
+            new_id = execute_master_sp("SPAGENTMAS", mode=0, data=serializer.validated_data)
+            agent = AgentMas.objects.get(pk=new_id)
+            serializer.instance = agent
             self._sync_child_records(agent.id, request.data)
 
-        headers = self.get_success_headers(serializer.data)
-        data = dict(serializer.data)
+        data = dict(self.get_serializer(agent).data)
         data = self._attach_child_data(agent.id, data)
+        headers = self.get_success_headers(data)
         return Response(data, status=status.HTTP_201_CREATED, headers=headers)
 
     def update(self, request, *args, **kwargs):
@@ -232,11 +238,12 @@ class AgentViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(instance, data=request.data, partial=partial)
         serializer.is_valid(raise_exception=True)
         with transaction.atomic():
-            agent = serializer.save()
-            self._sync_child_records(agent.id, request.data)
+            execute_master_sp("SPAGENTMAS", mode=1, code=instance.pk, data=serializer.validated_data)
+            instance.refresh_from_db()
+            self._sync_child_records(instance.id, request.data)
 
-        data = dict(serializer.data)
-        data = self._attach_child_data(agent.id, data)
+        data = dict(self.get_serializer(instance).data)
+        data = self._attach_child_data(instance.id, data)
         return Response(data)
 
     def destroy(self, request, *args, **kwargs):
@@ -246,7 +253,7 @@ class AgentViewSet(viewsets.ModelViewSet):
                 mas_from='AGENT', mas_code=instance.id
             ).delete()
             AgentCompanyMas.objects.filter(agent_id=instance.id).delete()
-            instance.delete()
+            execute_master_sp("SPAGENTMAS", mode=2, code=instance.pk)
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
@@ -306,12 +313,14 @@ class ManufactureViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         with transaction.atomic():
-            manufacture = serializer.save()
+            new_id = execute_master_sp("SPMANUFACTUREMAS", mode=0, data=serializer.validated_data)
+            manufacture = ManufactureMas.objects.get(pk=new_id)
+            serializer.instance = manufacture
             self._sync_child_records(manufacture.id, request.data)
 
-        headers = self.get_success_headers(serializer.data)
-        data = dict(serializer.data)
+        data = dict(self.get_serializer(manufacture).data)
         data = self._attach_child_data(manufacture.id, data)
+        headers = self.get_success_headers(data)
         return Response(data, status=status.HTTP_201_CREATED, headers=headers)
 
     def update(self, request, *args, **kwargs):
@@ -320,11 +329,12 @@ class ManufactureViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(instance, data=request.data, partial=partial)
         serializer.is_valid(raise_exception=True)
         with transaction.atomic():
-            manufacture = serializer.save()
-            self._sync_child_records(manufacture.id, request.data)
+            execute_master_sp("SPMANUFACTUREMAS", mode=1, code=instance.pk, data=serializer.validated_data)
+            instance.refresh_from_db()
+            self._sync_child_records(instance.id, request.data)
 
-        data = dict(serializer.data)
-        data = self._attach_child_data(manufacture.id, data)
+        data = dict(self.get_serializer(instance).data)
+        data = self._attach_child_data(instance.id, data)
         return Response(data)
 
     def destroy(self, request, *args, **kwargs):
@@ -333,7 +343,7 @@ class ManufactureViewSet(viewsets.ModelViewSet):
             ContactDetailsMas.objects.filter(
                 mas_from='MANUFACTURE', mas_code=instance.id
             ).delete()
-            instance.delete()
+            execute_master_sp("SPMANUFACTUREMAS", mode=2, code=instance.pk)
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
@@ -411,12 +421,14 @@ class CustomerViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         with transaction.atomic():
-            customer = serializer.save()
+            new_id = execute_master_sp("SPCUSTOMERMAS", mode=0, data=serializer.validated_data)
+            customer = CustomerMas.objects.get(pk=new_id)
+            serializer.instance = customer
             self._sync_child_records(customer.id, request.data)
 
-        headers = self.get_success_headers(serializer.data)
-        data = dict(serializer.data)
+        data = dict(self.get_serializer(customer).data)
         data = self._attach_child_data(customer.id, data)
+        headers = self.get_success_headers(data)
         return Response(data, status=status.HTTP_201_CREATED, headers=headers)
 
     def update(self, request, *args, **kwargs):
@@ -425,11 +437,12 @@ class CustomerViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(instance, data=request.data, partial=partial)
         serializer.is_valid(raise_exception=True)
         with transaction.atomic():
-            customer = serializer.save()
-            self._sync_child_records(customer.id, request.data)
+            execute_master_sp("SPCUSTOMERMAS", mode=1, code=instance.pk, data=serializer.validated_data)
+            instance.refresh_from_db()
+            self._sync_child_records(instance.id, request.data)
 
-        data = dict(serializer.data)
-        data = self._attach_child_data(customer.id, data)
+        data = dict(self.get_serializer(instance).data)
+        data = self._attach_child_data(instance.id, data)
         return Response(data)
 
     def destroy(self, request, *args, **kwargs):
@@ -439,7 +452,7 @@ class CustomerViewSet(viewsets.ModelViewSet):
                 mas_from='CUSTOMER', mas_code=instance.id
             ).delete()
             CustomerCompanyMas.objects.filter(customer_id=instance.id).delete()
-            instance.delete()
+            execute_master_sp("SPCUSTOMERMAS", mode=2, code=instance.pk)
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
@@ -499,12 +512,14 @@ class CourierViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         with transaction.atomic():
-            courier = serializer.save()
+            new_id = execute_master_sp("SPCOURIERMAS", mode=0, data=serializer.validated_data)
+            courier = CourierMas.objects.get(pk=new_id)
+            serializer.instance = courier
             self._sync_child_records(courier.id, request.data)
 
-        headers = self.get_success_headers(serializer.data)
-        data = dict(serializer.data)
+        data = dict(self.get_serializer(courier).data)
         data = self._attach_child_data(courier.id, data)
+        headers = self.get_success_headers(data)
         return Response(data, status=status.HTTP_201_CREATED, headers=headers)
 
     def update(self, request, *args, **kwargs):
@@ -513,11 +528,12 @@ class CourierViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(instance, data=request.data, partial=partial)
         serializer.is_valid(raise_exception=True)
         with transaction.atomic():
-            courier = serializer.save()
-            self._sync_child_records(courier.id, request.data)
+            execute_master_sp("SPCOURIERMAS", mode=1, code=instance.pk, data=serializer.validated_data)
+            instance.refresh_from_db()
+            self._sync_child_records(instance.id, request.data)
 
-        data = dict(serializer.data)
-        data = self._attach_child_data(courier.id, data)
+        data = dict(self.get_serializer(instance).data)
+        data = self._attach_child_data(instance.id, data)
         return Response(data)
 
     def destroy(self, request, *args, **kwargs):
@@ -526,7 +542,7 @@ class CourierViewSet(viewsets.ModelViewSet):
             ContactDetailsMas.objects.filter(
                 mas_from__in=['COURIER', 'COURIERMAS'], mas_code=instance.id
             ).delete()
-            instance.delete()
+            execute_master_sp("SPCOURIERMAS", mode=2, code=instance.pk)
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
@@ -604,12 +620,14 @@ class TransportViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         with transaction.atomic():
-            transport = serializer.save()
+            new_id = execute_master_sp("SPTRANSPORTMAS", mode=0, data=serializer.validated_data)
+            transport = TransportMas.objects.get(pk=new_id)
+            serializer.instance = transport
             self._sync_child_records(transport.id, request.data)
 
-        headers = self.get_success_headers(serializer.data)
-        data = dict(serializer.data)
+        data = dict(self.get_serializer(transport).data)
         data = self._attach_child_data(transport.id, data)
+        headers = self.get_success_headers(data)
         return Response(data, status=status.HTTP_201_CREATED, headers=headers)
 
     def update(self, request, *args, **kwargs):
@@ -618,11 +636,12 @@ class TransportViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(instance, data=request.data, partial=partial)
         serializer.is_valid(raise_exception=True)
         with transaction.atomic():
-            transport = serializer.save()
-            self._sync_child_records(transport.id, request.data)
+            execute_master_sp("SPTRANSPORTMAS", mode=1, code=instance.pk, data=serializer.validated_data)
+            instance.refresh_from_db()
+            self._sync_child_records(instance.id, request.data)
 
-        data = dict(serializer.data)
-        data = self._attach_child_data(transport.id, data)
+        data = dict(self.get_serializer(instance).data)
+        data = self._attach_child_data(instance.id, data)
         return Response(data)
 
     def destroy(self, request, *args, **kwargs):
@@ -632,6 +651,6 @@ class TransportViewSet(viewsets.ModelViewSet):
                 mas_from__in=['TRANSPORT', 'TRANSPORTMAS'], mas_code=instance.id
             ).delete()
             TransportCompanyMas.objects.filter(transport_id=instance.id).delete()
-            instance.delete()
+            execute_master_sp("SPTRANSPORTMAS", mode=2, code=instance.pk)
         return Response(status=status.HTTP_204_NO_CONTENT)
 
