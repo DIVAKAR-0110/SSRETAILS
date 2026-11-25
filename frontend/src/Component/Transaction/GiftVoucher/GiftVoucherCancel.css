@@ -1,0 +1,181 @@
+/* frontend/src/Component/Transaction/GiftVoucher/GiftVoucherCancel.css */
+/* Classic WinForms ERP Styling matching Screenshot 2 */
+
+.gvc-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  background-color: #f7f4ed;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #2b2b2b;
+  font-size: 11px;
+  user-select: none;
+  box-sizing: border-box;
+  padding: 6px;
+  overflow: auto;
+}
+
+.gvc-fieldset {
+  border: 1px solid #c8bead;
+  border-radius: 2px;
+  margin: 2px 4px;
+  padding: 8px 12px;
+  background-color: #fcfbfa;
+  box-sizing: border-box;
+  width: calc(100% - 8px);
+}
+
+.gvc-legend {
+  font-size: 11px;
+  font-weight: 600;
+  color: #4a4031;
+  padding: 0 4px;
+}
+
+/* Header Filter Row */
+.gvc-filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.gvc-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.gvc-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: #332d24;
+  white-space: nowrap;
+}
+
+.gvc-input,
+.gvc-select {
+  height: 22px;
+  padding: 1px 6px;
+  font-size: 11px;
+  font-family: inherit;
+  border: 1px solid #a9a092;
+  border-radius: 2px;
+  background-color: #ffffff;
+  color: #111;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.gvc-select-wide {
+  width: 240px;
+}
+
+.gvc-select:focus,
+.gvc-input:focus {
+  border-color: #557799;
+}
+
+.gvc-btn-load {
+  min-width: 90px;
+  height: 23px;
+  padding: 2px 16px;
+  font-size: 11px;
+  font-family: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  border: 1px solid #8e8576;
+  border-radius: 2px;
+  background: linear-gradient(to bottom, #faf8f5, #e4ded2);
+  color: #2b7a32;
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #cfc7b7;
+  margin-left: auto;
+}
+
+.gvc-btn-load:hover {
+  background: linear-gradient(to bottom, #ffffff, #dad2c1);
+}
+
+/* Data Table Grid */
+.gvc-table-wrap {
+  border: 1px solid #b5ab9a;
+  background-color: #ffffff;
+  overflow: auto;
+  min-height: 260px;
+  max-height: 480px;
+}
+
+.gvc-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+}
+
+.gvc-table th {
+  background: linear-gradient(to bottom, #eae4d5, #dbd1be);
+  color: #332d24;
+  font-weight: 600;
+  padding: 4px 8px;
+  border: 1px solid #c5baa8;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.gvc-table td {
+  padding: 3px 8px;
+  border: 1px solid #e2dacd;
+  white-space: nowrap;
+}
+
+.gvc-table tr:hover td {
+  background-color: #f7f3ec;
+}
+
+.gvc-table td.text-center {
+  text-align: center;
+}
+
+.gvc-table td.text-right {
+  text-align: right;
+}
+
+.gvc-table td.no-records {
+  text-align: center;
+  padding: 30px;
+  color: #888;
+  font-style: italic;
+}
+
+/* Action Buttons */
+.gvc-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.gvc-btn {
+  min-width: 90px;
+  padding: 3px 20px;
+  font-size: 11px;
+  font-family: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid #8e8576;
+  border-radius: 2px;
+  background: linear-gradient(to bottom, #faf8f5, #e4ded2);
+  color: #222;
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #cfc7b7;
+}
+
+.gvc-btn:hover {
+  background: linear-gradient(to bottom, #ffffff, #dad2c1);
+}
+
+.gvc-btn:active {
+  background: linear-gradient(to bottom, #d8d0bf, #e8e2d4);
+  box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.2);
+}

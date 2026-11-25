@@ -1,0 +1,181 @@
+/* frontend/src/Component/Transaction/LoyalityCard/LoyaltyBlock.css */
+/* Classic WinForms ERP Styling matching Screenshot 1 */
+
+.loyalty-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background-color: #f7f4ed;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #2b2b2b;
+  font-size: 11px;
+  user-select: none;
+  box-sizing: border-box;
+  padding: 8px;
+  overflow: auto;
+}
+
+.loyalty-fieldset {
+  border: 1px solid #c8bead;
+  border-radius: 2px;
+  margin: 4px 6px;
+  padding: 12px 16px 16px 16px;
+  background-color: #fcfbfa;
+  box-sizing: border-box;
+  max-width: 580px;
+}
+
+.loyalty-legend {
+  font-size: 11px;
+  font-weight: 600;
+  color: #3b3327;
+  padding: 0 4px;
+}
+
+.loyalty-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.loyalty-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.loyalty-label {
+  width: 110px;
+  min-width: 110px;
+  font-size: 11px;
+  font-weight: 500;
+  color: #332d24;
+  text-align: left;
+}
+
+.loyalty-control {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+/* Radio Group Box */
+.loyalty-radio-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 18px;
+  border: 1px solid #b5ab9a;
+  background-color: #ffffff;
+  padding: 4px 14px;
+  border-radius: 2px;
+}
+
+.loyalty-radio-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  cursor: pointer;
+  color: #111;
+  font-weight: 600;
+}
+
+.loyalty-radio-label input[type="radio"] {
+  margin: 0;
+  cursor: pointer;
+}
+
+/* Inputs */
+.loyalty-input {
+  width: 100%;
+  max-width: 380px;
+  height: 22px;
+  padding: 1px 6px;
+  font-size: 11px;
+  font-family: inherit;
+  border: 1px solid #a9a092;
+  border-radius: 2px;
+  background-color: #ffffff;
+  color: #111;
+  box-sizing: border-box;
+  outline: none;
+}
+
+.loyalty-input:focus {
+  border-color: #557799;
+  background-color: #fdfeff;
+}
+
+.loyalty-input:disabled {
+  background-color: #ebe7df;
+  color: #7a756c;
+  cursor: not-allowed;
+}
+
+.loyalty-date-input {
+  width: 180px;
+  height: 22px;
+  padding: 1px 6px;
+  font-size: 11px;
+  font-family: inherit;
+  border: 1px solid #a9a092;
+  border-radius: 2px;
+  background-color: #ffffff;
+  color: #111;
+  box-sizing: border-box;
+}
+
+/* Buttons */
+.loyalty-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.loyalty-btn {
+  min-width: 80px;
+  padding: 3px 20px;
+  font-size: 11px;
+  font-family: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid #8e8576;
+  border-radius: 2px;
+  background: linear-gradient(to bottom, #faf8f5, #e4ded2);
+  color: #222;
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #cfc7b7;
+}
+
+.loyalty-btn:hover {
+  background: linear-gradient(to bottom, #ffffff, #dad2c1);
+}
+
+.loyalty-btn:active {
+  background: linear-gradient(to bottom, #d8d0bf, #e8e2d4);
+  box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+/* Status Banner */
+.loyalty-status {
+  padding: 4px 8px;
+  margin-top: 8px;
+  font-size: 11px;
+  border-radius: 2px;
+  text-align: center;
+}
+
+.loyalty-status.success {
+  background-color: #e4f4e2;
+  border: 1px solid #95ca91;
+  color: #276222;
+}
+
+.loyalty-status.error {
+  background-color: #fde8e8;
+  border: 1px solid #e29b9b;
+  color: #8c2020;
+}

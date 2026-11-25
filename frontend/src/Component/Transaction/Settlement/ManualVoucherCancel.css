@@ -1,0 +1,196 @@
+/* frontend/src/Component/Transaction/Settlement/ManualVoucherCancel.css */
+/* Classic WinForms ERP Styling matching Screenshot 2 */
+
+.mvc-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  background-color: #f7f4ed;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #2b2b2b;
+  font-size: 11px;
+  user-select: none;
+  box-sizing: border-box;
+  padding: 8px 12px;
+  overflow: auto;
+}
+
+/* Header Fields */
+.mvc-top-section {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.mvc-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.mvc-label {
+  width: 90px;
+  min-width: 90px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #332d24;
+}
+
+.mvc-input,
+.mvc-select {
+  width: 220px;
+  height: 22px;
+  padding: 1px 6px;
+  font-size: 11px;
+  font-family: inherit;
+  border: 1px solid #a9a092;
+  border-radius: 2px;
+  background-color: #ffffff;
+  color: #111;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.mvc-input:focus,
+.mvc-select:focus {
+  border-color: #557799;
+}
+
+/* Section Title */
+.mvc-section-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: #2b2b2b;
+  margin-bottom: 4px;
+}
+
+/* Table Grid */
+.mvc-table-wrap {
+  border: 1px solid #b5ab9a;
+  background-color: #ffffff;
+  overflow: auto;
+  min-height: 260px;
+  max-height: 440px;
+}
+
+.mvc-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+}
+
+.mvc-table th {
+  background: linear-gradient(to bottom, #eae4d5, #dbd1be);
+  color: #332d24;
+  font-weight: 600;
+  padding: 3px 8px;
+  border: 1px solid #c5baa8;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.mvc-table td {
+  padding: 3px 8px;
+  border: 1px solid #e2dacd;
+  white-space: nowrap;
+}
+
+.mvc-table tr:hover td {
+  background-color: #f7f3ec;
+}
+
+.mvc-row-idx {
+  width: 30px;
+  text-align: center;
+  font-weight: 600;
+  color: #665c49;
+  background: #f7f4ed;
+}
+
+.mvc-table td.text-center {
+  text-align: center;
+}
+
+.mvc-table td.text-right {
+  text-align: right;
+}
+
+.mvc-table td.no-records {
+  text-align: center;
+  padding: 36px;
+  color: #888;
+  font-style: italic;
+}
+
+/* Footer Summary */
+.mvc-summary-row {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+
+.mvc-summary-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #332d24;
+}
+
+.mvc-summary-input {
+  width: 140px;
+  height: 22px;
+  text-align: right;
+  padding: 1px 6px;
+  font-size: 11px;
+  font-family: inherit;
+  font-weight: 600;
+  border: 1px solid #a9a092;
+  border-radius: 2px;
+  background: #f0ece1;
+  color: #222;
+  box-sizing: border-box;
+}
+
+/* Action Buttons */
+.mvc-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.mvc-btn {
+  min-width: 80px;
+  padding: 3px 20px;
+  font-size: 11px;
+  font-family: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid #8e8576;
+  border-radius: 2px;
+  background: linear-gradient(to bottom, #faf8f5, #e4ded2);
+  color: #222;
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #cfc7b7;
+}
+
+.mvc-btn:hover {
+  background: linear-gradient(to bottom, #ffffff, #dad2c1);
+}
+
+.mvc-btn:active {
+  background: linear-gradient(to bottom, #d8d0bf, #e8e2d4);
+  box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+.mvc-btn-save {
+  color: #2b7a32;
+}
+
+.mvc-btn-close {
+  color: #8c2020;
+}

@@ -102,8 +102,19 @@ DATABASES = {
             'driver': 'ODBC Driver 17 for SQL Server',
             'trusted_connection': 'yes',
         },
-    }
+    },
+    'transaction': {
+        'ENGINE': 'mssql',
+        'NAME': 'GANESHSSRETAILTRAN',
+        'HOST': r'localhost\SQL2008',
+        'OPTIONS': {
+            'driver': 'ODBC Driver 17 for SQL Server',
+            'trusted_connection': 'yes',
+        },
+    },
 }
+
+DATABASE_ROUTERS = ['ssretails.router.TransactionRouter']
 
 
 # =========================

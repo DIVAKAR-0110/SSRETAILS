@@ -73,9 +73,72 @@ import Customer from "../Master/Intractors/Customer/Customer.jsx";
 import Courier from "../Master/Intractors/Courier/Courier.jsx";
 import Transport from "../Master/Intractors/Transport/Transport.jsx";
 
+// 6. Transactions -> LR
+import LREntry from "../Transaction/LR/LREntry.jsx";
+import LRIssue from "../Transaction/LR/LRIssue.jsx";
+import LRReceipt from "../Transaction/LR/LRReceipt.jsx";
+import LRExport from "../Transaction/LR/LRExport.jsx";
+import LRAccountPost from "../Transaction/LR/LRAccountPost.jsx";
+
+// 7. Transactions -> Purchase Order
+import PurchaseOrder from "../Transaction/PurchaseOrder/PurchaseOrder.jsx";
+
+// 8. Transactions -> Payment
+import PaymentEntry from "../Transaction/Payment/PaymentEntry.jsx";
+
+// 9. Transactions -> Loyalty Card
+import LoyaltyBlock from "../Transaction/LoyalityCard/LoyaltyBlock.jsx";
+import ManualEntryCancel from "../Transaction/LoyalityCard/ManualEntryCancel.jsx";
+
+// 10. Transactions -> Gift Voucher
+import GiftVoucherIssue from "../Transaction/GiftVoucher/GiftVoucherIssue.jsx";
+import GiftVoucherCancel from "../Transaction/GiftVoucher/GiftVoucherCancel.jsx";
+
+// 11. Transactions -> Settlement
+import SettlementCancel from "../Transaction/Settlement/SettlementCancel.jsx";
+import ManualVoucherCancel from "../Transaction/Settlement/ManualVoucherCancel.jsx";
+
+// 12. Transactions -> Others
+import DayBook from "../Transaction/Others/DayBook.jsx";
+import CourierInward from "../Transaction/Others/CourierInward.jsx";
+import CashDrawerDenomination from "../Transaction/Others/CashDrawerDenomination.jsx";
+import SalesManEdit from "../Transaction/Others/SalesManEdit.jsx";
+import TemplateClearOff from "../Transaction/Others/TemplateClearOff.jsx";
+
+// 13. Transactions -> Stock
+import StockAdjustmentNote from "../Transaction/Stock/StockAdjustmentNote.jsx";
+import StockTransfer from "../Transaction/Stock/StockTransfer.jsx";
+import ManualStockTransfer from "../Transaction/Stock/ManualStockTransfer.jsx";
+import StockExport from "../Transaction/Stock/StockExport.jsx";
+import StockInward from "../Transaction/Stock/StockInward.jsx";
+import BranchExport from "../Transaction/Stock/BranchExport.jsx";
+
 // Helper function to format tab title like classic ERP (e.g. "Location Listing", "Supplier Listing")
 function getTabTitle(label) {
   if (!label) return "Listing";
+  if (
+    label.startsWith("LR ") ||
+    label.startsWith("Purchase ") ||
+    label.startsWith("Sales ") ||
+    label.startsWith("Payment ") ||
+    label.startsWith("Loyalty") ||
+    label.startsWith("Manual ") ||
+    label.startsWith("ManualVoucher") ||
+    label.startsWith("Gift Voucher") ||
+    label.startsWith("GIFT VOUCHER") ||
+    label.startsWith("Settlement") ||
+    label === "Day Book" ||
+    label === "Cash Balance" ||
+    label === "Courier Inward" ||
+    label.startsWith("Cash Drawer") ||
+    label === "Sales Man Edit" ||
+    label === "Template Clear Off" ||
+    label.startsWith("Stock ") ||
+    label.startsWith("Manual Stock") ||
+    label === "Export" ||
+    label === "Branch Export"
+  )
+    return label;
   if (label.endsWith(" Listing")) return label;
   const clean = label.replace(/\s+Master$/i, "");
   return `${clean} Listing`;
@@ -322,6 +385,124 @@ export default function Dashboard() {
       case "Transport Master":
       case "transport":
         return <Transport adminId={adminId} onExit={onExit} />;
+
+      // Transaction -> LR
+      case "LR Entry":
+      case "LREntry":
+        return <LREntry adminId={adminId} onExit={onExit} />;
+      case "LR Issue":
+      case "LR Issue Entry":
+      case "LRIssue":
+        return <LRIssue adminId={adminId} onExit={onExit} />;
+      case "LR Receipt":
+      case "LR Receipt Entry":
+      case "LRReceipt":
+        return <LRReceipt adminId={adminId} onExit={onExit} />;
+      case "LR Export":
+      case "LRExport":
+        return <LRExport adminId={adminId} onExit={onExit} />;
+      case "LR Account Post":
+      case "LR Accounts Post":
+      case "LRAccountPost":
+        return <LRAccountPost adminId={adminId} onExit={onExit} />;
+
+      // Transaction -> Purchase Order
+      case "Purchase Order":
+      case "PurchaseOrder":
+        return <PurchaseOrder adminId={adminId} onExit={onExit} />;
+
+      // Transaction -> Payment
+      case "Payment Entry":
+      case "PaymentEntry":
+      case "Payment":
+        return <PaymentEntry adminId={adminId} onExit={onExit} />;
+
+      // Transaction -> Loyalty Card
+      case "Loyalty Block":
+      case "LoyaltyBlock":
+      case "LoyaltyCard Update":
+      case "Loyalty Card Update":
+        return <LoyaltyBlock adminId={adminId} onClose={onExit} onExit={onExit} />;
+
+      case "Manual Entry Cancel":
+      case "ManualEntryCancel":
+      case "Manual Cancel":
+        return <ManualEntryCancel adminId={adminId} onClose={onExit} onExit={onExit} />;
+
+      // Transaction -> Gift Voucher
+      case "Gift Voucher Issue":
+      case "GiftVoucherIssue":
+      case "GIFT VOUCHER ISSUE":
+        return <GiftVoucherIssue adminId={adminId} onClose={onExit} onExit={onExit} />;
+
+      case "Gift Voucher Issue Cancel":
+      case "Gift Voucher Cancel":
+      case "GiftVoucherCancel":
+      case "GiftVoucherIssueCancel":
+        return <GiftVoucherCancel adminId={adminId} onClose={onExit} onExit={onExit} />;
+
+      // Transaction -> Settlement
+      case "Settlement Cancel":
+      case "SettlementCancel":
+        return <SettlementCancel adminId={adminId} onClose={onExit} onExit={onExit} />;
+
+      case "Manual Voucher Cancel":
+      case "ManualVoucher Cancel":
+      case "ManualVoucherCancel":
+        return <ManualVoucherCancel adminId={adminId} onClose={onExit} onExit={onExit} />;
+
+      // Transaction -> Others
+      case "Day Book":
+      case "DayBook":
+      case "Cash Balance":
+        return <DayBook adminId={adminId} onClose={onExit} onExit={onExit} />;
+
+      case "Courier Inward":
+      case "CourierInward":
+        return <CourierInward adminId={adminId} onClose={onExit} onExit={onExit} />;
+
+      case "Cash Drawer Denomination":
+      case "CashDrawerDenomination":
+      case "Cash Drawer With Denomination":
+        return <CashDrawerDenomination adminId={adminId} onClose={onExit} onExit={onExit} />;
+
+      case "Sales Man Edit":
+      case "SalesManEdit":
+      case "Salesman Edit":
+        return <SalesManEdit adminId={adminId} onClose={onExit} onExit={onExit} />;
+
+      case "Template Clear Off":
+      case "TemplateClearOff":
+        return <TemplateClearOff adminId={adminId} onClose={onExit} onExit={onExit} />;
+
+      // Transaction -> Stock
+      case "Stock Adjustment Note":
+      case "StockAdjustmentNote":
+        return <StockAdjustmentNote adminId={adminId} onClose={onExit} onExit={onExit} />;
+
+      case "Stock Transfer":
+      case "StockTransfer":
+      case "Stock Transfer Entry":
+        return <StockTransfer adminId={adminId} onClose={onExit} onExit={onExit} />;
+
+      case "Manual Stock Transfer":
+      case "ManualStockTransfer":
+      case "Manual Stock Transfer Entry":
+        return <ManualStockTransfer adminId={adminId} onClose={onExit} onExit={onExit} />;
+
+      case "Export":
+      case "Stock Export":
+      case "StockExport":
+        return <StockExport adminId={adminId} onClose={onExit} onExit={onExit} />;
+
+      case "Stock Inward":
+      case "StockInward":
+      case "Stock Inward Entry":
+        return <StockInward adminId={adminId} onClose={onExit} onExit={onExit} />;
+
+      case "Branch Export":
+      case "BranchExport":
+        return <BranchExport adminId={adminId} onClose={onExit} onExit={onExit} />;
 
       // Item Categories (Unified ItemCategory component)
       case "Brand":

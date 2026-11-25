@@ -26,4 +26,14 @@ urlpatterns = [
     path("", include("ssretails.URLS.Master.Intractors")),
     path("", include("ssretails.URLS.Master.CourierType")),
     path("", include("ssretails.URLS.Master.Accounts")),
+
+    # 3. Transaction Module Endpoints
+    path("", include("ssretails.URLS.transaction.LR")),
+    path("", include("ssretails.URLS.transaction.purchaseorder")),
+    path("", include("ssretails.URLS.transaction.payment")),
+    path("", include("ssretails.URLS.transaction.loyalitycard")),
+    path("", include("ssretails.URLS.transaction.giftvoucher")),
+    path("", include("ssretails.URLS.transaction.settlement")),
+    path("", include("ssretails.URLS.transaction.others")),
+    path("", include("ssretails.URLS.transaction.stock")),
 ]

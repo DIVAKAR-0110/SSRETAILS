@@ -1,0 +1,222 @@
+/* frontend/src/Component/Transaction/LR/LRAccountPost.css */
+
+.lr-accpost-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: #f7f4ed;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #2b2b2b;
+  font-size: 11px;
+  user-select: none;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.lr-accpost-fieldset {
+  border: 1px solid #c8bead;
+  border-radius: 3px;
+  margin: 6px;
+  padding: 8px 12px 10px 12px;
+  background-color: #fcfbfa;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.lr-accpost-legend {
+  font-size: 11px;
+  font-weight: 600;
+  color: #4a4031;
+  padding: 0 4px;
+}
+
+.lr-accpost-header-grid {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 8px;
+}
+
+.lr-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.lr-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.lr-select-all-row {
+  margin-top: 4px;
+  padding-left: 86px;
+}
+
+.lr-lbl {
+  width: 80px;
+  text-align: right;
+  font-weight: 500;
+  color: #3b3327;
+  white-space: nowrap;
+}
+
+.lr-inp,
+.lr-sel {
+  background-color: #ffffff;
+  border: 1px solid #999083;
+  border-radius: 1px;
+  padding: 2px 4px;
+  font-size: 11px;
+  color: #111;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.lr-inp {
+  height: 22px;
+  flex: 1;
+}
+
+.lr-sel {
+  height: 22px;
+  flex: 1;
+}
+
+.lr-ro {
+  background-color: #f1ede4;
+}
+
+.lr-date {
+  max-width: 140px;
+}
+
+.lr-submit-wrap {
+  margin-top: 4px;
+  padding-left: 86px;
+}
+
+.lr-chk-lbl {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.lr-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 3px 14px;
+  font-size: 11px;
+  font-family: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid #8e8576;
+  border-radius: 2px;
+  background: linear-gradient(to bottom, #faf8f5, #e4ded2);
+  color: #222;
+}
+
+.lr-btn:hover {
+  background: linear-gradient(to bottom, #ffffff, #dcd4c5);
+}
+
+.lr-btn-submit {
+  min-width: 90px;
+}
+
+.lr-status-note {
+  margin: 4px 0;
+  color: #a04000;
+  font-style: italic;
+}
+
+/* Grid */
+.lr-accpost-grid {
+  flex: 1;
+  border: 1px solid #b5ab9a;
+  background-color: #ffffff;
+  overflow: auto;
+  min-height: 140px;
+}
+
+.lr-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+}
+
+.lr-table th {
+  background: linear-gradient(to bottom, #f6f2e9, #e6decb);
+  border-right: 1px solid #c0b7a6;
+  border-bottom: 1px solid #b3a998;
+  padding: 4px 6px;
+  font-weight: 600;
+  text-align: left;
+  color: #3b3327;
+  white-space: nowrap;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.lr-table td {
+  border-right: 1px solid #e2ddd3;
+  border-bottom: 1px solid #e8e4dc;
+  padding: 3px 6px;
+  white-space: nowrap;
+}
+
+.lr-table tr:hover {
+  background-color: #f1f4f9;
+}
+
+.lr-sel-row {
+  background-color: #dbe7f5 !important;
+}
+
+.lr-empty {
+  text-align: center;
+  padding: 24px !important;
+  color: #777;
+  font-style: italic;
+}
+
+/* Footer */
+.lr-accpost-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid #dfd8cc;
+}
+
+.lr-master-export-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.lr-btn-masterexport {
+  min-width: 110px;
+}
+
+.lr-footer-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.lr-btn-ok {
+  min-width: 70px;
+}
+
+.lr-btn-close {
+  min-width: 70px;
+}

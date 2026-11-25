@@ -1,0 +1,245 @@
+/* frontend/src/Component/Transaction/Others/DayBook.css */
+/* Classic WinForms ERP Styling matching Screenshot 1 */
+
+.daybook-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  background-color: #f7f4ed;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #2b2b2b;
+  font-size: 11px;
+  user-select: none;
+  box-sizing: border-box;
+  padding: 6px;
+  overflow: auto;
+}
+
+.daybook-fieldset {
+  border: 1px solid #c8bead;
+  border-radius: 2px;
+  margin: 2px 4px 6px 4px;
+  padding: 8px 12px;
+  background-color: #fcfbfa;
+  box-sizing: border-box;
+}
+
+.daybook-legend {
+  font-size: 11px;
+  font-weight: 600;
+  color: #4a4031;
+  padding: 0 4px;
+}
+
+.daybook-header-grid {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 6px;
+}
+
+.daybook-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.daybook-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.daybook-label {
+  width: 70px;
+  min-width: 70px;
+  font-size: 11px;
+  font-weight: 500;
+  color: #332d24;
+}
+
+.daybook-input,
+.daybook-select {
+  flex: 1;
+  height: 22px;
+  padding: 1px 6px;
+  font-size: 11px;
+  font-family: inherit;
+  border: 1px solid #a9a092;
+  border-radius: 2px;
+  background-color: #ffffff;
+  color: #111;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.daybook-input:focus,
+.daybook-select:focus {
+  border-color: #557799;
+}
+
+.daybook-input:read-only {
+  background-color: #f0ece1;
+  color: #555;
+}
+
+.daybook-btn-submit {
+  min-width: 80px;
+  height: 23px;
+  padding: 2px 16px;
+  font-size: 11px;
+  font-family: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  border: 1px solid #8e8576;
+  border-radius: 2px;
+  background: linear-gradient(to bottom, #faf8f5, #e4ded2);
+  color: #2b7a32;
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #cfc7b7;
+}
+
+.daybook-btn-submit:hover {
+  background: linear-gradient(to bottom, #ffffff, #dad2c1);
+}
+
+.daybook-section-title {
+  font-size: 10px;
+  font-weight: 700;
+  color: #4a4031;
+  margin: 6px 4px 2px 4px;
+}
+
+/* Table Grid */
+.daybook-table-wrap {
+  border: 1px solid #b5ab9a;
+  background-color: #ffffff;
+  overflow: auto;
+  min-height: 260px;
+  max-height: 460px;
+  margin: 0 4px;
+}
+
+.daybook-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+}
+
+.daybook-table th {
+  background: linear-gradient(to bottom, #eae4d5, #dbd1be);
+  color: #332d24;
+  font-weight: 600;
+  padding: 3px 8px;
+  border: 1px solid #c5baa8;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.daybook-table td {
+  padding: 2px 4px;
+  border: 1px solid #e2dacd;
+  white-space: nowrap;
+}
+
+.daybook-table tr:hover td {
+  background-color: #f7f3ec;
+}
+
+.daybook-table td.text-right {
+  text-align: right;
+}
+
+.daybook-table td.text-center {
+  text-align: center;
+}
+
+.daybook-table td.no-records {
+  text-align: center;
+  padding: 30px;
+  color: #888;
+  font-style: italic;
+}
+
+.daybook-table-input {
+  width: 100%;
+  height: 20px;
+  padding: 1px 4px;
+  font-size: 11px;
+  font-family: inherit;
+  border: 1px solid transparent;
+  background: transparent;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.daybook-table-input:focus {
+  border: 1px solid #557799;
+  background: #ffffff;
+}
+
+.daybook-table-footer {
+  display: flex;
+  justify-content: flex-end;
+  background: #eae4d5;
+  border: 1px solid #c5baa8;
+  border-top: none;
+  margin: 0 4px;
+  padding: 2px 8px;
+  gap: 12px;
+}
+
+.daybook-footer-box {
+  width: 110px;
+  text-align: right;
+  font-weight: 700;
+  padding: 1px 6px;
+  background: #ffffff;
+  border: 1px solid #b5ab9a;
+  border-radius: 2px;
+}
+
+/* Bottom Closing Balance & Actions */
+.daybook-bottom {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  margin: 8px 4px;
+}
+
+.daybook-closing-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.daybook-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-width: 80px;
+  padding: 3px 18px;
+  font-size: 11px;
+  font-family: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid #8e8576;
+  border-radius: 2px;
+  background: linear-gradient(to bottom, #faf8f5, #e4ded2);
+  color: #222;
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #cfc7b7;
+}
+
+.daybook-btn:hover {
+  background: linear-gradient(to bottom, #ffffff, #dad2c1);
+}
+
+.daybook-btn-ok {
+  color: #0b4f17;
+}
+
+.daybook-btn-close {
+  color: #7b1c1c;
+}

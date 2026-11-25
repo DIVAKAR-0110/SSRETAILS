@@ -11,26 +11,39 @@ Supports standard 6-Mode pattern:
   MODE 5: LOOKUP / DROPDOWN
 """
 import logging
-from django.db import connection
+from django.db import connection, connections
 from rest_framework import exceptions, status
 from rest_framework.response import Response
 
 logger = logging.getLogger(__name__)
 
-# Cache for SP parameters: { "SPCOUNTRYMAS": [ ("@NAME", "varchar"), ... ] }
+# Cache for SP parameters: { ("default", "SPCOUNTRYMAS"): [ ("@NAME", "varchar"), ... ] }
 _SP_PARAM_CACHE = {}
 
 
-def get_sp_parameters(proc_name):
+def _get_connection(database=None, proc_name=""):
+    """Returns the appropriate database connection (default: GANESHSSRETAIL, transaction: GANESHSSRETAILTRAN)."""
+    if database:
+        return connections[database]
+    clean_proc = (proc_name or "").upper()
+    if clean_proc.startswith("SPTRANS_") or "LR" in clean_proc and "ENTRY" in clean_proc:
+        return connections["transaction"] if "transaction" in connections else connection
+    return connection
+
+
+def get_sp_parameters(proc_name, database=None):
     """
     Introspects and caches stored procedure parameters from INFORMATION_SCHEMA.
     Returns a list of dicts: [{'name': '@NAME', 'data_type': 'varchar', 'mode': 'IN'}, ...]
     """
     clean_name = proc_name.upper().strip().replace("[", "").replace("]", "").replace("DBO.", "")
-    if clean_name in _SP_PARAM_CACHE:
-        return _SP_PARAM_CACHE[clean_name]
+    conn = _get_connection(database, clean_name)
+    db_name = conn.alias
+    cache_key = (db_name, clean_name)
+    if cache_key in _SP_PARAM_CACHE:
+        return _SP_PARAM_CACHE[cache_key]
 
-    with connection.cursor() as cursor:
+    with conn.cursor() as cursor:
         cursor.execute("""
             SELECT PARAMETER_NAME, DATA_TYPE, PARAMETER_MODE
             FROM INFORMATION_SCHEMA.PARAMETERS
@@ -47,7 +60,7 @@ def get_sp_parameters(proc_name):
             }
             for r in rows
         ]
-        _SP_PARAM_CACHE[clean_name] = params
+        _SP_PARAM_CACHE[cache_key] = params
         return params
 
 
@@ -104,9 +117,9 @@ def _extract_param_value(data_dict, param_clean_name, param_data_type):
     return None
 
 
-def execute_master_sp(proc_name, mode, code=0, data=None):
+def execute_master_sp(proc_name, mode, code=0, data=None, database=None):
     """
-    Executes a Master Stored Procedure for DML operations.
+    Executes a Master / Transaction Stored Procedure for DML operations.
     Modes:
       0: INSERT (returns new integer Code)
       1: UPDATE (updates record matching Code, returns Code)
@@ -115,8 +128,9 @@ def execute_master_sp(proc_name, mode, code=0, data=None):
     Raises rest_framework.exceptions.ValidationError if @ERR <> 0 or SQL failure.
     """
     clean_proc = proc_name.upper().strip().replace("[", "").replace("]", "").replace("DBO.", "")
-    params_meta = get_sp_parameters(clean_proc)
+    params_meta = get_sp_parameters(clean_proc, database=database)
     data = data or {}
+    conn = _get_connection(database, clean_proc)
 
     exec_params = []
     param_bindings = []
@@ -184,7 +198,7 @@ def execute_master_sp(proc_name, mode, code=0, data=None):
     full_sql = "\n".join(sql_lines)
 
     try:
-        with connection.cursor() as cursor:
+        with conn.cursor() as cursor:
             cursor.execute(full_sql, param_bindings)
             while cursor.description is None:
                 if not cursor.nextset():
@@ -213,12 +227,13 @@ def execute_master_sp(proc_name, mode, code=0, data=None):
         raise exceptions.ValidationError(f"Failed to execute {clean_proc}: {str(exc)}")
 
 
-def execute_sp_select(proc_name, mode=3, code=0):
+def execute_sp_select(proc_name, mode=3, code=0, database=None):
     """
     Executes a Stored Procedure in SELECT mode (e.g. MODE 3 = All, MODE 4 = By Code, MODE 5 = Lookup).
     Returns a list of dicts.
     """
     clean_proc = proc_name.upper().strip().replace("[", "").replace("]", "").replace("DBO.", "")
+    conn = _get_connection(database, clean_proc)
 
     if int(mode) == 4:
         sql = f"EXEC [dbo].[{clean_proc}] @MODE = 4, @CODE = %s;"
@@ -227,7 +242,7 @@ def execute_sp_select(proc_name, mode=3, code=0):
         sql = f"EXEC [dbo].[{clean_proc}] @MODE = {int(mode)};"
         bindings = []
 
-    with connection.cursor() as cursor:
+    with conn.cursor() as cursor:
         cursor.execute(sql, bindings)
         if cursor.description is None:
             return []
@@ -236,12 +251,38 @@ def execute_sp_select(proc_name, mode=3, code=0):
         return [dict(zip(columns, row)) for row in rows]
 
 
+def execute_custom_sp(proc_name, params=None, database=None):
+    """
+    Executes an arbitrary stored procedure with named parameters.
+    Returns results as list of dicts or True.
+    """
+    clean_proc = proc_name.upper().strip().replace("[", "").replace("]", "").replace("DBO.", "")
+    conn = _get_connection(database, clean_proc)
+    params = params or {}
+
+    param_clauses = []
+    bindings = []
+    for k, v in params.items():
+        p_name = k if k.startswith("@") else f"@{k}"
+        param_clauses.append(f"{p_name} = %s")
+        bindings.append(v)
+
+    sql = f"EXEC [dbo].[{clean_proc}] " + ", ".join(param_clauses)
+    with conn.cursor() as cursor:
+        cursor.execute(sql, bindings)
+        if cursor.description:
+            columns = [col[0] for col in cursor.description]
+            return [dict(zip(columns, row)) for row in cursor.fetchall()]
+        return True
+
+
 class StoredProcedureMasterViewSetMixin:
     """
     Mixin for DRF ViewSets to automatically route create, update, and destroy actions
     through the designated Microsoft SQL Server Stored Procedure.
     """
     stored_proc_name = None
+    sp_database = None
 
     def perform_create(self, serializer):
         if not self.stored_proc_name:
@@ -250,7 +291,8 @@ class StoredProcedureMasterViewSetMixin:
         new_code = execute_master_sp(
             self.stored_proc_name,
             mode=0,
-            data=serializer.validated_data
+            data=serializer.validated_data,
+            database=self.sp_database
         )
         serializer.instance = self.get_queryset().get(pk=new_code)
 
@@ -263,7 +305,8 @@ class StoredProcedureMasterViewSetMixin:
             self.stored_proc_name,
             mode=1,
             code=instance.pk,
-            data=serializer.validated_data
+            data=serializer.validated_data,
+            database=self.sp_database
         )
         instance.refresh_from_db()
 
@@ -274,6 +317,7 @@ class StoredProcedureMasterViewSetMixin:
         execute_master_sp(
             self.stored_proc_name,
             mode=2,
-            code=instance.pk
+            code=instance.pk,
+            database=self.sp_database
         )
 

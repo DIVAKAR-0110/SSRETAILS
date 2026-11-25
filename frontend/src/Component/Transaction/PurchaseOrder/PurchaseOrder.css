@@ -1,0 +1,411 @@
+/* frontend/src/Component/Transaction/PurchaseOrder/PurchaseOrder.css */
+/* Classic WinForms ERP Styling matching Master UI and LR Suite */
+
+.po-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: #f7f4ed;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #2b2b2b;
+  font-size: 11px;
+  user-select: none;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.po-fieldset {
+  border: 1px solid #c8bead;
+  border-radius: 3px;
+  margin: 6px;
+  padding: 8px 12px 10px 12px;
+  background-color: #fcfbfa;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.po-legend {
+  font-size: 11px;
+  font-weight: 600;
+  color: #4a4031;
+  padding: 0 4px;
+}
+
+/* Tabstrip */
+.po-tabstrip {
+  display: flex;
+  gap: 2px;
+  border-bottom: 1px solid #c0b7a6;
+  margin-bottom: 8px;
+}
+
+.po-tab-btn {
+  padding: 3px 14px;
+  font-size: 11px;
+  font-family: inherit;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid #b5ab9a;
+  border-bottom: none;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  background: linear-gradient(to bottom, #eae4d5, #dbd1be);
+  color: #443c30;
+}
+
+.po-tab-btn.active {
+  background: #fcfbfa;
+  font-weight: 600;
+  color: #111;
+  border-bottom: 1px solid #fcfbfa;
+  margin-bottom: -1px;
+}
+
+.po-tab-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* TAB 1: GENERAL */
+.po-general-content {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+}
+
+.po-gen-col-left {
+  flex: 1.2;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.po-gen-col-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.po-form-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.po-lbl {
+  width: 110px;
+  text-align: right;
+  font-weight: 500;
+  color: #3b3327;
+  white-space: nowrap;
+}
+
+.po-inp,
+.po-sel,
+.po-txt {
+  background-color: #ffffff;
+  border: 1px solid #999083;
+  border-radius: 1px;
+  padding: 2px 4px;
+  font-size: 11px;
+  color: #111;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.po-inp {
+  height: 22px;
+  flex: 1;
+}
+
+.po-sel {
+  height: 22px;
+  flex: 1;
+}
+
+.po-txt {
+  flex: 1;
+  resize: none;
+}
+
+.po-address-box {
+  height: 54px;
+  background-color: #f4efe4;
+}
+
+.po-ro {
+  background-color: #f1ede4;
+  color: #555;
+}
+
+.po-date-inp {
+  max-width: 140px;
+}
+
+/* Cash Discount Panel */
+.po-cash-discount-panel {
+  margin-top: 10px;
+  border: 1px solid #c8bead;
+  border-radius: 2px;
+  padding: 6px 8px;
+  background-color: #f8f6f0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.po-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.po-panel-title {
+  font-weight: 600;
+  color: #4a4031;
+}
+
+.po-sub-btn {
+  font-size: 10px;
+  padding: 1px 6px;
+  background: #fdfdfd;
+  border: 1px solid #999;
+  cursor: pointer;
+  border-radius: 2px;
+}
+
+.po-cash-discount-grid {
+  height: 120px;
+}
+
+/* Grids Common */
+.po-grid-wrap {
+  border: 1px solid #b5ab9a;
+  background-color: #ffffff;
+  overflow: auto;
+}
+
+.po-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+}
+
+.po-table th {
+  background: linear-gradient(to bottom, #f6f2e9, #e6decb);
+  border-right: 1px solid #c0b7a6;
+  border-bottom: 1px solid #b3a998;
+  padding: 3px 4px;
+  font-weight: 600;
+  text-align: left;
+  color: #3b3327;
+  white-space: nowrap;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.po-table td {
+  border-right: 1px solid #e2ddd3;
+  border-bottom: 1px solid #e8e4dc;
+  padding: 2px 4px;
+  white-space: nowrap;
+}
+
+.po-table tr:hover {
+  background-color: #f1f4f9;
+}
+
+.po-sel-row {
+  background-color: #dbe7f5 !important;
+}
+
+.po-cell-input {
+  width: 100%;
+  box-sizing: border-box;
+  height: 20px;
+  border: 1px solid #aaa;
+  padding: 1px 3px;
+  font-size: 11px;
+}
+
+.po-cell-select {
+  width: 100%;
+  box-sizing: border-box;
+  height: 20px;
+  border: 1px solid #aaa;
+  font-size: 11px;
+}
+
+.po-dots-btn {
+  height: 18px;
+  padding: 0 4px;
+  font-size: 10px;
+  border: 1px solid #999;
+  background: #f2ece1;
+  cursor: pointer;
+}
+
+.po-grid-totals-bar {
+  display: flex;
+  gap: 20px;
+  padding: 4px 8px;
+  background: #f1ede4;
+  border: 1px solid #c8bead;
+  border-top: none;
+  font-weight: 600;
+  color: #3b3327;
+}
+
+/* TAB 2: DETAILS */
+.po-details-content {
+  gap: 8px;
+}
+
+.po-details-section {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.po-items-grid {
+  height: 180px;
+}
+
+.po-categories-display {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.po-categories-display label {
+  font-weight: 500;
+  color: #3b3327;
+}
+
+.po-size-section {
+  flex: 1;
+}
+
+.po-sizes-grid {
+  height: 120px;
+}
+
+/* TAB 3: SUMMARY */
+.po-summary-content {
+  gap: 8px;
+}
+
+.po-summary-top-section {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.po-summary-items-grid {
+  height: 150px;
+}
+
+.po-summary-bottom-split {
+  display: flex;
+  gap: 16px;
+  flex: 1;
+}
+
+.po-summary-left-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.po-textarea-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.po-lbl-block {
+  font-weight: 600;
+  color: #3b3327;
+}
+
+.po-summary-txt {
+  height: 65px;
+}
+
+.po-summary-right-panel {
+  flex: 1.4;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.po-addless-grid {
+  height: 130px;
+}
+
+.po-grand-total-bar {
+  justify-content: flex-end;
+  background: #e8e3d5;
+}
+
+/* BOTTOM ACTION BAR */
+.po-footer-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+  padding-top: 6px;
+  border-top: 1px solid #dfd8cc;
+}
+
+.po-prev-entry-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+}
+
+.po-prev-sel {
+  max-width: 380px;
+}
+
+.po-action-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.po-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 3px 14px;
+  font-size: 11px;
+  font-family: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid #8e8576;
+  border-radius: 2px;
+  background: linear-gradient(to bottom, #faf8f5, #e4ded2);
+  color: #222;
+}
+
+.po-btn:hover {
+  background: linear-gradient(to bottom, #ffffff, #dcd4c5);
+}
+
+.po-btn-ok {
+  min-width: 70px;
+}
+
+.po-btn-close {
+  min-width: 70px;
+}
